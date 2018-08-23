@@ -1,27 +1,53 @@
 @startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+allow_mixing
+
 skinparam handwritten true
 skinparam monochrome true
 
-class DataProvider      #darkgray
-class DataProxy         #darkgray
-class DataClientManager #darkgray
-class DataClient        #darkgray
+'class RequestData
+'class IConnector
+DataProvider -left- IConnector
 
-class IDataProvider      #white
-class IDataProxy         #white
-class IDataClientManager #white
-class IDataClient        #white
+package "RequestData" #DDDDDD {
+  component RequestCommand
+  class RequestData
+}
 
 
-DataProvider --o IDataProvider
-DataProxy    --o IDataProxy
-DataClientManager --o IDataClientManager
-DataClient   --o IDataClient
+package "DataProvider" #DDDDDD {
+  together {
+    class DataProxy         #darkgray
+    class DataProvider      #darkgray
+  }
 
-DataClient        - IDataClientManager
-DataClientManager - IDataProxy
-DataProxy --o IDataProvider
-DataProvider --o IConnector
-DataProvider - IDataProxy
+  together {
+    abstract class IDataProxy         #white
+    abstract class IDataProvider      #white
+  }
 
+  DataProvider --|> IDataProvider
+  DataProxy    --|> IDataProxy
+  DataProxy    -right--o IDataProvider
+}
+
+
+package "DataBinding" #DDDDDD {
+  together {
+    class DataClientManager   #darkgray
+/'    class DataClient        #darkgray
+  }
+'/
+
+  together {
+    abstract class IDataClientManager #white
+    abstract class IDataClient        #white
+  }
+  'IDataClientManager - DataClient
+
+  DataClientManager --|> IDataClientManager
+  DataClient        --|> IDataClient
+}
+
+DataClientManager -right- IDataProxy
 @enduml
