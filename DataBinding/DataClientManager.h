@@ -39,25 +39,25 @@ public:
     virtual DataClientManager *clone() const override;
     void clearDataClientList();
 
-    void registerClient(  const RequestCmd requestCmd, IDataClient* dataClient) final;
-    void deregisterClient(const RequestCmd requestCmd, IDataClient* dataClient) final;
+    void registerClient(const Request request, IDataClient* dataClient) final;
+    void deregisterClient(const Request request, IDataClient* dataClient) final;
     void deregisterAllClient(IDataClient* dataClient) final;
-    void changeRegisteredRequestCmd(IDataClient* dataClient, const RequestCmd oldRequestId, const RequestCmd newRequestId) final;
+    void changeRegisteredRequest(IDataClient* dataClient, const Request oldRequest, const Request newRequest) final;
 
     int numberOfRegisterdRequests() const;
-    const RequestCmdVector allRequestCmdOfAClient(IDataClient* dataClient) const;
+    const RequestVector allRequestsOfAClient(IDataClient* dataClient) const;
 
-    void requestGetClientData(IDataClient* dataClient, const RequestCmd requestCmd, bool withRange = true) final;
-    void requestGetAllClientData(bool withRange = true) final;
-    void requestSaveData(const RequestCmd requestCmd,   const QString& requestValue) final;
-    void requestCommand(const RequestCmd commandName, const QString& inRequest)  final;
+    void requestGetClientData(IDataClient* dataClient, const Request& request) final;
+    void requestGetAllClientData() final;
+    void requestSaveData(const Request request,   const QString& requestValue) final;
+    void requestCommand(const Request commandRequest, const QString& inRequest)  final;
 
     void newValueReceived( const RequestData& requestData) final;
     void newStatusReceived(const RequestData& requestData) final;
 
 private:
     using ClientVector     = QVector<IDataClient*>;
-    using ClientRequestMap = QMap<RequestCmd, ClientVector>;
+    using ClientRequestMap = QMap<Request, ClientVector>;
 
     IDataProxy&           mDataProxy;
     ClientRequestMap      mClientRequestMap;

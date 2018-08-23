@@ -1,4 +1,4 @@
-TEMPLATE       = subdirs
+TEMPLATE = subdirs
 
 SUBDIRS = DataProvider \
           DataProvider/DataProviderTest \
@@ -6,13 +6,20 @@ SUBDIRS = DataProvider \
           DataBinding/DataBindingTest \
           RequestData \
           RequestData/RequestDataTest \
-          DemoApp.pro 
+          DemoApp
+
+DemoApp.file = ./DemoApp.pro
+
+PRE_TARGETDEPS += RequestData DataProvider DataBinding
 
 RequestData/RequestDataTest.depends   = RequestData
 DataProvider.depends                  = RequestData
 DataBinding.depends                   = RequestData
 DataProvider/DataProviderTest.depends = DataProvider
 DataBinding/DataBindingTest.depends   = DataBinding
-DemoApp.pro.depends                   = RequestData DataProvider DataBinding
+DemoApp.depends                       = RequestData DataProvider DataBinding
+
+OTHER_FILES += doc/ClassDiagram.png \
+               doc/ClassDiagram.uml
 
 

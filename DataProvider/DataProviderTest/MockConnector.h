@@ -31,7 +31,7 @@ class MockConnector: public RequestBroker::IConnector
         TestValues testData;
         responseData = requestData;
 
-        if( responseData.requestCmdVector() == testData.commandVector)
+        if( responseData.requestVector() == testData.requestVector)
         {
           StringMatrix valueMatrix;
           valueMatrix.append(testData.values1);

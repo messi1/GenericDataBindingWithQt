@@ -14,4 +14,5 @@ HEADERS += RequestData.h \
     RequestData.h \
     RequestCommand.h
 
-SOURCES += RequestData.cpp
+SOURCES += RequestData.cpp \
+    RequestCommand.cpp

@@ -25,13 +25,13 @@ struct TestValues
   QStringList values3 = {"true", "false", "true"};
   QStringList values4 = {"false", "true", "false"};
 
-  RequestCmdVector commandVector1 = { RequestCmd::WlanList,
-                                      RequestCmd::WlanState,
-                                      RequestCmd::EthState };
+  RequestVector commandVector1 = { {RequestCmd::WlanList},
+                                   {RequestCmd::WlanState},
+                                   {RequestCmd::EthState} };
 
-  RequestCmdVector commandVector2 = { RequestCmd::Language,
-                                      RequestCmd::DateTime,
-                                      RequestCmd::BatteryState };
+  RequestVector commandVector2 = { {RequestCmd::Language},
+                                   {RequestCmd::DateTime},
+                                   {RequestCmd::BatteryState} };
 
 };
 
@@ -43,7 +43,7 @@ class MockConnector final: public RequestBroker::IConnector
         TestValues testData;
         responseData = requestData;
 
-        if( responseData.requestCmdVector() == testData.commandVector1)
+        if( responseData.requestVector() == testData.commandVector1)
         {
           StringMatrix valueMatrix;
           valueMatrix.append(testData.values1);
@@ -91,30 +91,30 @@ int main(int argc, char* argv[])
   QThread* dataThread = new QThread;
   dataThread->setObjectName("dataThread");
   MockConnector mockConnector;
-  DataProvider* dataProvider  = new DataProvider(mockConnector);
-  DataProxy* dataProxy1       = new DataProxy(dataProvider, nullptr);
-  DataProxy* dataProxy2       = new DataProxy(dataProvider, nullptr);
+  DataProvider dataProvider(mockConnector);
+  DataProxy dataProxy1(dataProvider, nullptr);
+  DataProxy dataProxy2(dataProvider, nullptr);
 
   RequestData     requestData1;
-  requestData1.setDataProxy(dataProxy1);
+  requestData1.setDataProxy(&dataProxy1);
   requestData1.setRequestType(RequestType::GetValues);
-  requestData1.setRequestCmdVector(testValues.commandVector1);
+  requestData1.setRequestVector(testValues.commandVector1);
 
   RequestData     requestData2;
-  requestData2.setDataProxy(dataProxy2);
+  requestData2.setDataProxy(&dataProxy2);
   requestData2.setRequestType(RequestType::GetValues);
-  requestData2.setRequestCmdVector(testValues.commandVector1);
+  requestData2.setRequestVector(testValues.commandVector1);
 
 
   qWarning() << "Current Thread: " << QThread::currentThreadId();
-  qWarning() << "Current WorkerThread: " << dataProvider->thread();
+  qWarning() << "Current WorkerThread: " << dataProvider.thread();
 
-  dataProvider->moveToThread(dataThread);
-  qWarning() << "New WorkerThread: " << dataProvider->thread();
+  dataProvider.moveToThread(dataThread);
+  qWarning() << "New WorkerThread: " << dataProvider.thread();
 
   dataThread->start();
-  dataProxy1->requestData(requestData1);
-  dataProxy2->requestData(requestData2);
+  dataProxy1.requestData(requestData1);
+  dataProxy2.requestData(requestData2);
 
   return app.exec();
 }

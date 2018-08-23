@@ -35,7 +35,7 @@ TEST(DataProxy, requestData)
 
   MockDataProvider      mockDataProvider;
   MockDataClientManager mockDataClientManager;
-  DataProxy             dataProxy(&mockDataProvider);
+  DataProxy             dataProxy(mockDataProvider);
   TestValues            testData;
 
   QEventLoop* waitForLoop = new QEventLoop;
@@ -50,7 +50,7 @@ TEST(DataProxy, requestData)
   RequestData  requestData1;
   requestData1.setDataProxy(&dataProxy);
   requestData1.setDataManager(&mockDataClientManager);
-  requestData1.setRequestCmdVector(testData.commandVector);
+  requestData1.setRequestVector(testData.requestVector);
 
   mockDataProvider.moveToThread(dataThread);
 

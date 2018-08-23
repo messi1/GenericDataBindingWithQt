@@ -18,7 +18,7 @@ TEST(DataClientManager, registerNullPtrClient)
     DataClientManager clientManager(dataProxy);
     TestDataClient testClient(clientManager);
 
-    clientManager.registerClient(RequestCmd::DateTime, nullptr);
+    clientManager.registerClient({RequestCmd::DateTime}, nullptr);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
 }
@@ -29,10 +29,10 @@ TEST(DataClientManager, deregisterNullPtrClient)
     DataClientManager clientManager(dataProxy);
     TestDataClient testClient(clientManager);
 
-    clientManager.registerClient(RequestCmd::DateTime, &testClient);
+    clientManager.registerClient({RequestCmd::DateTime}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 1);
 
-    clientManager.deregisterClient(RequestCmd::DateTime, nullptr);
+    clientManager.deregisterClient({RequestCmd::DateTime}, nullptr);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 1);
 }
@@ -44,9 +44,9 @@ TEST(DataClientManager, registerClient)
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
-    clientManager.registerClient(RequestCmd::BatteryState, &testClient);
+    clientManager.registerClient({RequestCmd::BatteryState}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 1);
-    clientManager.registerClient(RequestCmd::EthState, &testClient);
+    clientManager.registerClient({RequestCmd::EthState}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 2);
 }
 
@@ -57,9 +57,9 @@ TEST(DataClientManager, deregisterClient)
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
-    clientManager.registerClient(RequestCmd::BatteryState, &testClient);
+    clientManager.registerClient({RequestCmd::BatteryState}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 1);
-    clientManager.deregisterClient(RequestCmd::BatteryState, &testClient);
+    clientManager.deregisterClient({RequestCmd::BatteryState}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
 }
 
@@ -70,9 +70,9 @@ TEST(DataClientManager, doubleClientRegistration)
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
-    clientManager.registerClient(RequestCmd::DateTime, &testClient);
-    clientManager.registerClient(RequestCmd::DateTime, &testClient);
-    clientManager.registerClient(RequestCmd::DateTime, &testClient);
+    clientManager.registerClient({RequestCmd::DateTime}, &testClient);
+    clientManager.registerClient({RequestCmd::DateTime}, &testClient);
+    clientManager.registerClient({RequestCmd::DateTime}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 1);
 }
 
@@ -83,9 +83,9 @@ TEST(DataClientManager, deregisterAllClientFromRequests)
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
-    clientManager.registerClient(RequestCmd::DateTime, &testClient);
-    clientManager.registerClient(RequestCmd::EthState, &testClient);
-    clientManager.registerClient(RequestCmd::BatteryState, &testClient);
+    clientManager.registerClient({RequestCmd::DateTime},     &testClient);
+    clientManager.registerClient({RequestCmd::EthState},     &testClient);
+    clientManager.registerClient({RequestCmd::BatteryState}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 3);
 }
 
@@ -96,18 +96,18 @@ TEST(DataClientManager, changeRegisteredRequestCmd)
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
-    clientManager.registerClient(RequestCmd::DateTime, &testClient);
-    clientManager.registerClient(RequestCmd::EthState, &testClient);
-    clientManager.registerClient(RequestCmd::BatteryState, &testClient);
+    clientManager.registerClient({RequestCmd::DateTime},    &testClient);
+    clientManager.registerClient({RequestCmd::EthState},     &testClient);
+    clientManager.registerClient({RequestCmd::BatteryState}, &testClient);
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 3);
-    clientManager.changeRegisteredRequestCmd(&testClient, RequestCmd::BatteryState, RequestCmd::WlanState);
+    clientManager.changeRegisteredRequest(&testClient, {RequestCmd::BatteryState}, {RequestCmd::WlanState});
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 3);
 
-    RequestCmdVector cmdVector = clientManager.allRequestCmdOfAClient(&testClient);
+    RequestVector cmdVector = clientManager.allRequestsOfAClient(&testClient);
 
-    EXPECT_TRUE(cmdVector.contains(RequestCmd::DateTime));
-    EXPECT_TRUE(cmdVector.contains(RequestCmd::EthState));
-    EXPECT_TRUE(cmdVector.contains(RequestCmd::WlanState));
+    EXPECT_TRUE(cmdVector.contains({RequestCmd::DateTime}));
+    EXPECT_TRUE(cmdVector.contains({RequestCmd::EthState}));
+    EXPECT_TRUE(cmdVector.contains({RequestCmd::WlanState}));
 }
 
 #endif // TST_DATACLIENTMANAGER_H

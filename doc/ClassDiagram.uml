@@ -1,0 +1,27 @@
+@startuml
+skinparam handwritten true
+skinparam monochrome true
+
+class DataProvider      #darkgray
+class DataProxy         #darkgray
+class DataClientManager #darkgray
+class DataClient        #darkgray
+
+class IDataProvider      #white
+class IDataProxy         #white
+class IDataClientManager #white
+class IDataClient        #white
+
+
+DataProvider --o IDataProvider
+DataProxy    --o IDataProxy
+DataClientManager --o IDataClientManager
+DataClient   --o IDataClient
+
+DataClient        - IDataClientManager
+DataClientManager - IDataProxy
+DataProxy --o IDataProvider
+DataProvider --o IConnector
+DataProvider - IDataProxy
+
+@enduml

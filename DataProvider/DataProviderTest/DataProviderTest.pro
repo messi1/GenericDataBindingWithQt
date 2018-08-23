@@ -11,6 +11,9 @@ INCLUDEPATH += \
                .. \
                ../..
 
+PRE_TARGETDEPS += ../../RequestData/libRequestDataLib.a \
+                  ../libDataProviderLib.a
+
 LIBS += -L../ -lDataProviderLib \
         -L../../RequestData -lRequestDataLib
 
@@ -25,6 +28,3 @@ HEADERS += \
 
 SOURCES += \
         main.cpp
-
-DISTFILES += \
-    target.mk

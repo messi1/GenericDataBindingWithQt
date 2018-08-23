@@ -30,11 +30,11 @@ public:
     virtual ~DataClient() = default;
 
     void registerRequestCmd(const RequestCmd requestCmd);
-    void changeRegisteredRequestCmd(const RequestCmd oldRequestId, const RequestCmd newRequestId);
+    void changeRegisteredRequestCmd(const RequestCmd oldRequestCmd, const RequestCmd newRequestCmd);
     void deregisterRequestCmd(const RequestCmd requestCmd);
     void deregisterClient();
 
-    void requestGetData(const RequestCmd requestCmd, bool withRange = false);
+    void requestGetData(const RequestCmd requestCmd, bool withRange = false, quint8 contextId = 0);
     void requestSaveData(const RequestCmd requestCmd,       const QString&     requestValue);
     virtual void setValue(     const RequestCmd requestCmd, const QString&     requestValue, const QString& requestRange, const int status) = 0;
     virtual void setValue(     const RequestCmd requestCmd, const QString&     requestValue) = 0;

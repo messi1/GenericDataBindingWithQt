@@ -50,21 +50,21 @@ IDataProxy *RequestData::dataProxy() const
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setRequestCmdVector( RequestCmdVector requestCmdVector)
+void RequestData::setRequestVector(RequestVector requestVector)
 {
-  mRequestCmdVector = requestCmdVector;
+  mRequestVector = requestVector;
 }
 
 //-------------------------------------------------------------------------------------------------
-const  RequestCmdVector &RequestData::requestCmdVector() const
+const  RequestVector &RequestData::requestVector() const
 {
-  return mRequestCmdVector;
+  return mRequestVector;
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequestCommand(RequestCmd command)
+void RequestData::appendRequest(Request command)
 {
-  mRequestCmdVector.append(command);
+  mRequestVector.append(command);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -124,7 +124,7 @@ void RequestData::appendErrorList(const QStringList &errorList)
 //-------------------------------------------------------------------------------------------------
 void RequestData::clearAllData()
 {
-  mRequestCmdVector.clear();
+  mRequestVector.clear();
   mValueMatrix.clear();
   mRangeMatrix.clear();
   mErrorMatrix.clear();
@@ -143,28 +143,6 @@ void RequestData::setRequestType(const RequestType &requestType)
 }
 
 //-------------------------------------------------------------------------------------------------
-bool RequestData::withRange() const
-{
-  return mWithRange;
-}
-
-//-------------------------------------------------------------------------------------------------
-void RequestData::setWithRange(bool withRange)
-{
-  mWithRange = withRange;
-}
-
-int RequestData::compartmentId() const
-{
-    return mCompartmentId;
-}
-
-void RequestData::setCompartmentId(int compartmentId)
-{
-    mCompartmentId = compartmentId;
-}
-
-//-------------------------------------------------------------------------------------------------
 bool RequestData::operator==(const RequestData& obj) const
 {
   if(this == &obj)
@@ -178,8 +156,7 @@ bool RequestData::operator==(const RequestData& obj) const
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream &out, const RequestData &requestData)
 {
-  out << requestData.requestCmdVector() << requestData.valueMatrix() << requestData.rangeMatrix()
-      << requestData.errorMatrix()      << requestData.withRange()   << requestData.compartmentId();
+  out << requestData.requestVector() << requestData.valueMatrix() << requestData.rangeMatrix() << requestData.errorMatrix();
 
   return out;
 }
@@ -187,38 +164,51 @@ QDataStream &operator<<(QDataStream &out, const RequestData &requestData)
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator>>(QDataStream &in,  RequestData &requestData)
 {
-  RequestCmdVector requestCmdVector;
+  RequestVector requestVector;
   StringMatrix valueMatrix;
   StringMatrix rangeMatrix;
   StringMatrix errorMatrix;
-  bool         withRange = false;
-  int          compartmentId = 0;
-  in >> requestCmdVector >> valueMatrix >> rangeMatrix >> errorMatrix >> withRange >> compartmentId;
+  in >> requestVector >> valueMatrix >> rangeMatrix >> errorMatrix;
 
-  requestData.setRequestCmdVector(requestCmdVector);
+  requestData.setRequestVector(requestVector);
   requestData.setValueMatrix(valueMatrix);
   requestData.setRangeMatrix(rangeMatrix);
   requestData.setErrorMatrix(errorMatrix);
-  requestData.setWithRange(withRange);
-  requestData.setCompartmentId(compartmentId);
 
   return in;
 }
 
 //-------------------------------------------------------------------------------------------------
-QDataStream &operator<<(QDataStream& out, const  RequestCmd& enumValue)
+QDataStream &operator<<(QDataStream& out, const  Request& request)
 {
-  unsigned int bla = static_cast<typename std::underlying_type<RequestCmd>::type>(enumValue);
-  out << bla;
+  unsigned int bla = static_cast<typename std::underlying_type<RequestCmd>::type>(request.requestCmd);
+  out << bla << request.withRange << request.contexId;
   return out;
 }
 
 //-------------------------------------------------------------------------------------------------
-QDataStream &operator>>(QDataStream& in, RequestCmd& enumValue)
+QDataStream &operator>>(QDataStream& in, Request& request)
 {
     unsigned int tmp;
-    in >> tmp;
-    enumValue = static_cast<RequestCmd>(tmp);
+    in >> tmp >> request.withRange >> request.contexId;
+    request.requestCmd = static_cast<RequestCmd>(tmp);
     return in;
 }
+
+////-------------------------------------------------------------------------------------------------
+//QDataStream &operator<<(QDataStream& out, const  RequestType& enumValue)
+//{
+//  unsigned int bla = static_cast<typename std::underlying_type<RequestType>::type>(enumValue);
+//  out << bla;
+//  return out;
+//}
+
+////-------------------------------------------------------------------------------------------------
+//QDataStream &operator>>(QDataStream& in, RequestType& enumValue)
+//{
+//    unsigned int tmp;
+//    in >> tmp;
+//    enumValue = static_cast<RequestType>(tmp);
+//    return in;
+//}
 

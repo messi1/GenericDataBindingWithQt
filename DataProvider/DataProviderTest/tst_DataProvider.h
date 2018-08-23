@@ -88,7 +88,7 @@ TEST(DataProvider, DataPassing_requestValue)
   DataProvider* dataProvider  = new DataProvider(mockConnector);
   RequestData  requestData1;
   requestData1.setDataProxy(&mockDataProxy1);
-  requestData1.setRequestCmdVector(testData.commandVector);
+  requestData1.setRequestVector(testData.requestVector);
   requestData1.setRequestType(RequestType::GetValues);
 
   dataProvider->moveToThread(dataThread);
@@ -152,7 +152,7 @@ TEST(DataProvider, DataPassing_sendValue)
   DataProvider* dataProvider  = new DataProvider(mockConnector);
   RequestData  requestData1;
   requestData1.setDataProxy(&mockDataProxy1);
-  requestData1.setRequestCmdVector(testData.commandVector);
+  requestData1.setRequestVector(testData.requestVector);
   requestData1.setRequestType(RequestType::SetValues);
 
   dataProvider->moveToThread(dataThread);

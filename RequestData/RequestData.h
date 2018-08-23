@@ -25,13 +25,6 @@ class IDataProxy;
 using StringMatrix = QList<QStringList>;
 
 
-enum class RequestType
-{
-  GetValues,
-  SetValues,
-  Command
-};
-
 class RequestData
 {
 public:
@@ -44,9 +37,9 @@ public:
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
 
-  void setRequestCmdVector(RequestCmdVector requestCmdVector);
-  const RequestCmdVector &requestCmdVector() const;
-  void appendRequestCommand(RequestCmd command);
+  void setRequestVector(RequestVector requestVector);
+  const RequestVector &requestVector() const;
+  void appendRequest(Request command);
 
   void setValueMatrix(const StringMatrix& stringMatrix);
   void appendValueList(const QStringList& valueList);
@@ -66,23 +59,15 @@ public:
   RequestType requestType() const;
   void setRequestType(const RequestType &requestType);
 
-  bool withRange() const;
-  void setWithRange(bool withRange);
-
-  int compartmentId() const;
-  void setCompartmentId(int compartmentId);
-
 private:
   IDataClientManager* mCallerManager = nullptr;
   IDataProxy*         mCallerProxy   = nullptr;
 
-  RequestCmdVector    mRequestCmdVector;
+  RequestVector       mRequestVector;
   StringMatrix        mValueMatrix;
   StringMatrix        mRangeMatrix;
   StringMatrix        mErrorMatrix;
-  bool                mWithRange     = false;
   RequestType         mRequestType   = RequestType::GetValues;
-  int                 mCompartmentId = 0;
 };
 
 //-------------------------------------------------------------------------------------------------
@@ -91,6 +76,6 @@ private:
 
 QDataStream& operator<<(QDataStream& out, const RequestData& RequestData);
 QDataStream& operator>>(QDataStream&  in,       RequestData& RequestData);
-QDataStream &operator<<(QDataStream& out, const RequestCmd&  enumValue);
-QDataStream &operator>>(QDataStream&  in,       RequestCmd&  enumValue);
+QDataStream &operator<<(QDataStream& out, const Request&  request);
+QDataStream &operator>>(QDataStream&  in,       Request&  request);
 #endif // REQUEST_DATA_H

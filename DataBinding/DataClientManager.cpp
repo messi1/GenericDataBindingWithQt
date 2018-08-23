@@ -46,40 +46,40 @@ void DataClientManager::setDataProxy(IDataProxy& dataProxy)
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::registerClient(const RequestCmd requestCmd, IDataClient* dataClient)
+void DataClientManager::registerClient(const Request request, IDataClient* dataClient)
 {
   if(dataClient)
   {
-    if(mClientRequestMap.contains(requestCmd))
+    if(mClientRequestMap.contains(request))
     {
-      if(mClientRequestMap[requestCmd].contains(dataClient) == false )
-        mClientRequestMap[requestCmd].append(dataClient);
+      if(mClientRequestMap[request].contains(dataClient) == false )
+        mClientRequestMap[request].append(dataClient);
       else
         qDebug() << "registerValue(): Could register client because it is already registered ";
     }
     else
     {
-      mClientRequestMap.insert(requestCmd, ClientVector{dataClient});
+      mClientRequestMap.insert(request, ClientVector{dataClient});
     }
   }
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::deregisterClient(const RequestCmd requestCmd, IDataClient* dataClient)
+void DataClientManager::deregisterClient(const Request request, IDataClient* dataClient)
 {
   if(dataClient)
   {
-    if(mClientRequestMap.contains(requestCmd))
+    if(mClientRequestMap.contains(request))
     {
-        bool isContaining = mClientRequestMap[requestCmd].contains(dataClient) ;
+        bool isContaining = mClientRequestMap[request].contains(dataClient) ;
 
 
       if(isContaining)
       {
-        mClientRequestMap[requestCmd].removeAll(dataClient);
+        mClientRequestMap[request].removeAll(dataClient);
 
-        if(mClientRequestMap[requestCmd].count() == 0)
-            mClientRequestMap.remove(requestCmd);
+        if(mClientRequestMap[request].count() == 0)
+            mClientRequestMap.remove(request);
       }
     }
   }
@@ -98,19 +98,19 @@ void DataClientManager::deregisterAllClient(IDataClient* dataClient)
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::changeRegisteredRequestCmd(IDataClient* dataClient, const RequestCmd oldRequestId, const RequestCmd newRequestId)
+void DataClientManager::changeRegisteredRequest(IDataClient* dataClient, const Request oldRequest, const Request newRequest)
 {
   if(dataClient)
   {
-    deregisterClient(oldRequestId, dataClient);
-    registerClient(newRequestId, dataClient);
+    deregisterClient(oldRequest, dataClient);
+    registerClient(newRequest, dataClient);
   }
 }
 
 //--------------------------------------------------------------------------------------------------------
-const RequestCmdVector DataClientManager::allRequestCmdOfAClient(IDataClient* dataClient) const
+const RequestVector DataClientManager::allRequestsOfAClient(IDataClient* dataClient) const
 {
-    RequestCmdVector cmdVector;
+    RequestVector cmdVector;
 
     if(dataClient)
     {
@@ -147,41 +147,39 @@ void DataClientManager::clearDataClientList()
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestGetClientData(IDataClient* dataClient, const RequestCmd requestCmd, bool withRange)
+void DataClientManager::requestGetClientData(IDataClient* dataClient, const Request &request)
 {
   if( dataClient)
   {
     RequestData requestData(this, &mDataProxy);
     // TODO: Add dataClient to the requestData as return path for special single request, like timer based requests.
-    requestData.appendRequestCommand(requestCmd);
+    requestData.appendRequest(request);
     requestData.setRequestType(RequestType::GetValues);
-    requestData.setWithRange(withRange);
 
     mDataProxy.requestData(requestData);
   }
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestGetAllClientData(bool withRange)
+void DataClientManager::requestGetAllClientData()
 {
   if(mClientRequestMap.size() > 0)
   {
     RequestData requestData(this, &mDataProxy);
     requestData.setRequestType(RequestType::GetValues);
-    requestData.setWithRange(withRange);
-    requestData.setRequestCmdVector(mClientRequestMap.keys().toVector());
+    requestData.setRequestVector(mClientRequestMap.keys().toVector());
 
     mDataProxy.requestData(requestData);
   }
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestCommand(const RequestCmd commandName, const QString& commandValue)
+void DataClientManager::requestCommand(const Request commandRequest, const QString& commandValue)
 {
   QStringList valueList;
   RequestData requestData(this, &mDataProxy);
   requestData.setRequestType(RequestType::Command);
-  requestData.appendRequestCommand(commandName);
+  requestData.appendRequest(commandRequest);
   valueList.append(commandValue);
   requestData.appendValueList(valueList);
 
@@ -189,12 +187,12 @@ void DataClientManager::requestCommand(const RequestCmd commandName, const QStri
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestSaveData(const RequestCmd requestCmd, const QString& requestValue)
+void DataClientManager::requestSaveData(const Request request, const QString& requestValue)
 {
   QStringList valueList;
   RequestData requestData(this, &mDataProxy);
   requestData.setRequestType(RequestType::SetValues);
-  requestData.appendRequestCommand(requestCmd);
+  requestData.appendRequest(request);
   valueList.append(requestValue);
   requestData.appendValueList(valueList);
 
@@ -206,16 +204,16 @@ void DataClientManager::requestSaveData(const RequestCmd requestCmd, const QStri
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::newValueReceived(const RequestData &requestData)
 {
-    const RequestCmdVector &RequestCmdVector = requestData.requestCmdVector();
-    const StringMatrix               &dataValueMatrix  = requestData.valueMatrix();
+    const RequestVector &requestVector   = requestData.requestVector();
+    const StringMatrix  &dataValueMatrix = requestData.valueMatrix();
 
-    for (int i = 0; i < RequestCmdVector.size(); ++i)
+    for (int i = 0; i < requestVector.size(); ++i)
     {
-        ClientVector* clientVector = &mClientRequestMap[RequestCmdVector.at(i)];
+        ClientVector* clientVector = &mClientRequestMap[requestVector.at(i)];
 
         for (int i = 0; i < clientVector->size(); ++i)
         {
-          clientVector->at(i)->setValueList(RequestCmdVector.at(i), dataValueMatrix.at(i));
+          clientVector->at(i)->setValueList(requestVector.at(i).requestCmd, dataValueMatrix.at(i));
         }
     }
 }
@@ -223,16 +221,16 @@ void DataClientManager::newValueReceived(const RequestData &requestData)
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::newStatusReceived(const RequestData &requestData)
 {
-    const RequestCmdVector &RequestCmdVector = requestData.requestCmdVector();
-    const StringMatrix               &dataValueMatrix  = requestData.valueMatrix();
+    const RequestVector &requestVector   = requestData.requestVector();
+    const StringMatrix  &dataValueMatrix = requestData.valueMatrix();
 
-    for (int i = 0; i < RequestCmdVector.size(); ++i)
+    for (int i = 0; i < requestVector.size(); ++i)
     {
-        ClientVector* clientVector = &mClientRequestMap[RequestCmdVector.at(i)];
+        ClientVector* clientVector = &mClientRequestMap[requestVector.at(i)];
 
         for (int i = 0; i < clientVector->size(); ++i)
         {
-          clientVector->at(i)->setValueList(RequestCmdVector.at(i), dataValueMatrix.at(i));
+          clientVector->at(i)->setValueList(requestVector.at(i).requestCmd, dataValueMatrix.at(i));
         }
     }
 }

@@ -26,18 +26,18 @@ class IDataClientManager
 {
 public:
     virtual ~IDataClientManager() = default;
-    virtual void registerClient(const RequestCmd requestCmd, IDataClient* dataClient) = 0;
-    virtual void deregisterClient(const RequestCmd requestCmd, IDataClient* dataClient) = 0;
+    virtual void registerClient(const Request request, IDataClient* dataClient) = 0;
+    virtual void deregisterClient(const Request request, IDataClient* dataClient) = 0;
     virtual void deregisterAllClient(IDataClient* dataClient) = 0;
-    virtual void changeRegisteredRequestCmd(IDataClient* dataClient, const RequestCmd oldRequestId, const RequestCmd newRequestId) = 0;
+    virtual void changeRegisteredRequest(IDataClient* dataClient, const Request oldRequestId, const Request newRequestId) = 0;
 
     virtual IDataProxy* getDataProxy()  const = 0;
     virtual IDataClientManager* clone() const = 0;
 
-    virtual void requestSaveData(const RequestCmd requestCmd, const QString& requestValue) = 0;
-    virtual void requestCommand(const RequestCmd commandName, const QString& inRequesteter) = 0;
-    virtual void requestGetClientData(IDataClient* dataClient, const RequestCmd requestCmd, bool withRange = true) = 0;
-    virtual void requestGetAllClientData(bool withRange = true) = 0;
+    virtual void requestSaveData(const Request request, const QString& requestValue)     = 0;
+    virtual void requestCommand(const Request commandName, const QString& inRequesteter) = 0;
+    virtual void requestGetClientData(IDataClient* dataClient, const Request& request)   = 0;
+    virtual void requestGetAllClientData() = 0;
 
     virtual void newValueReceived(const RequestData &RequestData)  = 0;
     virtual void newStatusReceived(const RequestData &RequestData) = 0;

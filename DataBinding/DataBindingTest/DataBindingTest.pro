@@ -12,6 +12,9 @@ INCLUDEPATH += \
 LIBS += -L../ -lDataBindingLib \
         -L../../RequestData/ -lRequestDataLib
 
+PRE_TARGETDEPS += ../../RequestData/libRequestDataLib.a \
+                  ../libDataBindingLib.a
+
 HEADERS += \
     tst_DataClient.h \
     tst_DataClientManager.h \
@@ -22,6 +25,3 @@ HEADERS += \
 
 SOURCES += \
         main.cpp
-
-DISTFILES += \
-    target.mk

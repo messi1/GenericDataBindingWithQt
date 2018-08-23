@@ -7,6 +7,13 @@
 
 /* This enum class represents all commands which can be send from the NewGui to the RequestBroker. */
 
+enum class RequestType
+{
+  GetValues,
+  SetValues,
+  Command
+};
+
 enum class RequestCmd : unsigned int
 {
   Language,                // RW
@@ -19,18 +26,21 @@ enum class RequestCmd : unsigned int
   StartFirmwareUpdate,     // Cmd
 };
 
-struct RequestCmdData {
+struct Request {
   RequestCmd     requestCmd;
-  bool           withRange     = false;
-  unsigned short compartmentId = 0;    // Compartment id starting from 1. 0 is for the platform
+  bool           withRange  = false; // Ask specific for the value range (Min/Max)
+  unsigned short contexId   = 0;     // Context id starting from "1". A "0" is for the general
 };
+
+using RequestVector  = QVector<Request>;
 
 template <typename E>
 constexpr typename std::underlying_type<E>::type to_underlying(E e) noexcept
 {
   return static_cast<typename std::underlying_type<E>::type>(e);
 }
-using RequestPair       = QPair<RequestCmd, int>; // A pair of RequestCmd and compartment id
-using RequestCmdVector  = QVector<RequestCmd>;
+
+bool operator==(const Request& request1, const Request& request2);
+bool operator<(const Request& request1, const Request& request2);
 
 #endif // REQUEST_COMMAND_H

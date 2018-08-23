@@ -30,13 +30,13 @@ DataClient::DataClient(IDataClientManager &dataClientManager)
 //--------------------------------------------------------------------------------------------------------
 void DataClient::registerRequestCmd(const RequestCmd requestCmd)
 {
-  mDataClientManager.registerClient(requestCmd, this);
+  mDataClientManager.registerClient({requestCmd}, this);
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClient::changeRegisteredRequestCmd(const RequestCmd oldRequestId, const RequestCmd newRequestId)
+void DataClient::changeRegisteredRequestCmd(const RequestCmd oldRequestCmd, const RequestCmd newRequestCmd)
 {
-  mDataClientManager.changeRegisteredRequestCmd( this, oldRequestId, newRequestId );
+  mDataClientManager.changeRegisteredRequest( this, {oldRequestCmd}, {newRequestCmd} );
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -48,26 +48,27 @@ void DataClient::deregisterClient()
 //--------------------------------------------------------------------------------------------------------
 void DataClient::deregisterRequestCmd(const RequestCmd requestCmd)
 {
-  mDataClientManager.deregisterClient(requestCmd, this);
+  mDataClientManager.deregisterClient({requestCmd}, this);
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClient::requestGetData(const RequestCmd requestCmd, bool withRange)
+void DataClient::requestGetData(const RequestCmd requestCmd, bool withRange, quint8 contextId)
 {
-  mDataClientManager.requestGetClientData(this, requestCmd, withRange);
+    Request request{requestCmd, withRange, contextId};
+  mDataClientManager.requestGetClientData(this, request);
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClient::requestSaveData(const RequestCmd requestCmd, const QString& requestValue)
 {
-  mDataClientManager.requestSaveData(requestCmd, requestValue);
+  mDataClientManager.requestSaveData({requestCmd}, requestValue);
 }
 
 //--------------------------------------------------------------------------------------------------------
 //void DataClient::setValue(const QString& requestName, const QString& requestValue, const QString& requestRange, const int status)
 //{
 //    qDebug() << "Please reimplement it in your class. :setValue(const QString& requestName, const QString& requestValue, const QString& requestRange, const int status)";
-//    qDebug() << "::setValue: Name:" << requestName << " Value:" << requestValue << " Range:" << requestRange << " Status:" << status;
+//    qDebug() << "::setValue: Name:" << requestNa{me << " Value:" << requestValue << " Range:" << requestRange << " Status:" << status;
 //}
 
 

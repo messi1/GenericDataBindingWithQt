@@ -26,9 +26,9 @@ struct TestValues
   QStringList values3 = {"true", "false", "true"};
   QStringList values4 = {"false", "true", "false"};
 
-  RequestCmdVector commandVector = { RequestCmd::WlanList,
-                                     RequestCmd::WlanState,
-                                     RequestCmd::Language };
+  RequestVector requestVector = { {RequestCmd::WlanList},
+                                  {   RequestCmd::WlanState},
+                                  {   RequestCmd::Language }};
 
 };
 

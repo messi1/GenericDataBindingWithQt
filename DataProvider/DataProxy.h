@@ -28,7 +28,7 @@ class DataProxy : public QObject, public IDataProxy
     Q_INTERFACES(IDataProxy)
 
 public:
-  explicit DataProxy(IDataProvider* dataProvider, QObject* parent=nullptr);
+  explicit DataProxy(IDataProvider& dataProvider, QObject* parent=nullptr);
 
   void requestData(const RequestData& requestData) override;
 
@@ -40,7 +40,7 @@ signals:
   void sigResponseData(const RequestData& requestData) override;
 
 private:
-    IDataProvider* mDataProvider = nullptr;
+    IDataProvider& mDataProvider;
 };
 
 #endif // DataProxy_H

@@ -43,7 +43,7 @@ public slots:
   {
     TestValues testData;
 
-    if(requestData.requestCmdVector() == testData.commandVector)
+    if(requestData.requestVector() == testData.requestVector)
     {
       StringMatrix valueMatrix;
       valueMatrix.append(testData.values1);

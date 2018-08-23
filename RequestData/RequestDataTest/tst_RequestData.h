@@ -32,7 +32,7 @@ using namespace testing;
 void fillRequestData(RequestData& data)
 {
   const RequestType requestType = RequestType::GetValues;
-  RequestCmdVector cmdVector{RequestCmd::BatteryState, RequestCmd::EthState, RequestCmd::WlanState};
+  RequestVector cmdVector{{RequestCmd::BatteryState, true, 3}, {RequestCmd::EthState, false, 1}, {RequestCmd::WlanState, true, 2}};
 
   const QStringList valueList1{"AA1","BB1","CC1"};
   const QStringList valueList2{"AA2","BB2","CC2"};
@@ -53,13 +53,11 @@ void fillRequestData(RequestData& data)
   const StringMatrix rangeMatrix{rangeList1, rangeList2, rangeList3};
   const StringMatrix errorMatrix{errorList1, errorList2, errorList3};
 
-  data.setRequestCmdVector(cmdVector);
+  data.setRequestVector(cmdVector);
   data.setValueMatrix(valueMatrix);
   data.setRangeMatrix(rangeMatrix);
   data.setErrorMatrix(errorMatrix);
   data.setRequestType(requestType);
-  data.setCompartmentId(2);
-  data.setWithRange(true);
 }
 
 TEST(RequestData, serialize_deserialize)
@@ -76,13 +74,11 @@ TEST(RequestData, serialize_deserialize)
   out << dataToSerialize;
   in  >> dataToDeserialize;
 
-  EXPECT_TRUE(dataToSerialize.requestCmdVector() == dataToDeserialize.requestCmdVector());
+  EXPECT_TRUE(dataToSerialize.requestVector()    == dataToDeserialize.requestVector());
   EXPECT_TRUE(dataToSerialize.valueMatrix()      == dataToDeserialize.valueMatrix());
   EXPECT_TRUE(dataToSerialize.rangeMatrix()      == dataToDeserialize.rangeMatrix());
   EXPECT_TRUE(dataToSerialize.errorMatrix()      == dataToDeserialize.errorMatrix());
   EXPECT_TRUE(dataToSerialize.requestType()      == dataToDeserialize.requestType());
-  EXPECT_TRUE(dataToSerialize.compartmentId()    == dataToDeserialize.compartmentId());
-  EXPECT_TRUE(dataToSerialize.withRange()        == dataToDeserialize.withRange());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,21 +96,17 @@ TEST(RequestData, bad_deserialize)
   out << dataToSerialize;
   in  >> dataToDeserialize;
 
-  dataToDeserialize.appendRequestCommand(RequestCmd::EthState);
+  dataToDeserialize.appendRequest({RequestCmd::EthState, false, 4});
   dataToDeserialize.appendValueList(QStringList());
   dataToDeserialize.appendRangeList(QStringList());
   dataToDeserialize.appendErrorList(QStringList());
 
-  dataToDeserialize.setCompartmentId(3);
-  dataToDeserialize.setWithRange(false);
   dataToDeserialize.setRequestType(RequestType::Command);
 
 
-  EXPECT_FALSE(dataToSerialize.requestCmdVector() == dataToDeserialize.requestCmdVector());
+  EXPECT_FALSE(dataToSerialize.requestVector()    == dataToDeserialize.requestVector());
   EXPECT_FALSE(dataToSerialize.valueMatrix()      == dataToDeserialize.valueMatrix());
   EXPECT_FALSE(dataToSerialize.rangeMatrix()      == dataToDeserialize.rangeMatrix());
   EXPECT_FALSE(dataToSerialize.errorMatrix()      == dataToDeserialize.errorMatrix());
   EXPECT_FALSE(dataToSerialize.requestType()      == dataToDeserialize.requestType());
-  EXPECT_FALSE(dataToSerialize.compartmentId()    == dataToDeserialize.compartmentId());
-  EXPECT_FALSE(dataToSerialize.withRange()        == dataToDeserialize.withRange());
 }
