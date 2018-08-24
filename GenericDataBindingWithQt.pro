@@ -8,8 +8,6 @@ SUBDIRS = DataProvider \
           RequestData/RequestDataTest \
           DemoApp
 
-DemoApp.file = ./DemoApp.pro
-
 PRE_TARGETDEPS += RequestData DataProvider DataBinding
 
 RequestData/RequestDataTest.depends   = RequestData
@@ -20,6 +18,8 @@ DataBinding/DataBindingTest.depends   = DataBinding
 DemoApp.depends                       = RequestData DataProvider DataBinding
 
 OTHER_FILES += doc/ClassDiagram.png \
-               doc/ClassDiagram.uml
+               doc/ClassDiagram.uml \
+               LICENSE.txt
+
 
 

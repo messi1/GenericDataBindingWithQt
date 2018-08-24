@@ -31,7 +31,7 @@ public:
     virtual void deregisterAllClient(IDataClient* dataClient) = 0;
     virtual void changeRegisteredRequest(IDataClient* dataClient, const Request oldRequestId, const Request newRequestId) = 0;
 
-    virtual IDataProxy* getDataProxy()  const = 0;
+    virtual IDataProxy* dataProxy()  const = 0;
     virtual IDataClientManager* clone() const = 0;
 
     virtual void requestSaveData(const Request request, const QString& requestValue)     = 0;

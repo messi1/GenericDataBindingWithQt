@@ -33,7 +33,7 @@ public:
     explicit DataClientManager(IDataProxy& dataProxy);
     virtual ~DataClientManager() override;
 
-    virtual IDataProxy* getDataProxy()const override;
+    virtual IDataProxy* dataProxy()const override;
     void setDataProxy(IDataProxy &dataProxy);
 
     virtual DataClientManager *clone() const override;

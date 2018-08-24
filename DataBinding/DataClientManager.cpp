@@ -34,7 +34,7 @@ DataClientManager::~DataClientManager()
 }
 
 //--------------------------------------------------------------------------------------------------------
-IDataProxy *DataClientManager::getDataProxy()const
+IDataProxy *DataClientManager::dataProxy()const
 {
     return &mDataProxy;
 }

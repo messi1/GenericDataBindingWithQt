@@ -30,7 +30,7 @@ public:
   void deregisterAllClient(IDataClient* /*dataClient*/) final {}
   void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request /*oldRequest*/, const Request /*newRequest*/) final {}
 
-  virtual IDataProxy* getDataProxy()  const final {return nullptr;}
+  virtual IDataProxy* dataProxy()  const final {return nullptr;}
   virtual IDataClientManager* clone() const final {return nullptr;}
 
   void requestSaveData(const Request /*requestCmd*/, const QString& /*requestValue*/)  final {}
