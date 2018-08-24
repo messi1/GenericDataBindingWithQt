@@ -18,7 +18,7 @@
 #include "RequestData/RequestData.h"
 #include "RequestBroker/IConnector.h"
 
-#include "BaseFrame.h"
+#include "DataClientManagers/BaseFrame.h"
 
 struct TestValues
 {

@@ -195,20 +195,4 @@ QDataStream &operator>>(QDataStream& in, Request& request)
     return in;
 }
 
-////-------------------------------------------------------------------------------------------------
-//QDataStream &operator<<(QDataStream& out, const  RequestType& enumValue)
-//{
-//  unsigned int bla = static_cast<typename std::underlying_type<RequestType>::type>(enumValue);
-//  out << bla;
-//  return out;
-//}
-
-////-------------------------------------------------------------------------------------------------
-//QDataStream &operator>>(QDataStream& in, RequestType& enumValue)
-//{
-//    unsigned int tmp;
-//    in >> tmp;
-//    enumValue = static_cast<RequestType>(tmp);
-//    return in;
-//}
 
