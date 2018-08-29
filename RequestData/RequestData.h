@@ -37,25 +37,22 @@ public:
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
 
-  /*  void appendRequest(Request request, const QStringList& valueList = QStringList(),
-  const QStringList& rangeList = QStringList(),
-  const QStringList& errorList = QStringList());*/
+  void appendRequest(Request request, const QStringList& valueList = QStringList(),
+                     const QStringList& rangeList = QStringList(),
+                     const QStringList& errorList = QStringList());
 
   void setRequestVector(RequestVector requestVector);
   const RequestVector &requestVector() const;
-  void appendRequest(Request command);
 
   void setValueMatrix(const StringMatrix& stringMatrix);
-  void appendValueList(const QStringList& valueList);
   const StringMatrix &valueMatrix() const;
 
   void setRangeMatrix(const StringMatrix& rangeList);
-  void appendRangeList(const QStringList& rangeList);
   const StringMatrix &rangeMatrix() const;
 
   void setErrorMatrix(const StringMatrix& errorMatrix);
-  void appendErrorList(const QStringList& errorList);
   const StringMatrix &errorMatrix() const;
+
   void clearAllData();
 
   bool operator==(const RequestData& obj) const;

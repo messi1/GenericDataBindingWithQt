@@ -46,7 +46,16 @@ IDataClientManager *RequestData::dataManager() const
 //-------------------------------------------------------------------------------------------------
 IDataProxy *RequestData::dataProxy() const
 {
-  return mCallerProxy;
+    return mCallerProxy;
+}
+
+//-------------------------------------------------------------------------------------------------
+void RequestData::appendRequest(Request request, const QStringList &valueList, const QStringList &rangeList, const QStringList &errorList)
+{
+    mRequestVector.append(request);
+    mValueMatrix.append(valueList);
+    mRangeMatrix.append(rangeList);
+    mErrorMatrix.append(errorList);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -62,21 +71,9 @@ const  RequestVector &RequestData::requestVector() const
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequest(Request command)
-{
-  mRequestVector.append(command);
-}
-
-//-------------------------------------------------------------------------------------------------
 void RequestData::setValueMatrix(const StringMatrix &stringMatrix)
 {
   mValueMatrix = stringMatrix;
-}
-
-//-------------------------------------------------------------------------------------------------
-void RequestData::appendValueList(const QStringList &valueList)
-{
-  mValueMatrix.append(valueList);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -98,12 +95,6 @@ const StringMatrix &RequestData::rangeMatrix() const
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRangeList(const QStringList &rangeList)
-{
-  mRangeMatrix.append(rangeList);
-}
-
-//-------------------------------------------------------------------------------------------------
 void RequestData::setErrorMatrix(const StringMatrix &errorMatrix)
 {
   mErrorMatrix = errorMatrix;
@@ -113,12 +104,6 @@ void RequestData::setErrorMatrix(const StringMatrix &errorMatrix)
 const StringMatrix &RequestData::errorMatrix() const
 {
   return mErrorMatrix;
-}
-
-//-------------------------------------------------------------------------------------------------
-void RequestData::appendErrorList(const QStringList &errorList)
-{
-  mErrorMatrix.append(errorList);
 }
 
 //-------------------------------------------------------------------------------------------------

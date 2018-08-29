@@ -74,11 +74,11 @@ TEST(RequestData, serialize_deserialize)
   out << dataToSerialize;
   in  >> dataToDeserialize;
 
-  EXPECT_TRUE(dataToSerialize.requestVector()    == dataToDeserialize.requestVector());
-  EXPECT_TRUE(dataToSerialize.valueMatrix()      == dataToDeserialize.valueMatrix());
-  EXPECT_TRUE(dataToSerialize.rangeMatrix()      == dataToDeserialize.rangeMatrix());
-  EXPECT_TRUE(dataToSerialize.errorMatrix()      == dataToDeserialize.errorMatrix());
-  EXPECT_TRUE(dataToSerialize.requestType()      == dataToDeserialize.requestType());
+  EXPECT_TRUE(dataToSerialize.requestVector() == dataToDeserialize.requestVector());
+  EXPECT_TRUE(dataToSerialize.valueMatrix()   == dataToDeserialize.valueMatrix());
+  EXPECT_TRUE(dataToSerialize.rangeMatrix()   == dataToDeserialize.rangeMatrix());
+  EXPECT_TRUE(dataToSerialize.errorMatrix()   == dataToDeserialize.errorMatrix());
+  EXPECT_TRUE(dataToSerialize.requestType()   == dataToDeserialize.requestType());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -97,16 +97,12 @@ TEST(RequestData, bad_deserialize)
   in  >> dataToDeserialize;
 
   dataToDeserialize.appendRequest({RequestCmd::EthState, false, 4});
-  dataToDeserialize.appendValueList(QStringList());
-  dataToDeserialize.appendRangeList(QStringList());
-  dataToDeserialize.appendErrorList(QStringList());
-
   dataToDeserialize.setRequestType(RequestType::Command);
 
 
-  EXPECT_FALSE(dataToSerialize.requestVector()    == dataToDeserialize.requestVector());
-  EXPECT_FALSE(dataToSerialize.valueMatrix()      == dataToDeserialize.valueMatrix());
-  EXPECT_FALSE(dataToSerialize.rangeMatrix()      == dataToDeserialize.rangeMatrix());
-  EXPECT_FALSE(dataToSerialize.errorMatrix()      == dataToDeserialize.errorMatrix());
-  EXPECT_FALSE(dataToSerialize.requestType()      == dataToDeserialize.requestType());
+  EXPECT_FALSE(dataToSerialize.requestVector() == dataToDeserialize.requestVector());
+  EXPECT_FALSE(dataToSerialize.valueMatrix()   == dataToDeserialize.valueMatrix());
+  EXPECT_FALSE(dataToSerialize.rangeMatrix()   == dataToDeserialize.rangeMatrix());
+  EXPECT_FALSE(dataToSerialize.errorMatrix()   == dataToDeserialize.errorMatrix());
+  EXPECT_FALSE(dataToSerialize.requestType()   == dataToDeserialize.requestType());
 }
