@@ -1,20 +1,19 @@
-#ifndef COMBOBOX_H
-#define COMBOBOX_H
+#ifndef DCCHECKBOX_H
+#define DCCHECKBOX_H
 
-#include <QComboBox>
+#include <QCheckBox>
 #include "DataBinding/DataClient.h"
 
-class ComboBox final: public QComboBox, public DataClient
+class DCCheckBox : public QCheckBox, public DataClient
 {
     Q_OBJECT
 public:
-    explicit ComboBox(IDataClientManager &dataClientManager, QWidget *parent = nullptr);
+    explicit DCCheckBox(IDataClientManager &dataClientManager, QWidget *parent = nullptr);
     void setValue(     const RequestCmd requestCmd, const QString&     requestValue, const QString& requestRange, const int status) override;
     void setValue(     const RequestCmd requestCmd, const QString&     requestValue) override;
     void setValueList( const RequestCmd requestCmd, const QStringList& requestValueList) override;
     void setStatus(    const RequestCmd requestCmd, const QString&     requestError, const int status) override;
     void refresh() override;
-
 };
 
-#endif // COMBOBOX_H
+#endif // DCCHECKBOX_H

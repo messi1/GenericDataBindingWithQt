@@ -19,11 +19,8 @@
 #include "IDataProvider.h"
 
 class RequestData;
+class IConnector;
 
-namespace RequestBroker
-{
-    class IConnector;
-}
 
 class DataProvider : public QObject, public IDataProvider
 {
@@ -31,13 +28,13 @@ class DataProvider : public QObject, public IDataProvider
   Q_INTERFACES(IDataProvider)
 
 public:
-    explicit DataProvider( RequestBroker::IConnector& connector, QObject *parent=nullptr);
+    explicit DataProvider( IConnector& connector, QObject *parent=nullptr);
 
 public slots:
     void requestData(const RequestData& requestData) override;
 
 private:
-    RequestBroker::IConnector& mDataConnector;
+    IConnector& mDataConnector;
 };
 
 #endif // DATAPROVIDER_H

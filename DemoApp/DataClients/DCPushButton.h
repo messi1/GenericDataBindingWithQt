@@ -1,14 +1,14 @@
-#ifndef CHECKBOX_H
-#define CHECKBOX_H
+#ifndef DCPUSHBUTTON_H
+#define DCPUSHBUTTON_H
 
-#include <QCheckBox>
+#include <QPushButton>
 #include "DataBinding/DataClient.h"
 
-class CheckBox : public QCheckBox, public DataClient
+class DCPushButton : public QPushButton, public DataClient
 {
     Q_OBJECT
 public:
-    explicit CheckBox(IDataClientManager &dataClientManager, QWidget *parent = nullptr);
+    explicit DCPushButton(IDataClientManager &dataClientManager, QWidget *parent = nullptr);
     void setValue(     const RequestCmd requestCmd, const QString&     requestValue, const QString& requestRange, const int status) override;
     void setValue(     const RequestCmd requestCmd, const QString&     requestValue) override;
     void setValueList( const RequestCmd requestCmd, const QStringList& requestValueList) override;
@@ -16,4 +16,4 @@ public:
     void refresh() override;
 };
 
-#endif // CHECKBOX_H
+#endif // DCPUSHBUTTON_H

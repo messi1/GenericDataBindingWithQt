@@ -17,8 +17,6 @@
 
 class RequestData;
 
-namespace RequestBroker
-{
 
 class IConnector
 {
@@ -27,6 +25,5 @@ public:
   virtual bool requestData(const RequestData& paramData, RequestData& responseData) = 0;
 };
 
-} // namespace RequestBroker
 
 #endif // ICONNECTOR_H

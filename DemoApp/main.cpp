@@ -11,6 +11,7 @@
 #include <QTranslator>
 #include <QWidget>
 #include <QThread>
+#include <QMetaObject>
 
 #include "DataProvider/DataProvider.h"
 #include "DataProvider/DataProxy.h"
@@ -19,6 +20,7 @@
 #include "RequestBroker/IConnector.h"
 
 #include "DataClientManagers/BaseFrame.h"
+#include "DataClients/DCLineEdit.h"
 
 struct TestValues
 {
@@ -37,7 +39,7 @@ struct TestValues
 
 };
 
-class MockConnector final: public RequestBroker::IConnector
+class MockConnector final: public IConnector
 {
   public:
     bool requestData(const RequestData& requestData, RequestData& responseData) override
@@ -64,7 +66,7 @@ int main(int argc, char* argv[])
   app.font().setHintingPreference(QFont::PreferVerticalHinting);
   app.setDesktopSettingsAware(false);
   app.setStyle("Windows");
-  app.setQuitOnLastWindowClosed(false);
+  app.setQuitOnLastWindowClosed(true);
 
   MockConnector mockConnector;
   DataProvider dataProvider(mockConnector);
@@ -74,21 +76,28 @@ int main(int argc, char* argv[])
   dataThread->setObjectName("dataThread");
   dataProvider.moveToThread(dataThread);
 
-  BaseFrame* widget = new BaseFrame(dataProxy);
-  widget->setGeometry(0, 100, 400, 300);
+  BaseFrame* baseWidget = new BaseFrame(dataProxy);
+  baseWidget->setGeometry(0, 100, 400, 300);
 
-  QPushButton *bla = new QPushButton(widget);
+  DCLineEdit* lineEdit = new DCLineEdit(*baseWidget);
+
+  QPushButton *bla = new QPushButton(baseWidget);
   bla->setGeometry(0, 0, 100, 40);
   bla->setText("BBBBBBBBBBBBBBBBBB");
   bla->setToolTip("BlaBla");
   bla->show();
-  QLineEdit* el = new QLineEdit(widget);
+  QLineEdit* el = new QLineEdit(baseWidget);
   el->setGeometry(0, 100, 100, 40);
   el->setToolTip("Gugus");
 
-  widget->show();
+  baseWidget->show();
 
   dataThread->start();
+
+//  QMetaObject::connect(&app, SIGNAL(lastWindowClosed()),
+//                       &app, SLOT(quit()), Qt::QueuedConnection);
+
+//  QMetaObject::connect(&app, &QGuiApplication::lastWindowClosed, &app, QGuiApplication::quit);
 
   return app.exec();
 }

@@ -10,16 +10,17 @@ public:
 
   MockDataClientManager() = default;
   virtual ~MockDataClientManager() = default;
-  void registerClient(const Request /*request*/, IDataClient* /*dataClient*/) final {}
-  void deregisterClient(const Request /*request*/, IDataClient* /*dataClient*/) final {}
+  void registerClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
+  void deregisterClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
   void deregisterAllClient(IDataClient* /*dataClient*/) final {}
-  void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request /*oldRequest*/, const Request /*newRequest*/) final {}
+  void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request& /*oldRequest*/, const Request& /*newRequest*/) final {}
 
   virtual IDataProxy* dataProxy()  const final {return nullptr;}
   virtual IDataClientManager* clone() const final {return nullptr;}
 
-  void requestSaveData(const Request /*request*/, const QString& /*requestValue*/)  final {}
-  void requestCommand(const Request /*commandName*/, const QString& /*inRequesteter*/) final {}
+  void requestData(const RequestData& /*requestData*/) final {}
+  void requestSaveData(const Request& /*request*/, const QString& /*requestValue*/)  final {}
+  void requestCommand(const Request& /*commandName*/, const QString& /*inRequesteter*/) final {}
   void requestGetClientData(IDataClient* /*dataClient*/, const Request& /*request*/) final;
   void requestGetAllClientData() final {}
 

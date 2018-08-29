@@ -37,6 +37,10 @@ public:
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
 
+  /*  void appendRequest(Request request, const QStringList& valueList = QStringList(),
+  const QStringList& rangeList = QStringList(),
+  const QStringList& errorList = QStringList());*/
+
   void setRequestVector(RequestVector requestVector);
   const RequestVector &requestVector() const;
   void appendRequest(Request command);

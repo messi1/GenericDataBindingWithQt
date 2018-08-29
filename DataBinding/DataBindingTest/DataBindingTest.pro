@@ -20,7 +20,7 @@ HEADERS += \
     tst_DataClientManager.h \
     MockDataClientManager.h \
     TestDataClient.h \
-    MockProxy.h
+    MockDataProxy.h
 
 
 SOURCES += \

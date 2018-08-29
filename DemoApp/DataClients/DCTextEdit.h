@@ -1,14 +1,14 @@
-#ifndef LABEL_H
-#define LABEL_H
+#ifndef DCTEXTEDIT_H
+#define DCTEXTEDIT_H
 
-#include <QLabel>
+#include <QTextEdit>
 #include "DataBinding/DataClient.h"
 
-class Label : public QLabel, public DataClient
+class DCTextEdit : public QTextEdit, public DataClient
 {
     Q_OBJECT
 public:
-    explicit Label(IDataClientManager &dataClientManager, QWidget *parent = nullptr);
+    explicit DCTextEdit(IDataClientManager& dataClientManager, QWidget *parent = nullptr);
     void setValue(     const RequestCmd requestCmd, const QString&     requestValue, const QString& requestRange, const int status) override;
     void setValue(     const RequestCmd requestCmd, const QString&     requestValue) override;
     void setValueList( const RequestCmd requestCmd, const QStringList& requestValueList) override;
@@ -16,4 +16,4 @@ public:
     void refresh() override;
 };
 
-#endif // LABEL_H
+#endif // DCTEXTEDIT_H

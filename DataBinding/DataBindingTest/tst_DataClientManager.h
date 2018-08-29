@@ -4,7 +4,7 @@
 #include "RequestData/RequestCommand.h"
 
 #include "DataClientManager.h"
-#include "MockProxy.h"
+#include "MockDataProxy.h"
 #include "TestDataClient.h"
 
 #include <gtest/gtest.h>

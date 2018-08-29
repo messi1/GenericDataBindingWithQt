@@ -22,7 +22,7 @@
 
 
 //--------------------------------------------------------------------------------------------------------
-DataProvider::DataProvider (RequestBroker::IConnector& connector, QObject *parent) :
+DataProvider::DataProvider (IConnector& connector, QObject *parent) :
     QObject(parent),
     mDataConnector(connector)
 {

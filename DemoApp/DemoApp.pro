@@ -12,19 +12,19 @@ LIBS += -L../RequestData  -lRequestDataLib
 
 
 HEADERS += DataClientManagers/BaseFrame.h \
-    DataClients/PushButton.h \
-    DataClients/CheckBox.h \
-    DataClients/Label.h \
-    DataClients/ComboBox.h \
-    DataClients/TextEdit.h \
-    DataClients/LineEdit.h
+    DataClients/DCPushButton.h \
+    DataClients/DCCheckBox.h \
+    DataClients/DCLabel.h \
+    DataClients/DCComboBox.h \
+    DataClients/DCTextEdit.h \
+    DataClients/DCLineEdit.h
 
 
 SOURCES += main.cpp \
            DataClientManagers/BaseFrame.cpp \
-    DataClients/PushButton.cpp \
-    DataClients/CheckBox.cpp \
-    DataClients/Label.cpp \
-    DataClients/ComboBox.cpp \
-    DataClients/TextEdit.cpp \
-    DataClients/LineEdit.cpp
+    DataClients/DCPushButton.cpp \
+    DataClients/DCCheckBox.cpp \
+    DataClients/DCLabel.cpp \
+    DataClients/DCComboBox.cpp \
+    DataClients/DCTextEdit.cpp \
+    DataClients/DCLineEdit.cpp

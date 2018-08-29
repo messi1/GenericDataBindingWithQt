@@ -39,21 +39,22 @@ public:
     virtual DataClientManager *clone() const override;
     void clearDataClientList();
 
-    void registerClient(const Request request, IDataClient* dataClient) final;
-    void deregisterClient(const Request request, IDataClient* dataClient) final;
+    void registerClient(const Request& request, IDataClient* dataClient) final;
+    void deregisterClient(const Request& request, IDataClient* dataClient) final;
     void deregisterAllClient(IDataClient* dataClient) final;
-    void changeRegisteredRequest(IDataClient* dataClient, const Request oldRequest, const Request newRequest) final;
+    void changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequest, const Request& newRequest) final;
 
     int numberOfRegisterdRequests() const;
     const RequestVector allRequestsOfAClient(IDataClient* dataClient) const;
 
     void requestGetClientData(IDataClient* dataClient, const Request& request) final;
     void requestGetAllClientData() final;
-    void requestSaveData(const Request request,   const QString& requestValue) final;
-    void requestCommand(const Request commandRequest, const QString& inRequest)  final;
+    void requestData(const RequestData &requestData) final;
+    void requestSaveData(const Request& request,   const QString& requestValue) final;
+    void requestCommand(const Request& commandRequest, const QString& inRequest)  final;
 
-    void newValueReceived( const RequestData& requestData) final;
-    void newStatusReceived(const RequestData& requestData) final;
+    void newValueReceived( const RequestData& requestData) override;
+    void newStatusReceived(const RequestData& requestData) override;
 
 private:
     using ClientVector     = QVector<IDataClient*>;

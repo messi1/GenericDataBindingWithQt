@@ -46,7 +46,7 @@ void DataClientManager::setDataProxy(IDataProxy& dataProxy)
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::registerClient(const Request request, IDataClient* dataClient)
+void DataClientManager::registerClient(const Request& request, IDataClient* dataClient)
 {
   if(dataClient)
   {
@@ -65,7 +65,7 @@ void DataClientManager::registerClient(const Request request, IDataClient* dataC
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::deregisterClient(const Request request, IDataClient* dataClient)
+void DataClientManager::deregisterClient(const Request& request, IDataClient* dataClient)
 {
   if(dataClient)
   {
@@ -98,7 +98,7 @@ void DataClientManager::deregisterAllClient(IDataClient* dataClient)
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::changeRegisteredRequest(IDataClient* dataClient, const Request oldRequest, const Request newRequest)
+void DataClientManager::changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequest, const Request& newRequest)
 {
   if(dataClient)
   {
@@ -174,7 +174,13 @@ void DataClientManager::requestGetAllClientData()
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestCommand(const Request commandRequest, const QString& commandValue)
+void DataClientManager::requestData(const RequestData &requestData)
+{
+  mDataProxy.requestData(requestData);
+}
+
+//--------------------------------------------------------------------------------------------------------
+void DataClientManager::requestCommand(const Request& commandRequest, const QString& commandValue)
 {
   QStringList valueList;
   RequestData requestData(this, &mDataProxy);
@@ -187,7 +193,7 @@ void DataClientManager::requestCommand(const Request commandRequest, const QStri
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestSaveData(const Request request, const QString& requestValue)
+void DataClientManager::requestSaveData(const Request& request, const QString& requestValue)
 {
   QStringList valueList;
   RequestData requestData(this, &mDataProxy);

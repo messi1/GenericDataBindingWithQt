@@ -23,7 +23,7 @@
 #include "RequestBroker/IConnector.h"
 #include "TestValues.h"
 
-class MockConnector: public RequestBroker::IConnector
+class MockConnector: public IConnector
 {
   public:
     bool requestData(const RequestData& requestData, RequestData& responseData) override
