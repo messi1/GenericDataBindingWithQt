@@ -1,0 +1,36 @@
+@startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+allow_mixing
+
+skinparam handwritten true
+skinparam monochrome true
+
+class RequestData #darkgray
+
+class Request {
+   requestCmd : RequestCmd
+   withRange  : bool
+   contextId  : uint8
+}
+
+class RequestDataMatrix {
+   mValueList : QStringList
+   mRangeList : QStringList
+   mErrorList : QStringList
+}
+
+interface IDataClientManager #lightgray
+interface IDataProxy #lightgray
+
+class RequestMap <<QMap<Request, RequestDataMatrix>>> #lightgray
+class RequestType <<enum class>> #lightgray
+
+RequestMap  --* RequestData
+RequestType --* RequestData
+IDataClientManager --o RequestData
+IDataProxy --o RequestData
+
+Request --* RequestMap
+RequestDataMatrix --* RequestMap
+
+@enduml

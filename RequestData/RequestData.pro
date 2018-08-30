@@ -16,3 +16,7 @@ HEADERS += RequestData.h \
 
 SOURCES += RequestData.cpp \
     RequestCommand.cpp
+
+DISTFILES += \
+    doc/RequestDataClassDiagram.uml \
+    doc/RequestDataClassDiagram.png
