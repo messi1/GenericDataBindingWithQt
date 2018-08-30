@@ -15,15 +15,24 @@
 #ifndef REQUEST_DATA_H
 #define REQUEST_DATA_H
 
-#include <QList>
+#include <QMap>
 #include <QStringList>
 #include "RequestCommand.h"
 
 class IDataClientManager;
 class IDataProxy;
 
-using StringMatrix = QList<QStringList>;
-
+//-------------------------------------------------------------------------------------------------
+struct RequestDataMatrix {
+    QStringList        mValueList;
+    QStringList        mRangeList;
+    QStringList        mErrorList;
+};
+//-------------------------------------------------------------------------------------------------
+bool operator==(const RequestDataMatrix& stringMatrix1, const RequestDataMatrix& stringMatrix2);
+//-------------------------------------------------------------------------------------------------
+using RequestMap = QMap<Request, RequestDataMatrix>;
+//-------------------------------------------------------------------------------------------------
 
 class RequestData
 {
@@ -37,21 +46,22 @@ public:
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
 
-  void appendRequest(Request request, const QStringList& valueList = QStringList(),
-                     const QStringList& rangeList = QStringList(),
-                     const QStringList& errorList = QStringList());
+  bool valueList(const Request& request, QStringList &valueList);
+  bool rangeList(const Request& request, QStringList& rangeList);
+  bool errorList(const Request& request, QStringList& errorList);
 
-  void setRequestVector(RequestVector requestVector);
-  const RequestVector &requestVector() const;
+  void setValueList(const Request& request, const QStringList& valueList);
+  void setRangeList(const Request& request, const QStringList& rangeList);
+  void setErrorList(const Request& request, const QStringList& errorList);
 
-  void setValueMatrix(const StringMatrix& stringMatrix);
-  const StringMatrix &valueMatrix() const;
+  void appendRequestList(const RequestVector& requestVector);
+  void appendRequest(const Request& request);
+  void appendRequest(const Request& request, const QStringList& valueList);
+  void appendRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList);
+  void appendRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList);
 
-  void setRangeMatrix(const StringMatrix& rangeList);
-  const StringMatrix &rangeMatrix() const;
-
-  void setErrorMatrix(const StringMatrix& errorMatrix);
-  const StringMatrix &errorMatrix() const;
+  void setRequestMap(const RequestMap& requestMap);
+  const RequestMap &requestMap() const;
 
   void clearAllData();
 
@@ -64,19 +74,17 @@ private:
   IDataClientManager* mCallerManager = nullptr;
   IDataProxy*         mCallerProxy   = nullptr;
 
-  RequestVector       mRequestVector;
-  StringMatrix        mValueMatrix;
-  StringMatrix        mRangeMatrix;
-  StringMatrix        mErrorMatrix;
-  RequestType         mRequestType   = RequestType::GetValues;
+  RequestMap  mRequestMap;
+  RequestType mRequestType   = RequestType::GetValues;
 };
 
 //-------------------------------------------------------------------------------------------------
 // Serializer/Deserializer for RequestData Type
 //-------------------------------------------------------------------------------------------------
-
-QDataStream& operator<<(QDataStream& out, const RequestData& RequestData);
-QDataStream& operator>>(QDataStream&  in,       RequestData& RequestData);
+QDataStream& operator<<(QDataStream& out, const RequestDataMatrix& stringMatrix);
+QDataStream& operator>>(QDataStream&  in,       RequestDataMatrix& stringMatrix);
+QDataStream& operator<<(QDataStream& out, const RequestData& requestData);
+QDataStream& operator>>(QDataStream&  in,       RequestData& requestData);
 QDataStream &operator<<(QDataStream& out, const Request&  request);
 QDataStream &operator>>(QDataStream&  in,       Request&  request);
 #endif // REQUEST_DATA_H

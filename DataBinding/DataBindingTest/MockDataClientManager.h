@@ -42,7 +42,7 @@ void MockDataClientManager::requestGetClientData(IDataClient* dataClient, const 
     requestData.appendRequest(request);
     requestData.setRequestType(RequestType::GetValues);
 
-    dataClient->setValue(request.requestCmd, "BlaBla");
+    dataClient->setValueList(request, {"BlaBla"},{},{});
   }
 }
 #endif // MOCKDATACLIENTMANAGER_H

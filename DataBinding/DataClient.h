@@ -36,10 +36,8 @@ public:
 
     void requestGetData(const RequestCmd requestCmd, bool withRange = false, quint8 contextId = 0);
     void requestSaveData(const RequestCmd requestCmd,       const QString&     requestValue);
-    virtual void setValue(     const RequestCmd requestCmd, const QString&     requestValue, const QString& requestRange, const int status) = 0;
-    virtual void setValue(     const RequestCmd requestCmd, const QString&     requestValue) = 0;
-    virtual void setValueList( const RequestCmd requestCmd, const QStringList& requestValueList) = 0;
-    virtual void setStatus(    const RequestCmd requestCmd, const QString&     requestError, const int status) = 0;
+    virtual void setValueList( const Request& request, const QStringList& responseValueList,
+                               const QStringList& responseRangeList, const QStringList& responseErrorList) = 0;
     virtual void refresh() = 0;
 
 protected:

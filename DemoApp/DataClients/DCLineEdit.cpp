@@ -7,22 +7,8 @@ DCLineEdit::DCLineEdit(IDataClientManager &dataClientManager, QWidget *parent)
 
 }
 
-void DCLineEdit::setValue(const RequestCmd /*requestCmd*/, const QString &/*requestValue*/, const QString &/*requestRange*/, const int /*status*/)
-{
-
-}
-
-void DCLineEdit::setValue(const RequestCmd /*requestCmd*/, const QString &/*requestValue*/)
-{
-
-}
-
-void DCLineEdit::setValueList(const RequestCmd /*requestCmd*/, const QStringList &/*requestValueList*/)
-{
-
-}
-
-void DCLineEdit::setStatus(const RequestCmd /*requestCmd*/, const QString &/*requestError*/, const int /*status*/)
+void DCLineEdit::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
+                              const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
 {
 
 }

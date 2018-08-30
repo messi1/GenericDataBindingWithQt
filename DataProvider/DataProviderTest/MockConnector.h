@@ -28,18 +28,14 @@ class MockConnector: public IConnector
   public:
     bool requestData(const RequestData& requestData, RequestData& responseData) override
     {
-        TestValues testData;
-        responseData = requestData;
+      TestValues testData;
 
-        if( responseData.requestVector() == testData.requestVector)
-        {
-          StringMatrix valueMatrix;
-          valueMatrix.append(testData.values1);
-          responseData.setValueMatrix(valueMatrix);
-          return true;
-        }
+      responseData.clearAllData();
+      responseData = testData.responseData1;
+      responseData.setDataProxy(requestData.dataProxy());
+      responseData.setDataManager(requestData.dataManager());
 
-        return false;
+      return true;
     }
 };
 

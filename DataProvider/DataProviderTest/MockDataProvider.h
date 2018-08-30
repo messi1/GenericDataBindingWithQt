@@ -43,11 +43,13 @@ public slots:
   {
     TestValues testData;
 
-    if(requestData.requestVector() == testData.requestVector)
+    if(requestData.requestMap().keys() == testData.requestData1.requestMap().keys())
     {
-      StringMatrix valueMatrix;
-      valueMatrix.append(testData.values1);
-      const_cast<RequestData&>(requestData).setValueMatrix(valueMatrix);
+      IDataProxy* tmpProxy       = requestData.dataProxy();
+      IDataClientManager* tmpDCM = requestData.dataManager();
+      testData.responseData1.setDataManager(tmpDCM);
+      testData.responseData1.setDataProxy(tmpProxy);
+      const_cast<RequestData&>(requestData) = testData.responseData1;
     }
 
     if(requestData.dataProxy())

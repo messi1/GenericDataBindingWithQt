@@ -45,7 +45,7 @@ public:
     void changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequest, const Request& newRequest) final;
 
     int numberOfRegisterdRequests() const;
-    const RequestVector allRequestsOfAClient(IDataClient* dataClient) const;
+    const RequestVector allClientRequests(IDataClient* dataClient) const;
 
     void requestGetClientData(IDataClient* dataClient, const Request& request) final;
     void requestGetAllClientData() final;
@@ -54,7 +54,6 @@ public:
     void requestCommand(const Request& commandRequest, const QString& inRequest)  final;
 
     void newValueReceived( const RequestData& requestData) override;
-    void newStatusReceived(const RequestData& requestData) override;
 
 private:
     using ClientVector     = QVector<IDataClient*>;

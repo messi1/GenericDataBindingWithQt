@@ -11,10 +11,8 @@ public:
     explicit TestDataClient(IDataClientManager& dataClientManager);
     ~TestDataClient() = default;
 
-    void setValue(     const RequestCmd /*requestCmd*/, const QString&     /*requestValue*/, const QString& /*requestRange*/, const int /*status*/) final {}
-    void setValue(     const RequestCmd /*requestCmd*/, const QString&     /*requestValue*/) final;
-    void setValueList( const RequestCmd /*requestCmd*/, const QStringList& /*requestValueList*/) final {}
-    void setStatus(    const RequestCmd /*requestCmd*/, const QString&     /*requestError*/, const int /*status*/) final {}
+    void setValueList( const Request& /*requestCmd*/, const QStringList& /*valueList*/,
+                       const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final;
     void refresh() final {}
 
 private:
@@ -25,9 +23,10 @@ TestDataClient::TestDataClient(IDataClientManager& dataClientManager)
   : DataClient(dataClientManager)
 {}
 
-void TestDataClient::setValue(const RequestCmd /*requestCmd*/, const QString& requestValue)
+void TestDataClient::setValueList(const Request& /*requestCmd*/, const QStringList& valueList, const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
 {
-  mData = requestValue;
+  if(valueList.count() > 0)
+    mData = valueList.at(0);
 }
 
 #endif // TESTDATACLIENT_H

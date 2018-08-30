@@ -32,7 +32,7 @@ using namespace testing;
 void fillRequestData(RequestData& data)
 {
   const RequestType requestType = RequestType::GetValues;
-  RequestVector cmdVector{{RequestCmd::BatteryState, true, 3}, {RequestCmd::EthState, false, 1}, {RequestCmd::WlanState, true, 2}};
+  QList<Request> requestList{{RequestCmd::BatteryState, true, 3}, {RequestCmd::EthState, false, 1}, {RequestCmd::WlanState, true, 2}};
 
   const QStringList valueList1{"AA1","BB1","CC1"};
   const QStringList valueList2{"AA2","BB2","CC2"};
@@ -48,15 +48,10 @@ void fillRequestData(RequestData& data)
   const QStringList errorList2{"E4AA","E5BB","E6CC"};
   const QStringList errorList3{"E7AA","E8BB","E9CC"};
 
+  data.appendRequest(requestList.at(0), valueList1, rangeList1, errorList1);
+  data.appendRequest(requestList.at(1), valueList1, rangeList2, errorList2);
+  data.appendRequest(requestList.at(2), valueList1, rangeList3, errorList3);
 
-  const StringMatrix valueMatrix{valueList1, valueList2, valueList3};
-  const StringMatrix rangeMatrix{rangeList1, rangeList2, rangeList3};
-  const StringMatrix errorMatrix{errorList1, errorList2, errorList3};
-
-  data.setRequestVector(cmdVector);
-  data.setValueMatrix(valueMatrix);
-  data.setRangeMatrix(rangeMatrix);
-  data.setErrorMatrix(errorMatrix);
   data.setRequestType(requestType);
 }
 
@@ -74,11 +69,7 @@ TEST(RequestData, serialize_deserialize)
   out << dataToSerialize;
   in  >> dataToDeserialize;
 
-  EXPECT_TRUE(dataToSerialize.requestVector() == dataToDeserialize.requestVector());
-  EXPECT_TRUE(dataToSerialize.valueMatrix()   == dataToDeserialize.valueMatrix());
-  EXPECT_TRUE(dataToSerialize.rangeMatrix()   == dataToDeserialize.rangeMatrix());
-  EXPECT_TRUE(dataToSerialize.errorMatrix()   == dataToDeserialize.errorMatrix());
-  EXPECT_TRUE(dataToSerialize.requestType()   == dataToDeserialize.requestType());
+  EXPECT_TRUE(dataToSerialize == dataToDeserialize);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -100,9 +91,5 @@ TEST(RequestData, bad_deserialize)
   dataToDeserialize.setRequestType(RequestType::Command);
 
 
-  EXPECT_FALSE(dataToSerialize.requestVector() == dataToDeserialize.requestVector());
-  EXPECT_FALSE(dataToSerialize.valueMatrix()   == dataToDeserialize.valueMatrix());
-  EXPECT_FALSE(dataToSerialize.rangeMatrix()   == dataToDeserialize.rangeMatrix());
-  EXPECT_FALSE(dataToSerialize.errorMatrix()   == dataToDeserialize.errorMatrix());
-  EXPECT_FALSE(dataToSerialize.requestType()   == dataToDeserialize.requestType());
+  EXPECT_FALSE(dataToSerialize == dataToDeserialize);
 }

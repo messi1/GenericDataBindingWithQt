@@ -41,7 +41,6 @@ public:
     virtual void requestGetAllClientData() = 0;
 
     virtual void newValueReceived(const RequestData &requestData)  = 0;
-    virtual void newStatusReceived(const RequestData &requestData) = 0;
 };
 
 #endif // __IDATA_CLIENT_MANAGER

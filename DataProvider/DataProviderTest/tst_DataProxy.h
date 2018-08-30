@@ -43,14 +43,14 @@ TEST(DataProxy, requestData)
   QThread*    dataThread = new QThread;
   QSignalSpy  spy(&dataProxy, &DataProxy::sigResponseData);
 
-  quitEventLoopTimer.setInterval(2000);
+  quitEventLoopTimer.setInterval(200000);
   quitEventLoopTimer.setSingleShot(true);
   dataThread->setObjectName("dataThread");
 
-  RequestData  requestData1;
+  RequestData  testResponseData = TestValues().responseData1;
+  RequestData  requestData1 = TestValues().requestData1;
   requestData1.setDataProxy(&dataProxy);
   requestData1.setDataManager(&mockDataClientManager);
-  requestData1.setRequestVector(testData.requestVector);
 
   mockDataProvider.moveToThread(dataThread);
 
@@ -60,30 +60,39 @@ TEST(DataProxy, requestData)
     FAIL();
   });
 
-  QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testData, &waitForLoop](const RequestData &data)
+  QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
   {
     //Async code
-    EXPECT_EQ(data.valueMatrix().at(0).size(), testData.values1.size());
-    ASSERT_EQ(data.valueMatrix().at(0).size(), testData.values1.size());
+    EXPECT_EQ(responseData.requestMap().count(), testResponseData.requestMap().count());
+    ASSERT_EQ(responseData.requestMap().count(), testResponseData.requestMap().count());
+    EXPECT_TRUE( responseData.requestType() == testResponseData.requestType() );
 
-    for(int i = 0; i < testData.values1.size(); ++i)
-    {
-      EXPECT_EQ(data.valueMatrix().at(0).at(i), testData.values1.at(i));
+    QMapIterator<Request, RequestDataMatrix> responseItr(responseData.requestMap());
+    QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
+
+    while(testResponseItr.hasNext() && responseItr.hasNext()) {
+        testResponseItr.next();
+        responseItr.next();
+
+        EXPECT_TRUE( testResponseItr.key()   == responseItr.key() );
+        EXPECT_TRUE( testResponseItr.value() == responseItr.value() );
     }
 
-    MockDataClientManager* dataClientManager = dynamic_cast<MockDataClientManager*>(data.dataManager());
+    MockDataClientManager* dataClientManager = dynamic_cast<MockDataClientManager*>(responseData.dataManager());
 
     if(dataClientManager)
     {
-      usleep(1000); // Strange things happen. It seems that the data are not ready yet.
-      QStringList valueList = dataClientManager->requestData().valueMatrix().at(0);
+      QMapIterator<Request, RequestDataMatrix> responseItr(dataClientManager->requestData().requestMap());
+      QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
 
-      if(valueList.size() > 0)
-      {
-        for(int i = 0; i < testData.values1.size(); ++i)
-        {
-          EXPECT_EQ(valueList.at(i), testData.values1.at(i));
-        }
+      usleep(1000); // Strange things happen. It seems that the data are not ready yet.
+
+      while(testResponseItr.hasNext() && responseItr.hasNext()) {
+          testResponseItr.next();
+          responseItr.next();
+
+          EXPECT_TRUE( testResponseItr.key()   == responseItr.key() );
+          EXPECT_TRUE( testResponseItr.value() == responseItr.value() );
       }
     }
 

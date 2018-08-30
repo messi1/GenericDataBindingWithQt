@@ -7,22 +7,8 @@ DCLabel::DCLabel(IDataClientManager &dataClientManager, QWidget *parent)
 
 }
 
-void DCLabel::setValue(const RequestCmd /*requestCmd*/, const QString &/*requestValue*/, const QString &/*requestRange*/, const int /*status*/)
-{
-
-}
-
-void DCLabel::setValue(const RequestCmd /*requestCmd*/, const QString &/*requestValue*/)
-{
-
-}
-
-void DCLabel::setValueList(const RequestCmd /*requestCmd*/, const QStringList &/*requestValueList*/)
-{
-
-}
-
-void DCLabel::setStatus(const RequestCmd /*requestCmd*/, const QString &/*requestError*/, const int /*status*/)
+void DCLabel::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
+                           const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
 {
 
 }

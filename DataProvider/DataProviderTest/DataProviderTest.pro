@@ -27,4 +27,5 @@ HEADERS += \
     MockDataClientManager.h
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+    TestValues.cpp

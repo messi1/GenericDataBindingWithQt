@@ -17,9 +17,16 @@
 #include "DataProvider/IDataProxy.h"
 #include "RequestData.h"
 
-#include <type_traits>
 
 
+bool operator==(const RequestDataMatrix& stringMatrix1, const RequestDataMatrix& stringMatrix2)
+{
+    return (stringMatrix1.mValueList == stringMatrix2.mValueList &&
+            stringMatrix1.mRangeList == stringMatrix2.mRangeList &&
+            stringMatrix1.mErrorList == stringMatrix2.mErrorList );
+}
+
+//-------------------------------------------------------------------------------------------------
 RequestData::RequestData(IDataClientManager *dataManager, IDataProxy *dataProxy)
   : mCallerManager(dataManager),
     mCallerProxy(dataProxy)
@@ -50,69 +57,146 @@ IDataProxy *RequestData::dataProxy() const
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequest(Request request, const QStringList &valueList, const QStringList &rangeList, const QStringList &errorList)
+bool RequestData::valueList(const Request &request, QStringList &valueList)
 {
-    mRequestVector.append(request);
-    mValueMatrix.append(valueList);
-    mRangeMatrix.append(rangeList);
-    mErrorMatrix.append(errorList);
+    bool res = mRequestMap.contains(request);
+    if(res)
+        valueList = mRequestMap[request].mValueList;
+
+    return res;
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setRequestVector(RequestVector requestVector)
+bool RequestData::rangeList(const Request &request, QStringList &rangeList)
 {
-  mRequestVector = requestVector;
+    bool res = mRequestMap.contains(request);
+    if(res)
+        rangeList = mRequestMap[request].mRangeList;
+
+    return res;
 }
 
 //-------------------------------------------------------------------------------------------------
-const  RequestVector &RequestData::requestVector() const
+bool RequestData::errorList(const Request &request, QStringList &errorList)
 {
-  return mRequestVector;
+    bool res = mRequestMap.contains(request);
+    if(res)
+        errorList = mRequestMap[request].mErrorList;
+
+    return res;
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setValueMatrix(const StringMatrix &stringMatrix)
+void RequestData::setValueList(const Request &request, const QStringList &valueList)
 {
-  mValueMatrix = stringMatrix;
+    if(mRequestMap.contains(request))
+    {
+      mRequestMap[request].mValueList = valueList;
+    }
+    else
+        mRequestMap[request] = {valueList, QStringList(), QStringList()};
 }
 
 //-------------------------------------------------------------------------------------------------
-const StringMatrix &RequestData::valueMatrix() const
+void RequestData::setRangeList(const Request &request, const QStringList &rangeList)
 {
-    return mValueMatrix;
+    if(mRequestMap.contains(request))
+    {
+      mRequestMap[request].mRangeList = rangeList;
+    }
+    else
+        mRequestMap[request] = {QStringList(), rangeList, QStringList()};
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setRangeMatrix(const StringMatrix &rangeMatrix)
+void RequestData::setErrorList(const Request &request, const QStringList &errorList)
 {
-  mRangeMatrix = rangeMatrix;
+    if(mRequestMap.contains(request))
+    {
+      mRequestMap[request].mErrorList = errorList;
+    }
+    else
+        mRequestMap[request] = {QStringList(), QStringList(), errorList};
 }
 
 //-------------------------------------------------------------------------------------------------
-const StringMatrix &RequestData::rangeMatrix() const
+void RequestData::appendRequestList(const RequestVector &requestVector)
 {
-  return mRangeMatrix;
+    for(int i = 0; i < requestVector.count(); ++i)
+    {
+        mRequestMap[requestVector.at(i)] = {};
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setErrorMatrix(const StringMatrix &errorMatrix)
+void RequestData::appendRequest(const Request& request)
 {
-  mErrorMatrix = errorMatrix;
+    if(mRequestMap.contains(request) == false)
+        mRequestMap[request] = RequestDataMatrix();
 }
 
 //-------------------------------------------------------------------------------------------------
-const StringMatrix &RequestData::errorMatrix() const
+void RequestData::appendRequest(const Request& request, const QStringList &valueList)
 {
-  return mErrorMatrix;
+    if(mRequestMap.contains(request) == false)
+    {
+        RequestDataMatrix stringMatrix;
+        stringMatrix.mValueList = valueList;
+
+        mRequestMap[request] = stringMatrix;
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+void RequestData::appendRequest(const Request& request, const QStringList &valueList, const QStringList &rangeList)
+{
+    if(mRequestMap.contains(request) == false)
+    {
+        RequestDataMatrix stringMatrix;
+        stringMatrix.mValueList = valueList;
+        stringMatrix.mRangeList = rangeList;
+
+        mRequestMap[request] = stringMatrix;
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+void RequestData::appendRequest(const Request& request, const QStringList &valueList, const QStringList &rangeList, const QStringList &errorList)
+{
+    if(mRequestMap.contains(request) == false)
+    {
+        RequestDataMatrix stringMatrix;
+        stringMatrix.mValueList = valueList;
+        stringMatrix.mRangeList = rangeList;
+        stringMatrix.mErrorList = errorList;
+
+        mRequestMap[request] = stringMatrix;
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
+void RequestData::setRequestMap(const RequestMap &requestMap)
+{
+  mRequestMap = requestMap;
+}
+
+//-------------------------------------------------------------------------------------------------
+const RequestMap &RequestData::requestMap() const
+{
+  return mRequestMap;
 }
 
 //-------------------------------------------------------------------------------------------------
 void RequestData::clearAllData()
 {
-  mRequestVector.clear();
-  mValueMatrix.clear();
-  mRangeMatrix.clear();
-  mErrorMatrix.clear();
+    QMapIterator<Request, RequestDataMatrix> it(mRequestMap);
+
+    while (it.hasNext()) {
+        it.next();
+        mRequestMap[it.key()].mValueList.clear();
+        mRequestMap[it.key()].mRangeList.clear();
+        mRequestMap[it.key()].mErrorList.clear();
+    }
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -130,18 +214,32 @@ void RequestData::setRequestType(const RequestType &requestType)
 //-------------------------------------------------------------------------------------------------
 bool RequestData::operator==(const RequestData& obj) const
 {
-  if(this == &obj)
-    return true;
-  else
-    return false;
+    return (obj.requestType()  == this->requestType() &&
+       obj.dataManager()       == this->dataManager() &&
+       obj.dataProxy()         == this->dataProxy()   &&
+       obj.requestMap()        == this->requestMap());
 }
 
 //-------------------------------------------------------------------------------------------------
 // Serializer/deserializer operators
 //-------------------------------------------------------------------------------------------------
+
+QDataStream &operator<<(QDataStream &out, const RequestDataMatrix &stringMatrix)
+{
+  out << stringMatrix.mValueList << stringMatrix.mRangeList << stringMatrix.mErrorList;
+  return out;
+}
+//-------------------------------------------------------------------------------------------------
+QDataStream &operator>>(QDataStream &in, RequestDataMatrix &stringMatrix)
+{
+  in >> stringMatrix.mValueList >> stringMatrix.mRangeList >> stringMatrix.mErrorList;
+  return in;
+}
+
+//-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream &out, const RequestData &requestData)
 {
-  out << requestData.requestVector() << requestData.valueMatrix() << requestData.rangeMatrix() << requestData.errorMatrix();
+  out << requestData.requestMap();
 
   return out;
 }
@@ -149,16 +247,13 @@ QDataStream &operator<<(QDataStream &out, const RequestData &requestData)
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator>>(QDataStream &in,  RequestData &requestData)
 {
-  RequestVector requestVector;
-  StringMatrix valueMatrix;
-  StringMatrix rangeMatrix;
-  StringMatrix errorMatrix;
-  in >> requestVector >> valueMatrix >> rangeMatrix >> errorMatrix;
+  RequestMap requestMap;
+  RequestDataMatrix valueMatrix;
+  RequestDataMatrix rangeMatrix;
+  RequestDataMatrix errorMatrix;
+  in >> requestMap;
 
-  requestData.setRequestVector(requestVector);
-  requestData.setValueMatrix(valueMatrix);
-  requestData.setRangeMatrix(rangeMatrix);
-  requestData.setErrorMatrix(errorMatrix);
+  requestData.setRequestMap(requestMap);
 
   return in;
 }
@@ -179,5 +274,4 @@ QDataStream &operator>>(QDataStream& in, Request& request)
     request.requestCmd = static_cast<RequestCmd>(tmp);
     return in;
 }
-
 

@@ -108,7 +108,7 @@ void DataClientManager::changeRegisteredRequest(IDataClient* dataClient, const R
 }
 
 //--------------------------------------------------------------------------------------------------------
-const RequestVector DataClientManager::allRequestsOfAClient(IDataClient* dataClient) const
+const RequestVector DataClientManager::allClientRequests(IDataClient* dataClient) const
 {
     RequestVector cmdVector;
 
@@ -167,7 +167,7 @@ void DataClientManager::requestGetAllClientData()
   {
     RequestData requestData(this, &mDataProxy);
     requestData.setRequestType(RequestType::GetValues);
-    requestData.setRequestVector(mClientRequestMap.keys().toVector());
+    requestData.appendRequestList(mClientRequestMap.keys().toVector());
 
     mDataProxy.requestData(requestData);
   }
@@ -204,35 +204,21 @@ void DataClientManager::requestSaveData(const Request& request, const QString& r
 //--------------------------------------------------------------------------------------------------------
 // Replies from the DataProxy
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::newValueReceived(const RequestData &requestData)
+void DataClientManager::newValueReceived(const RequestData &responseData)
 {
-    const RequestVector &requestVector   = requestData.requestVector();
-    const StringMatrix  &dataValueMatrix = requestData.valueMatrix();
+    const RequestMap &requestMap   = responseData.requestMap();
+//    const DataMatrix  &dataValueMatrix   = requestData.valueMatrix();
 
-    for (int i = 0; i < requestVector.size(); ++i)
-    {
-        ClientVector* clientVector = &mClientRequestMap[requestVector.at(i)];
+    QMapIterator<Request, RequestDataMatrix> responseItr(requestMap);
+
+    while (responseItr.hasNext()) {
+        responseItr.next();
+        ClientVector* clientVector = &mClientRequestMap[responseItr.key()];
 
         for (int i = 0; i < clientVector->size(); ++i)
         {
-          clientVector->at(i)->setValueList(requestVector.at(i).requestCmd, dataValueMatrix.at(i));
+          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().mValueList, responseItr.value().mRangeList, responseItr.value().mErrorList);
         }
     }
 }
 
-//--------------------------------------------------------------------------------------------------------
-void DataClientManager::newStatusReceived(const RequestData &requestData)
-{
-    const RequestVector &requestVector   = requestData.requestVector();
-    const StringMatrix  &dataValueMatrix = requestData.valueMatrix();
-
-    for (int i = 0; i < requestVector.size(); ++i)
-    {
-        ClientVector* clientVector = &mClientRequestMap[requestVector.at(i)];
-
-        for (int i = 0; i < clientVector->size(); ++i)
-        {
-          clientVector->at(i)->setValueList(requestVector.at(i).requestCmd, dataValueMatrix.at(i));
-        }
-    }
-}

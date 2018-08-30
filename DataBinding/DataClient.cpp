@@ -64,25 +64,3 @@ void DataClient::requestSaveData(const RequestCmd requestCmd, const QString& req
   mDataClientManager.requestSaveData({requestCmd}, requestValue);
 }
 
-//--------------------------------------------------------------------------------------------------------
-//void DataClient::setValue(const QString& requestName, const QString& requestValue, const QString& requestRange, const int status)
-//{
-//    qDebug() << "Please reimplement it in your class. :setValue(const QString& requestName, const QString& requestValue, const QString& requestRange, const int status)";
-//    qDebug() << "::setValue: Name:" << requestNa{me << " Value:" << requestValue << " Range:" << requestRange << " Status:" << status;
-//}
-
-
-
-//--------------------------------------------------------------------------------------------------------
-//void DataClient::setValue(const QString& requestName, const QString& requestValue)
-//{
-//    qDebug() << "Please reimplement it in your class. setValue(const QString& requestName, const QString& requestValue)";
-//    qDebug() << "::setValue: Name:" << requestName << " Value:" << requestValue;
-//}
-
-//--------------------------------------------------------------------------------------------------------
-//void DataClient::setStatus(const QString& requestName, const QString& requestError, const int status)
-//{
-//    qDebug() << "Please reimplement it in your class. setStatus(const QString& requestName, const QString& requestError, const int status)";
-//    qDebug() << "::setStatus: Name:" << requestName << " Error:" << requestError  << " Status:" << status;
-//}

@@ -33,9 +33,7 @@ DataProxy::DataProxy(IDataProvider &dataProvider, QObject *parent)
 //--------------------------------------------------------------------------------------------------------
 void DataProxy::requestData(const RequestData &requestData)
 {
-    {
       emit sigRequestData(requestData);
-    }
 }
 
 //--------------------------------------------------------------------------------------------------------

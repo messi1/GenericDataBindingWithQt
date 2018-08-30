@@ -22,24 +22,9 @@
 #include "DataClientManagers/BaseFrame.h"
 #include "DataClients/DCLineEdit.h"
 
-struct TestValues
-{
-  QStringList values1 = {"5","10","20",""};
-  QStringList values2 = {"7","44","33",""};
-  QStringList values3 = {"true", "false", "true"};
-  QStringList values4 = {"false", "true", "false"};
+#include "DataProvider/DataProviderTest/TestValues.h"
 
-  RequestVector commandVector1 = { {RequestCmd::WlanList},
-                                   {RequestCmd::WlanState},
-                                   {RequestCmd::EthState} };
-
-  RequestVector commandVector2 = { {RequestCmd::Language},
-                                   {RequestCmd::DateTime},
-                                   {RequestCmd::BatteryState} };
-
-};
-
-class MockConnector final: public IConnector
+class MockConnector: public IConnector
 {
   public:
     bool requestData(const RequestData& requestData, RequestData& responseData) override
@@ -47,18 +32,21 @@ class MockConnector final: public IConnector
         TestValues testData;
         responseData = requestData;
 
-        if( responseData.requestVector() == testData.commandVector1)
+        if( responseData.requestMap() == responseData.requestMap())
         {
-          StringMatrix valueMatrix;
-          valueMatrix.append(testData.values1);
-          responseData.setValueMatrix(valueMatrix);
+          responseData.clearAllData();
+
+          responseData.appendRequest(testData.request1);
+          responseData.appendRequest(testData.request2, testData.valueList1);
+          responseData.appendRequest(testData.request3, testData.valueList2, testData.rangeList1);
+          responseData.appendRequest(testData.request4, testData.valueList3, testData.rangeList2, testData.errorList1);
+
           return true;
         }
 
         return false;
     }
 };
-
 
 int main(int argc, char* argv[])
 {

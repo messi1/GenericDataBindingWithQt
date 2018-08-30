@@ -103,7 +103,7 @@ TEST(DataClientManager, changeRegisteredRequestCmd)
     clientManager.changeRegisteredRequest(&testClient, {RequestCmd::BatteryState}, {RequestCmd::WlanState});
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 3);
 
-    RequestVector cmdVector = clientManager.allRequestsOfAClient(&testClient);
+    RequestVector cmdVector = clientManager.allClientRequests(&testClient);
 
     EXPECT_TRUE(cmdVector.contains({RequestCmd::DateTime}));
     EXPECT_TRUE(cmdVector.contains({RequestCmd::EthState}));

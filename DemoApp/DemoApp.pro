@@ -27,4 +27,5 @@ SOURCES += main.cpp \
     DataClients/DCLabel.cpp \
     DataClients/DCComboBox.cpp \
     DataClients/DCTextEdit.cpp \
-    DataClients/DCLineEdit.cpp
+    DataClients/DCLineEdit.cpp \
+    ../DataProvider/DataProviderTest/TestValues.cpp
