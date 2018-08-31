@@ -25,4 +25,8 @@ OTHER_FILES += \
 
 
 DISTFILES += \
-    LICENSE.txt
+    LICENSE.txt \
+    doc/DataClientClassDiagram.uml \
+    doc/DataClientClassDiagram.png \
+    doc/DataClientManagerClassDiagram.uml \
+    doc/DataClientManagerClassDiagram.png

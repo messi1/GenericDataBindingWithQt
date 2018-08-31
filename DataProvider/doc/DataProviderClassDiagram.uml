@@ -1,0 +1,20 @@
+@startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+allow_mixing
+
+skinparam handwritten true
+skinparam monochrome true
+
+class DataProvider #darkgray
+class DataProxy    #darkgray
+interface IDataProvider
+interface IDataProxy
+
+IConnector    --*  DataProvider
+IDataProvider <|-- DataProvider
+IDataProxy    <|-- DataProxy
+IDataProvider --*  DataProxy
+
+
+
+@enduml

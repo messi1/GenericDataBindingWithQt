@@ -1,0 +1,16 @@
+@startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+allow_mixing
+
+skinparam handwritten true
+skinparam monochrome true
+
+class DataClient #darkgray
+interface IDataClientManager
+interface IDataClient
+
+IDataClientManager --* DataClient
+
+IDataClient <|-- DataClient
+
+@enduml

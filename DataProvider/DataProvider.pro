@@ -19,4 +19,8 @@ SOURCES   += \
     DataProvider.cpp \
     DataProxy.cpp
 
+DISTFILES += \
+    doc/DataProviderClassDiagram.uml \
+    doc/DataProviderClassDiagram.png
+
 

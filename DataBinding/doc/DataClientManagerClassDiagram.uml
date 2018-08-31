@@ -1,0 +1,27 @@
+@startuml
+!pragma horizontalLineBetweenDifferentPackageAllowed
+allow_mixing
+
+skinparam handwritten true
+skinparam monochrome true
+
+class DataClientManager #darkgray
+interface IDataClientManager
+interface IDataProxy
+class ClientRequestMap <<QMap<Request, ClientVector>>>
+class ClientVector <<QVector<IDataClient *>>>
+
+class Request {
+   requestCmd : RequestCmd
+   withRange  : bool
+   contextId  : uint8
+}
+
+IDataClientManager <|-- DataClientManager
+IDataProxy --* DataClientManager
+ClientRequestMap --* DataClientManager
+Request --* ClientRequestMap
+ClientVector --* ClientRequestMap
+
+
+@enduml
