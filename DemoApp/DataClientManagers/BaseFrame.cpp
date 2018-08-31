@@ -8,7 +8,7 @@ BaseFrame::BaseFrame(IDataProxy &dataProxy, QWidget *parent)
 {
     RequestData requestData(this, DataClientManager::dataProxy());
     requestData.setRequestType(RequestType::GetValues);
-    requestData.appendRequest({RequestCmd::Language, true});
+    requestData.addRequest({RequestCmd::Language, true});
 
     DataClientManager::dataProxy()->requestData(requestData);
 }

@@ -39,10 +39,10 @@ void MockDataClientManager::requestGetClientData(IDataClient* dataClient, const 
   {
     RequestData requestData(this, nullptr);
     // TODO: Add dataClient to the requestData as return path for special single request, like timer based requests.
-    requestData.appendRequest(request);
+    requestData.addRequest(request);
     requestData.setRequestType(RequestType::GetValues);
 
-    dataClient->setValueList(request, {"BlaBla"},{},{});
+    dataClient->setValueList(request, {"BlaBla"}, QStringList(), QStringList());
   }
 }
 #endif // MOCKDATACLIENTMANAGER_H

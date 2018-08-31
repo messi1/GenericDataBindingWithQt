@@ -6,7 +6,7 @@ RequestData fillRequestData(const TestRequestList& requestList)
 
     for(int i = 0; i < requestList.count(); ++i)
     {
-        requestData.appendRequest(requestList.at(i));
+        requestData.addRequest(requestList.at(i));
     }
 
     return requestData;
@@ -23,7 +23,7 @@ RequestData fillRequestData(const TestRequestList& requestList, const TestString
         if(valueListList.count() > i)
             valueList = valueListList.at(i);
 
-        requestData.appendRequest(requestList.at(i), valueList);
+        requestData.addRequest(requestList.at(i), valueList);
     }
 
     return requestData;
@@ -44,7 +44,7 @@ RequestData fillRequestData(const TestRequestList& requestList, const TestString
         if(rangeListList.count() > i)
             rangeList = rangeListList.at(i);
 
-        requestData.appendRequest(requestList.at(i), valueList, rangeList);
+        requestData.addRequest(requestList.at(i), valueList, rangeList);
     }
 
     return requestData;
@@ -69,7 +69,7 @@ RequestData fillRequestData(const TestRequestList& requestList, const TestString
         if(errorListList.count() > i)
             errorList = errorListList.at(i);
 
-        requestData.appendRequest(requestList.at(i), valueList, rangeList, errorList);
+        requestData.addRequest(requestList.at(i), valueList, rangeList, errorList);
     }
 
     return requestData;

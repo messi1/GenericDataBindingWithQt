@@ -108,9 +108,9 @@ void DataClientManager::changeRegisteredRequest(IDataClient* dataClient, const R
 }
 
 //--------------------------------------------------------------------------------------------------------
-const RequestVector DataClientManager::allClientRequests(IDataClient* dataClient) const
+const RequestList DataClientManager::allClientRequests(IDataClient* dataClient) const
 {
-    RequestVector cmdVector;
+    RequestList cmdVector;
 
     if(dataClient)
     {
@@ -153,7 +153,7 @@ void DataClientManager::requestGetClientData(IDataClient* dataClient, const Requ
   {
     RequestData requestData(this, &mDataProxy);
     // TODO: Add dataClient to the requestData as return path for special single request, like timer based requests.
-    requestData.appendRequest(request);
+    requestData.addRequest(request);
     requestData.setRequestType(RequestType::GetValues);
 
     mDataProxy.requestData(requestData);
@@ -167,7 +167,7 @@ void DataClientManager::requestGetAllClientData()
   {
     RequestData requestData(this, &mDataProxy);
     requestData.setRequestType(RequestType::GetValues);
-    requestData.appendRequestList(mClientRequestMap.keys().toVector());
+    requestData.addRequestList(mClientRequestMap.keys());
 
     mDataProxy.requestData(requestData);
   }
@@ -185,7 +185,7 @@ void DataClientManager::requestCommand(const Request& commandRequest, const QStr
   QStringList valueList{commandValue};
   RequestData requestData(this, &mDataProxy);
   requestData.setRequestType(RequestType::Command);
-  requestData.appendRequest(commandRequest, valueList);
+  requestData.addRequest(commandRequest, valueList);
 
   mDataProxy.requestData(requestData);
 }
@@ -196,7 +196,7 @@ void DataClientManager::requestSaveData(const Request& request, const QString& r
   QStringList valueList{requestValue};
   RequestData requestData(this, &mDataProxy);
   requestData.setRequestType(RequestType::SetValues);
-  requestData.appendRequest(request, valueList);
+  requestData.addRequest(request, valueList);
 
   mDataProxy.requestData(requestData);
 }

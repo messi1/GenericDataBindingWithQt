@@ -36,10 +36,10 @@ class MockConnector: public IConnector
         {
           responseData.clearAllData();
 
-          responseData.appendRequest(testData.request1);
-          responseData.appendRequest(testData.request2, testData.valueList1);
-          responseData.appendRequest(testData.request3, testData.valueList2, testData.rangeList1);
-          responseData.appendRequest(testData.request4, testData.valueList3, testData.rangeList2, testData.errorList1);
+          responseData.addRequest(testData.request1);
+          responseData.addRequest(testData.request2, testData.valueList1);
+          responseData.addRequest(testData.request3, testData.valueList2, testData.rangeList1);
+          responseData.addRequest(testData.request4, testData.valueList3, testData.rangeList2, testData.errorList1);
 
           return true;
         }
@@ -68,6 +68,7 @@ int main(int argc, char* argv[])
   baseWidget->setGeometry(0, 100, 400, 300);
 
   DCLineEdit* lineEdit = new DCLineEdit(*baseWidget);
+  lineEdit->setPlaceholderText("Please enter ...");
 
   QPushButton *bla = new QPushButton(baseWidget);
   bla->setGeometry(0, 0, 100, 40);

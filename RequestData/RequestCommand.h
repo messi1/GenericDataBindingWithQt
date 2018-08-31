@@ -32,8 +32,6 @@ struct Request {
   unsigned short contexId   = 0;     // Context id starting from "1". A "0" is for the general
 };
 
-using RequestVector  = QVector<Request>;
-
 template <typename E>
 constexpr typename std::underlying_type<E>::type to_underlying(E e) noexcept
 {

@@ -48,9 +48,9 @@ void fillRequestData(RequestData& data)
   const QStringList errorList2{"E4AA","E5BB","E6CC"};
   const QStringList errorList3{"E7AA","E8BB","E9CC"};
 
-  data.appendRequest(requestList.at(0), valueList1, rangeList1, errorList1);
-  data.appendRequest(requestList.at(1), valueList1, rangeList2, errorList2);
-  data.appendRequest(requestList.at(2), valueList1, rangeList3, errorList3);
+  data.addRequest(requestList.at(0), valueList1, rangeList1, errorList1);
+  data.addRequest(requestList.at(1), valueList1, rangeList2, errorList2);
+  data.addRequest(requestList.at(2), valueList1, rangeList3, errorList3);
 
   data.setRequestType(requestType);
 }
@@ -87,9 +87,32 @@ TEST(RequestData, bad_deserialize)
   out << dataToSerialize;
   in  >> dataToDeserialize;
 
-  dataToDeserialize.appendRequest({RequestCmd::EthState, false, 4});
+  dataToDeserialize.addRequest({RequestCmd::EthState, false, 4});
   dataToDeserialize.setRequestType(RequestType::Command);
 
 
   EXPECT_FALSE(dataToSerialize == dataToDeserialize);
+}
+
+//-------------------------------------------------------------------------------------------------
+TEST(RequestData, copyRequestData)
+{
+  RequestData requestData;
+  RequestData responseData;
+
+  fillRequestData(requestData);
+
+  responseData = requestData;
+
+  EXPECT_TRUE(responseData == requestData);
+
+  RequestList requestKeyList  = requestData.requestMap().keys();
+  RequestList responseKeyList = responseData.requestMap().keys();
+
+  EXPECT_TRUE(requestKeyList.count() == responseKeyList.count());
+
+  for(int i = 0; i < requestKeyList.count(); ++i)
+  {
+    EXPECT_TRUE(requestKeyList.at(i) == responseKeyList.at(i));
+  }
 }

@@ -120,58 +120,48 @@ void RequestData::setErrorList(const Request &request, const QStringList &errorL
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequestList(const RequestVector &requestVector)
+void RequestData::addRequestList(const RequestList &requestList)
 {
-    for(int i = 0; i < requestVector.count(); ++i)
+    for(int i = 0; i < requestList.count(); ++i)
     {
-        mRequestMap[requestVector.at(i)] = {};
+        mRequestMap.insert(requestList.at(i), {});
     }
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequest(const Request& request)
+void RequestData::addRequest(const Request& request)
 {
-    if(mRequestMap.contains(request) == false)
-        mRequestMap[request] = RequestDataMatrix();
+  mRequestMap.insert(request, RequestDataMatrix());
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequest(const Request& request, const QStringList &valueList)
+void RequestData::addRequest(const Request& request, const QStringList &valueList)
 {
-    if(mRequestMap.contains(request) == false)
-    {
-        RequestDataMatrix stringMatrix;
-        stringMatrix.mValueList = valueList;
+  RequestDataMatrix stringMatrix;
+  stringMatrix.mValueList = valueList;
 
-        mRequestMap[request] = stringMatrix;
-    }
+  mRequestMap.insert(request, stringMatrix);
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequest(const Request& request, const QStringList &valueList, const QStringList &rangeList)
+void RequestData::addRequest(const Request& request, const QStringList &valueList, const QStringList &rangeList)
 {
-    if(mRequestMap.contains(request) == false)
-    {
-        RequestDataMatrix stringMatrix;
-        stringMatrix.mValueList = valueList;
-        stringMatrix.mRangeList = rangeList;
+  RequestDataMatrix stringMatrix;
+  stringMatrix.mValueList = valueList;
+  stringMatrix.mRangeList = rangeList;
 
-        mRequestMap[request] = stringMatrix;
-    }
+  mRequestMap.insert(request, stringMatrix);
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::appendRequest(const Request& request, const QStringList &valueList, const QStringList &rangeList, const QStringList &errorList)
+void RequestData::addRequest(const Request& request, const QStringList &valueList, const QStringList &rangeList, const QStringList &errorList)
 {
-    if(mRequestMap.contains(request) == false)
-    {
-        RequestDataMatrix stringMatrix;
-        stringMatrix.mValueList = valueList;
-        stringMatrix.mRangeList = rangeList;
-        stringMatrix.mErrorList = errorList;
+  RequestDataMatrix stringMatrix;
+  stringMatrix.mValueList = valueList;
+  stringMatrix.mRangeList = rangeList;
+  stringMatrix.mErrorList = errorList;
 
-        mRequestMap[request] = stringMatrix;
-    }
+  mRequestMap.insert(request, stringMatrix);
 }
 
 //-------------------------------------------------------------------------------------------------

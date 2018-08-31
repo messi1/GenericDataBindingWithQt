@@ -45,7 +45,7 @@ public:
     void changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequest, const Request& newRequest) final;
 
     int numberOfRegisterdRequests() const;
-    const RequestVector allClientRequests(IDataClient* dataClient) const;
+    const RequestList allClientRequests(IDataClient* dataClient) const;
 
     void requestGetClientData(IDataClient* dataClient, const Request& request) final;
     void requestGetAllClientData() final;

@@ -29,9 +29,10 @@ struct RequestDataMatrix {
     QStringList        mErrorList;
 };
 //-------------------------------------------------------------------------------------------------
-bool operator==(const RequestDataMatrix& stringMatrix1, const RequestDataMatrix& stringMatrix2);
+bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& dataMatrix2);
 //-------------------------------------------------------------------------------------------------
-using RequestMap = QMap<Request, RequestDataMatrix>;
+using RequestMap    = QMap<Request, RequestDataMatrix>;
+using RequestList   = QList<Request>;
 //-------------------------------------------------------------------------------------------------
 
 class RequestData
@@ -54,11 +55,11 @@ public:
   void setRangeList(const Request& request, const QStringList& rangeList);
   void setErrorList(const Request& request, const QStringList& errorList);
 
-  void appendRequestList(const RequestVector& requestVector);
-  void appendRequest(const Request& request);
-  void appendRequest(const Request& request, const QStringList& valueList);
-  void appendRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList);
-  void appendRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList);
+  void addRequestList(const RequestList& requestList);
+  void addRequest(const Request& request);
+  void addRequest(const Request& request, const QStringList& valueList);
+  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList);
+  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList);
 
   void setRequestMap(const RequestMap& requestMap);
   const RequestMap &requestMap() const;
