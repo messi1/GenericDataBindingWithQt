@@ -252,7 +252,7 @@ QDataStream &operator>>(QDataStream &in,  RequestData &requestData)
 QDataStream &operator<<(QDataStream& out, const  Request& request)
 {
   unsigned int bla = static_cast<typename std::underlying_type<RequestCmd>::type>(request.requestCmd);
-  out << bla << request.withRange << request.contexId;
+  out << bla << request.withRange << request.contextId;
   return out;
 }
 
@@ -260,7 +260,7 @@ QDataStream &operator<<(QDataStream& out, const  Request& request)
 QDataStream &operator>>(QDataStream& in, Request& request)
 {
     unsigned int tmp;
-    in >> tmp >> request.withRange >> request.contexId;
+    in >> tmp >> request.withRange >> request.contextId;
     request.requestCmd = static_cast<RequestCmd>(tmp);
     return in;
 }

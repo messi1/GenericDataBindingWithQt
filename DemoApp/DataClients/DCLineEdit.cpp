@@ -13,6 +13,11 @@ void DCLineEdit::setValueList(const Request& /*request*/, const QStringList& /*v
 
 }
 
+void DCLineEdit::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
 void DCLineEdit::refresh()
 {
 

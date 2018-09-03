@@ -10,6 +10,7 @@ class DCTextEdit : public QTextEdit, public DataClient
 public:
     explicit DCTextEdit(IDataClientManager& dataClientManager, QWidget *parent = nullptr);
     void setValueList( const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList) override;
+    void setStatusList(const Request& request, const QStringList& responseStatusList, const QStringList& responseErrorList) override;
     void refresh() override;
 };
 

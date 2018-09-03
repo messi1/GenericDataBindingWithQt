@@ -12,6 +12,11 @@ void DCComboBox::setValueList(const Request& /*request*/, const QStringList& /*v
 
 }
 
+void DCComboBox::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
 void DCComboBox::refresh()
 {
 

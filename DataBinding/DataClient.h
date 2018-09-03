@@ -38,6 +38,8 @@ public:
     void requestSaveData(const RequestCmd requestCmd,       const QString&     requestValue);
     virtual void setValueList( const Request& request, const QStringList& responseValueList,
                                const QStringList& responseRangeList, const QStringList& responseErrorList) = 0;
+    virtual void setStatusList(const Request& request,
+                               const QStringList& responseStatusList, const QStringList& responseErrorList) = 0;
     virtual void refresh() = 0;
 
 protected:

@@ -13,6 +13,11 @@ void DCPushButton::setValueList(const Request& /*request*/, const QStringList& /
 
 }
 
+void DCPushButton::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
 void DCPushButton::refresh()
 {
 

@@ -11,7 +11,8 @@ enum class RequestType
 {
   GetValues,
   SetValues,
-  Command
+  Command,
+  Status
 };
 
 enum class RequestCmd : unsigned int
@@ -29,7 +30,7 @@ enum class RequestCmd : unsigned int
 struct Request {
   RequestCmd     requestCmd;
   bool           withRange  = false; // Ask specific for the value range (Min/Max)
-  unsigned short contexId   = 0;     // Context id starting from "1". A "0" is for the general
+  unsigned short contextId   = 0;     // Context id starting from "1". A "0" is for the general
 };
 
 template <typename E>

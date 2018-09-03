@@ -207,7 +207,24 @@ void DataClientManager::requestSaveData(const Request& request, const QString& r
 void DataClientManager::newValueReceived(const RequestData &responseData)
 {
     const RequestMap &requestMap   = responseData.requestMap();
-//    const DataMatrix  &dataValueMatrix   = requestData.valueMatrix();
+
+    QMapIterator<Request, RequestDataMatrix> responseItr(requestMap);
+
+    while (responseItr.hasNext()) {
+        responseItr.next();
+        ClientVector* clientVector = &mClientRequestMap[responseItr.key()];
+
+        for (int i = 0; i < clientVector->size(); ++i)
+        {
+          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().mValueList, responseItr.value().mRangeList, responseItr.value().mErrorList);
+        }
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------
+void DataClientManager::newStatusReceived(const RequestData &responseData)
+{
+    const RequestMap &requestMap   = responseData.requestMap();
 
     QMapIterator<Request, RequestDataMatrix> responseItr(requestMap);
 

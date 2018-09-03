@@ -13,6 +13,7 @@ public:
 
     void setValueList( const Request& /*requestCmd*/, const QStringList& /*valueList*/,
                        const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final;
+    void setStatusList( const Request& /*requestCmd*/, const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final {}
     void refresh() final {}
 
 private:

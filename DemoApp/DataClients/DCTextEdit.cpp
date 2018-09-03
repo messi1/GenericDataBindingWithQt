@@ -13,6 +13,11 @@ void DCTextEdit::setValueList(const Request& /*request*/, const QStringList& /*v
 
 }
 
+void DCTextEdit::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
 void DCTextEdit::refresh()
 {
 

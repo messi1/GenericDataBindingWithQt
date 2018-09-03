@@ -13,6 +13,11 @@ void DCLabel::setValueList(const Request& /*request*/, const QStringList& /*valu
 
 }
 
+void DCLabel::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
 void DCLabel::refresh()
 {
 

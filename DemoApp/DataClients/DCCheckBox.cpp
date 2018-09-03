@@ -13,6 +13,11 @@ void DCCheckBox::setValueList(const Request& /*request*/, const QStringList& /*v
 
 }
 
+void DCCheckBox::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
 void DCCheckBox::refresh()
 {
 

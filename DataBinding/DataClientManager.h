@@ -53,7 +53,8 @@ public:
     void requestSaveData(const Request& request,   const QString& requestValue) final;
     void requestCommand(const Request& commandRequest, const QString& inRequest)  final;
 
-    void newValueReceived( const RequestData& requestData) override;
+    virtual void newValueReceived( const RequestData& requestData) override;
+    virtual void newStatusReceived(const RequestData& requestData) override;
 
 private:
     using ClientVector     = QVector<IDataClient*>;
