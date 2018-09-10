@@ -34,8 +34,9 @@ public:
     void deregisterRequestCmd(const RequestCmd requestCmd);
     void deregisterClient();
 
-    void requestGetData(const RequestCmd requestCmd, bool withRange = false, quint8 contextId = 0);
-    void requestSaveData(const RequestCmd requestCmd,       const QString&     requestValue);
+    void requestGetData(const RequestCmd requestCmd,  bool withRange = false, quint8 contextId = 0);
+    void requestSaveData(const RequestCmd requestCmd, const QString& requestValue);
+    virtual void setAccessRights(const QString& accessRights) = 0;
     virtual void setValueList( const Request& request, const QStringList& responseValueList,
                                const QStringList& responseRangeList, const QStringList& responseErrorList) = 0;
     virtual void setStatusList(const Request& request,

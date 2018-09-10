@@ -9,11 +9,15 @@ class TestDataClient : public DataClient
 public:
     TestDataClient() = delete;
     explicit TestDataClient(IDataClientManager& dataClientManager);
-    ~TestDataClient() = default;
+    ~TestDataClient() override = default;
 
     void setValueList( const Request& /*requestCmd*/, const QStringList& /*valueList*/,
                        const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final;
     void setStatusList( const Request& /*requestCmd*/, const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final {}
+    void setAccessRights(const QString& /*accessRights*/) override
+    {
+
+    }
     void refresh() final {}
 
 private:

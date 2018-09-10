@@ -21,15 +21,26 @@
 
 struct TestValues
 {
-  QStringList values1 = {"5","10","20",""};
-  QStringList values2 = {"7","44","33",""};
-  QStringList values3 = {"true", "false", "true"};
-  QStringList values4 = {"false", "true", "false"};
+  const Request request1{RequestCmd::WlanList,  true};
+  const Request request2{RequestCmd::WlanState, false, 1};
+  const Request request3{RequestCmd::Language,  true , 2};
+
+  const Request request4{RequestCmd::WlanList,  false, 3};
+  const Request request5{RequestCmd::WlanState, true,  4};
+  const Request request6{RequestCmd::Language,  false, 5};
+
+  QStringList valueList1 = {"5","10","20",""};
+  QStringList valueList2 = {"7","44","33"};
+  QStringList rangeList1 = {"true", "false", "true"};
+  QStringList rangeList2 = {"false", "true"};
+  QStringList errorList1 = {"Error11", "Error14", "Error16"};
+  QStringList errorList2 = {"Error13", "Error15"};
+
+  QStringList accessRightsList   = {"", "r", "rw", "rwx"};
 
   QList<RequestCmd> commandVector{ RequestCmd::WlanList,
                                    RequestCmd::WlanState,
                                    RequestCmd::EthState };
-
 };
 
 #endif // TESTVALUES_H

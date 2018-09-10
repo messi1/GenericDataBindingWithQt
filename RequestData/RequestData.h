@@ -24,9 +24,10 @@ class IDataProxy;
 
 //-------------------------------------------------------------------------------------------------
 struct RequestDataMatrix {
-    QStringList        mValueList;
-    QStringList        mRangeList;
-    QStringList        mErrorList;
+    QStringList        valueList;
+    QStringList        rangeList;
+    QStringList        errorList;
+    QString            accessRights;
 };
 //-------------------------------------------------------------------------------------------------
 bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& dataMatrix2);
@@ -34,6 +35,15 @@ bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& d
 using RequestMap    = QMap<Request, RequestDataMatrix>;
 using RequestList   = QList<Request>;
 //-------------------------------------------------------------------------------------------------
+
+class RequestMap2 {
+  void addRequest2(const Request& request, const QStringList& valueList, const QStringList& rangeList)
+  {
+    map.insert(request, {valueList, rangeList, {}, ""});
+  }
+private:
+  QMap<Request, RequestDataMatrix> map;
+};
 
 class RequestData
 {
@@ -47,6 +57,8 @@ public:
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
 
+  const QString accessRights(const Request& request) const;
+
   bool valueList(const Request& request, QStringList &valueList);
   bool rangeList(const Request& request, QStringList& rangeList);
   bool errorList(const Request& request, QStringList& errorList);
@@ -56,10 +68,11 @@ public:
   void setErrorList(const Request& request, const QStringList& errorList);
 
   void addRequestList(const RequestList& requestList);
-  void addRequest(const Request& request);
-  void addRequest(const Request& request, const QStringList& valueList);
-  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList);
-  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList);
+  void addRequest(const Request& request, const QString& accessRights="");
+  void addRequest(const Request& request, const QStringList& valueList, const QString& accessRights="");
+  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QString& accessRights="");
+  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList,
+                  const QStringList& errorList, const QString& accessRights="");
 
   void setRequestMap(const RequestMap& requestMap);
   const RequestMap &requestMap() const;

@@ -12,7 +12,8 @@ enum class RequestType
   GetValues,
   SetValues,
   Command,
-  Status
+  Status,
+  _MaxCount
 };
 
 enum class RequestCmd : unsigned int
@@ -25,6 +26,7 @@ enum class RequestCmd : unsigned int
   BatteryState,            // R
   UnitSettings,            // R
   StartFirmwareUpdate,     // Cmd
+  _MaxCount
 };
 
 struct Request {

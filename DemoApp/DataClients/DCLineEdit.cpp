@@ -18,6 +18,21 @@ void DCLineEdit::setStatusList(const Request &/*request*/, const QStringList &/*
 
 }
 
+void DCLineEdit::setAccessRights(const QString& accessRights)
+{
+  if(accessRights.isEmpty())
+    this->setVisible(false);
+  else
+  {
+    this->setVisible(true);
+
+    if(accessRights.contains('r'))
+      this->setEnabled(false);
+    if(accessRights.contains('w'))
+      this->setEnabled(true);
+  }
+}
+
 void DCLineEdit::refresh()
 {
 

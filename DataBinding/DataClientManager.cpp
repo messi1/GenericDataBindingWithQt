@@ -216,7 +216,8 @@ void DataClientManager::newValueReceived(const RequestData &responseData)
 
         for (int i = 0; i < clientVector->size(); ++i)
         {
-          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().mValueList, responseItr.value().mRangeList, responseItr.value().mErrorList);
+          clientVector->at(i)->setAccessRights(responseItr.value().accessRights);
+          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList, responseItr.value().errorList);
         }
     }
 }
@@ -234,7 +235,8 @@ void DataClientManager::newStatusReceived(const RequestData &responseData)
 
         for (int i = 0; i < clientVector->size(); ++i)
         {
-          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().mValueList, responseItr.value().mRangeList, responseItr.value().mErrorList);
+          clientVector->at(i)->setAccessRights(responseItr.value().accessRights);
+          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList, responseItr.value().errorList);
         }
     }
 }

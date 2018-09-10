@@ -30,6 +30,7 @@ public:
                                const QStringList& responseRangeList, const QStringList& responseErrorList) = 0;
     virtual void setStatusList(const Request& request,
                                const QStringList& responseStatusList, const QStringList& responseErrorList) = 0;
+    virtual void setAccessRights(const QString& accessRights) = 0;
     virtual void refresh() = 0;
 };
 
