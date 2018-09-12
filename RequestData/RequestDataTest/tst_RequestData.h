@@ -29,32 +29,6 @@
 
 using namespace testing;
 
-void fillRequestData(RequestData& data)
-{
-  const RequestType requestType = RequestType::GetValues;
-  QList<Request> requestList{{RequestCmd::BatteryState, true, 3}, {RequestCmd::EthState, false, 1}, {RequestCmd::WlanState, true, 2}};
-
-  const QStringList valueList1{"AA1","BB1","CC1"};
-  const QStringList valueList2{"AA2","BB2","CC2"};
-  const QStringList valueList3{"AA3","BB3","CC3"};
-
-
-  const QStringList rangeList1{"111","222","333"};
-  const QStringList rangeList2{"444","555","666"};
-  const QStringList rangeList3{"777","888","999"};
-
-
-  const QStringList errorList1{"E1AA","E2BB","E3CC"};
-  const QStringList errorList2{"E4AA","E5BB","E6CC"};
-  const QStringList errorList3{"E7AA","E8BB","E9CC"};
-
-  data.addRequest(requestList.at(0), valueList1, rangeList1, errorList1);
-  data.addRequest(requestList.at(1), valueList1, rangeList2, errorList2);
-  data.addRequest(requestList.at(2), valueList1, rangeList3, errorList3);
-
-  data.setRequestType(requestType);
-}
-
 TEST(RequestData, serialize_deserialize)
 {
   QByteArray  byteArray;
@@ -227,5 +201,69 @@ TEST(RequestData, addRequestsWithSameRequest)
               rangeList.count() == testValues.rangeList2.count() &&
               errorList.count() == testValues.errorList1.count() &&
               accessRights == testValues.accessRightsList.at(3));
+
+}
+
+//-------------------------------------------------------------------------------------------------
+TEST(RequestData, addMultipleRequests)
+{
+  TestValues testValues;
+
+  RequestData requestData;
+  QStringList valueList, rangeList, errorList;
+  QString accessRights;
+
+
+  requestData.addRequest(testValues.request1, testValues.accessRightsList.at(0));
+
+  EXPECT_TRUE(requestData.requestMap().keys().count() == 1 && requestData.requestMap().values().count() == 1 );
+  requestData.valueList(testValues.request1, valueList);
+  requestData.rangeList(testValues.request1, rangeList);
+  requestData.errorList(testValues.request1, errorList);
+  accessRights = requestData.accessRights(testValues.request1);
+  EXPECT_TRUE(valueList.isEmpty() &&
+              rangeList.isEmpty() &&
+              errorList.isEmpty() &&
+              accessRights.isEmpty());
+
+
+  requestData.addRequest(testValues.request2, testValues.valueList1, testValues.accessRightsList.at(1));
+
+  EXPECT_TRUE(requestData.requestMap().keys().count() == 2 && requestData.requestMap().values().count() == 2 );
+  requestData.valueList(testValues.request2, valueList);
+  requestData.rangeList(testValues.request2, rangeList);
+  requestData.errorList(testValues.request2, errorList);
+  accessRights = requestData.accessRights(testValues.request2);
+  EXPECT_TRUE(valueList.count() == testValues.valueList1.count() &&
+              rangeList.isEmpty() &&
+              errorList.isEmpty() &&
+              accessRights == testValues.accessRightsList.at(1));
+
+
+  requestData.addRequest(testValues.request3, testValues.valueList2, testValues.rangeList1, testValues.accessRightsList.at(2));
+
+  EXPECT_TRUE(requestData.requestMap().keys().count() == 3 && requestData.requestMap().values().count() == 3 );
+  requestData.valueList(testValues.request3, valueList);
+  requestData.rangeList(testValues.request3, rangeList);
+  requestData.errorList(testValues.request3, errorList);
+  accessRights = requestData.accessRights(testValues.request3);
+  EXPECT_TRUE(valueList.count() == testValues.valueList2.count() &&
+              rangeList.count() == testValues.rangeList1.count() &&
+              errorList.isEmpty() &&
+              accessRights == testValues.accessRightsList.at(2));
+
+
+  requestData.addRequest(testValues.request4, testValues.valueList1, testValues.rangeList2, testValues.errorList1, testValues.accessRightsList.at(3));
+
+  EXPECT_TRUE(requestData.requestMap().keys().count() == 4 && requestData.requestMap().values().count() == 4 );
+  requestData.valueList(testValues.request4, valueList);
+  requestData.rangeList(testValues.request4, rangeList);
+  requestData.errorList(testValues.request4, errorList);
+  accessRights = requestData.accessRights(testValues.request4);
+  EXPECT_TRUE(valueList.count() == testValues.valueList1.count() &&
+              rangeList.count() == testValues.rangeList2.count() &&
+              errorList.count() == testValues.errorList1.count() &&
+              accessRights == testValues.accessRightsList.at(3));
+
 
 }
