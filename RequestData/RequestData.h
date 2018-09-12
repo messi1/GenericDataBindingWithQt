@@ -36,15 +36,6 @@ using RequestMap    = QMap<Request, RequestDataMatrix>;
 using RequestList   = QList<Request>;
 //-------------------------------------------------------------------------------------------------
 
-class RequestMap2 {
-  void addRequest2(const Request& request, const QStringList& valueList, const QStringList& rangeList)
-  {
-    map.insert(request, {valueList, rangeList, {}, ""});
-  }
-private:
-  QMap<Request, RequestDataMatrix> map;
-};
-
 class RequestData
 {
 public:
