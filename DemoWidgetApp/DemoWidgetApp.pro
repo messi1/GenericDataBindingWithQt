@@ -1,5 +1,5 @@
-TARGET         = DemoApp
-QT             = core gui widgets xml
+TARGET         = DemoWidgetApp
+QT             = core gui widgets
 QMAKE_CXXFLAGS = -Wextra -Wnon-virtual-dtor -ggdb -std=gnu++11
 CONFIG  += c++14
 
