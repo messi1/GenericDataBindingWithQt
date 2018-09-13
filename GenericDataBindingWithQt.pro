@@ -6,7 +6,7 @@ SUBDIRS = DataProvider \
           DataBinding/DataBindingTest \
           RequestData \
           RequestData/RequestDataTest \
-          DemoApp
+          DemoWidgetApp
 
 PRE_TARGETDEPS += RequestData DataProvider DataBinding
 

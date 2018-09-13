@@ -83,11 +83,6 @@ int main(int argc, char* argv[])
 
   dataThread->start();
 
-//  QMetaObject::connect(&app, SIGNAL(lastWindowClosed()),
-//                       &app, SLOT(quit()), Qt::QueuedConnection);
-
-//  QMetaObject::connect(&app, &QGuiApplication::lastWindowClosed, &app, QGuiApplication::quit);
-
   return app.exec();
 }
 
