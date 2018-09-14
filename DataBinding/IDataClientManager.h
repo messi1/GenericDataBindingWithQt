@@ -35,9 +35,9 @@ public:
     virtual IDataClientManager* clone() const = 0;
 
     virtual void requestData(const RequestData &requestData) = 0;
-    virtual void requestSaveData(const Request& request, const QString& requestValue)     = 0;
-    virtual void requestCommand(const Request& commandName, const QString& inRequesteter) = 0;
-    virtual void requestGetClientData(IDataClient* dataClient, const Request& request)   = 0;
+    virtual void requestSaveData(const Request& saveRequest,   const QStringList& valueList) = 0;
+    virtual void requestCommand(const Request& commandRequest, const QStringList& valueList) = 0;
+    virtual void requestGetClientData(IDataClient* dataClient, const Request& request)       = 0;
     virtual void requestGetAllClientData() = 0;
 
     virtual void newValueReceived(const RequestData &requestData)  = 0;

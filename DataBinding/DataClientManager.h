@@ -50,8 +50,8 @@ public:
     void requestGetClientData(IDataClient* dataClient, const Request& request) final;
     void requestGetAllClientData() final;
     void requestData(const RequestData &requestData) final;
-    void requestSaveData(const Request& request,   const QString& requestValue) final;
-    void requestCommand(const Request& commandRequest, const QString& inRequest)  final;
+    void requestSaveData(const Request& saveRequest,   const QStringList& valueList) final;
+    void requestCommand(const Request& commandRequest, const QStringList& valueList) final;
 
     virtual void newValueReceived( const RequestData& requestData) override;
     virtual void newStatusReceived(const RequestData& requestData) override;

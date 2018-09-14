@@ -19,8 +19,8 @@ public:
   virtual IDataClientManager* clone() const final {return nullptr;}
 
   void requestData(const RequestData& /*requestData*/) final {}
-  void requestSaveData(const Request& /*request*/, const QString& /*requestValue*/)  final {}
-  void requestCommand(const Request& /*commandName*/, const QString& /*inRequesteter*/) final {}
+  void requestSaveData(const Request& /*saveRequest*/,   const QStringList& /*valueList*/) final {}
+  void requestCommand(const Request& /*commandRequest*/, const QStringList& /*valueList*/) final {}
   void requestGetClientData(IDataClient* /*dataClient*/, const Request& /*request*/) final;
   void requestGetAllClientData() final {}
 

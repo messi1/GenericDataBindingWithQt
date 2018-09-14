@@ -180,9 +180,8 @@ void DataClientManager::requestData(const RequestData &requestData)
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestCommand(const Request& commandRequest, const QString& commandValue)
+void DataClientManager::requestCommand(const Request& commandRequest, const QStringList& valueList)
 {
-  QStringList valueList{commandValue};
   RequestData requestData(this, &mDataProxy);
   requestData.setRequestType(RequestType::Command);
   requestData.addRequest(commandRequest, valueList);
@@ -191,12 +190,11 @@ void DataClientManager::requestCommand(const Request& commandRequest, const QStr
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::requestSaveData(const Request& request, const QString& requestValue)
+void DataClientManager::requestSaveData(const Request& saveRequest, const QStringList& valueList)
 {
-  QStringList valueList{requestValue};
   RequestData requestData(this, &mDataProxy);
   requestData.setRequestType(RequestType::SetValues);
-  requestData.addRequest(request, valueList);
+  requestData.addRequest(saveRequest, valueList);
 
   mDataProxy.requestData(requestData);
 }

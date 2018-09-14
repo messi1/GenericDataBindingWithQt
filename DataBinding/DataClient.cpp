@@ -61,6 +61,6 @@ void DataClient::requestGetData(const RequestCmd requestCmd, bool withRange, qui
 //--------------------------------------------------------------------------------------------------------
 void DataClient::requestSaveData(const RequestCmd requestCmd, const QString& requestValue)
 {
-  mDataClientManager.requestSaveData({requestCmd}, requestValue);
+  mDataClientManager.requestSaveData({requestCmd}, {requestValue});
 }
 
