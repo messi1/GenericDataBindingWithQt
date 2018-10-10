@@ -15,7 +15,6 @@
 #include <QDebug>
 #include <QDateTime>
 
-
 #include "DataClientManager.h"
 #include "DataProvider/IDataProxy.h"
 #include "IDataClient.h"

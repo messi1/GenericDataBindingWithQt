@@ -29,7 +29,6 @@ class IDataClient;
 class DataClientManager : public IDataClientManager
 {
 public:
-    DataClientManager() = delete;
     explicit DataClientManager(IDataProxy& dataProxy);
     virtual ~DataClientManager() override;
 

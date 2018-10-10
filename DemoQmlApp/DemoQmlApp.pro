@@ -5,5 +5,18 @@ CONFIG  += c++14
 
 INCLUDEPATH += ../
 
+LIBS += -L../DataBinding  -lDataBindingLib
+LIBS += -L../DataProvider -lDataProviderLib
+LIBS += -L../RequestData  -lRequestDataLib
+
 SOURCES += \
-    main.cpp
+    main.cpp \
+    DCLineEdit.cpp \
+    DCComponent.cpp
+
+HEADERS += \
+    DCLineEdit.h \
+    DCComponent.h
+
+DISTFILES += \
+    qml/MainWindow.qml

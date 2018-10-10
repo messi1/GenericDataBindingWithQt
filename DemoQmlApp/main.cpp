@@ -4,6 +4,8 @@
 #include <QQuickView>
 #include <QUrl>
 
+#include "DCComponent.h"
+
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
@@ -15,6 +17,8 @@ int main(int argc, char* argv[])
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
   QQmlContext *context = view.rootContext();
+
+//  qmlRegisterType<DCComponent>("", 1, 9, "DCComponent");
 
   if(context)
   {
