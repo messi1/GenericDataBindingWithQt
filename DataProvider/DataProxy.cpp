@@ -41,7 +41,8 @@ void DataProxy::requestData(const RequestData &requestData)
 //--------------------------------------------------------------------------------------------------------
 void DataProxy::responseReceived(const RequestData& requestData)
 {
-  if(requestData.dataManager())
+  IDataClientManager* mgr = reinterpret_cast<IDataClientManager*>(requestData.dataManager());
+  if(mgr)
   {
     requestData.dataManager()->newValueReceived(requestData);
   }

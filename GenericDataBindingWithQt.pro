@@ -7,7 +7,8 @@ SUBDIRS = DataProvider \
           RequestData \
           RequestData/RequestDataTest \
           DemoWidgetApp \
-          DemoQmlApp
+          DemoQmlApp \
+          IntegrationTest
 
 PRE_TARGETDEPS += RequestData DataProvider DataBinding
 
@@ -22,6 +23,3 @@ DemoQmlApp.depends                    = RequestData DataProvider DataBinding
 OTHER_FILES += doc/ClassDiagram.png \
                doc/ClassDiagram.uml \
                LICENSE.txt
-
-
-

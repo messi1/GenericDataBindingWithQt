@@ -1,4 +1,4 @@
-include(gtest_dependency.pri)
+#include(gtest_dependency.pri)
 
 
 TEMPLATE = app
@@ -15,7 +15,8 @@ PRE_TARGETDEPS += ../../RequestData/libRequestDataLib.a \
                   ../libDataProviderLib.a
 
 LIBS += -L../ -lDataProviderLib \
-        -L../../RequestData -lRequestDataLib
+        -L../../RequestData -lRequestDataLib \
+        -L/usr/local/lib -lgtest
 
 HEADERS += \
     tst_DataProxy.h \

@@ -1,4 +1,4 @@
-include(gtest_dependency.pri)
+#include(gtest_dependency.pri)
 
 
 TEMPLATE = app
@@ -11,7 +11,8 @@ INCLUDEPATH += \
                .. \
                ../..
 
-LIBS += -L../ -lRequestDataLib
+LIBS += -L../ -lRequestDataLib \
+        -L/usr/local/lib -lgtest
 
 HEADERS += \
     tst_RequestData.h \

@@ -4,7 +4,7 @@
 
 BaseFrame::BaseFrame(IDataProxy &dataProxy, QWidget *parent)
     :QFrame(parent),
-      DataClientManager(dataProxy)
+      DataClientManager(&dataProxy)
 {
     RequestData requestData(this, DataClientManager::dataProxy());
     requestData.setRequestType(RequestType::GetValues);

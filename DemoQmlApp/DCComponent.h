@@ -9,6 +9,7 @@ class DCComponent : public QObject, public DataClientManager
 {
     Q_OBJECT
 public:
+    DCComponent();
     explicit DCComponent(IDataProxy& dataProxy, QObject *parent = nullptr);
 
 signals:

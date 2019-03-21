@@ -29,11 +29,12 @@ class IDataClient;
 class DataClientManager : public IDataClientManager
 {
 public:
-    explicit DataClientManager(IDataProxy& dataProxy);
+    DataClientManager() = default;
+    explicit DataClientManager(IDataProxy *dataProxy);
     virtual ~DataClientManager() override;
 
     virtual IDataProxy* dataProxy()const override;
-    void setDataProxy(IDataProxy &dataProxy);
+    void setDataProxy(IDataProxy* dataProxy);
 
     virtual DataClientManager *clone() const override;
     void clearDataClientList();
@@ -59,7 +60,7 @@ private:
     using ClientVector     = QVector<IDataClient*>;
     using ClientRequestMap = QMap<Request, ClientVector>;
 
-    IDataProxy&           mDataProxy;
+    IDataProxy*           mDataProxy = nullptr;
     ClientRequestMap      mClientRequestMap;
 };
 

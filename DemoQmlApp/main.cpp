@@ -16,9 +16,14 @@ int main(int argc, char* argv[])
 
   view.setResizeMode(QQuickView::SizeRootObjectToView);
 
+  const QString mainQmlApp = QStringLiteral("qrc:///MainWindow.qml");
+
+  view.setSource(QUrl(mainQmlApp));
+  view.setResizeMode(QQuickView::SizeRootObjectToView);
+
   QQmlContext *context = view.rootContext();
 
-//  qmlRegisterType<DCComponent>("", 1, 9, "DCComponent");
+  qmlRegisterType<DCComponent>("", 1, 9, "DCComponent");
 
   if(context)
   {
