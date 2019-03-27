@@ -33,6 +33,12 @@ RequestData::RequestData(IDataClientManager *dataManager, IDataProxy *dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
+RequestData::RequestData(ClientMangerWeakPtr dataManager, IDataProxy *dataProxy)
+  : mManagerToSendResponse(dataManager),
+    mCallerProxy(dataProxy)
+{}
+
+//-------------------------------------------------------------------------------------------------
 void RequestData::setDataManager(IDataClientManager* dataManager)
 {
   mCallerManager = dataManager;

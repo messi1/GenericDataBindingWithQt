@@ -17,6 +17,7 @@
 
 #include <QMap>
 #include <QStringList>
+#include <QWeakPointer>
 #include "RequestCommand.h"
 
 class IDataClientManager;
@@ -34,6 +35,7 @@ bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& d
 //-------------------------------------------------------------------------------------------------
 using RequestMap    = QMap<Request, RequestDataMatrix>;
 using RequestList   = QList<Request>;
+using ClientMangerWeakPtr = QWeakPointer<IDataClientManager*>;
 //-------------------------------------------------------------------------------------------------
 
 class RequestData
@@ -41,6 +43,7 @@ class RequestData
 public:
   RequestData()=default;
   RequestData(IDataClientManager* dataManager, IDataProxy* dataProxy);
+  RequestData(ClientMangerWeakPtr dataManager, IDataProxy* dataProxy);
 
   void setDataManager(IDataClientManager* dataManager);
   IDataClientManager* dataManager() const;
@@ -76,6 +79,7 @@ public:
   void setRequestType(const RequestType &requestType);
 
 private:
+  ClientMangerWeakPtr mManagerToSendResponse;
   IDataClientManager* mCallerManager = nullptr;
   IDataProxy*         mCallerProxy   = nullptr;
 
