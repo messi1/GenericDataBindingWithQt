@@ -7,7 +7,8 @@ SUBDIRS = DataProvider \
           RequestData \
           RequestData/RequestDataTest \
           DemoWidgetApp \
-          DemoQmlApp
+          DemoQmlApp \
+          IntegrationTest
 
 PRE_TARGETDEPS += RequestData DataProvider DataBinding
 
@@ -18,6 +19,7 @@ DataProvider/DataProviderTest.depends = DataProvider
 DataBinding/DataBindingTest.depends   = DataBinding
 DemoWidgetApp.depends                 = RequestData DataProvider DataBinding
 DemoQmlApp.depends                    = RequestData DataProvider DataBinding
+IntegrationTest.depends               = RequestData DataProvider DataBinding
 
 OTHER_FILES += doc/ClassDiagram.png \
                doc/ClassDiagram.uml \

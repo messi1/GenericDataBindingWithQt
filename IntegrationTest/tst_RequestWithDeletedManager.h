@@ -68,7 +68,7 @@ TEST(Integration, requestWithDeletedManager)
     MockConnector mockConnector;
     DataProvider dataProvider(mockConnector);
     DataProxy dataProxy(dataProvider, nullptr);
-    DataClientManager* dataClientManager = new DataClientManager(&dataProxy);
+    DataClientManager* dataClientManager = new DataClientManager(dataProxy);
 
     QThread* dataThread = new QThread;
     dataThread->setObjectName("dataThread");

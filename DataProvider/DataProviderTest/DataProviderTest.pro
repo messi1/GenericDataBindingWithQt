@@ -1,6 +1,3 @@
-include(gtest_dependency.pri)
-
-
 TEMPLATE = app
 CONFIG  += console c++14
 CONFIG  -= app_bundle
@@ -15,7 +12,8 @@ PRE_TARGETDEPS += ../../RequestData/libRequestDataLib.a \
                   ../libDataProviderLib.a
 
 LIBS += -L../ -lDataProviderLib \
-        -L../../RequestData -lRequestDataLib
+        -L../../RequestData -lRequestDataLib \
+        -L/usr/local/lib -lgtest
 
 HEADERS += \
     tst_DataProxy.h \

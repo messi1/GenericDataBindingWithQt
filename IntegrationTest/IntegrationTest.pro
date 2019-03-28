@@ -15,8 +15,7 @@ PRE_TARGETDEPS += ../RequestData/libRequestDataLib.a \
 LIBS += -L../DataBinding  -lDataBindingLib \
         -L../DataProvider -lDataProviderLib \
         -L../RequestData  -lRequestDataLib \
-        -L/usr/local/lib  -lgtest \
-        -L/usr/lib/x86_64-linux-gnu/ -lcurl
+        -L/usr/local/lib  -lgtest
 
 HEADERS += \
     ../DataProvider/DataProviderTest/TestValues.h \
