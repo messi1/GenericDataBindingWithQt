@@ -18,6 +18,7 @@
 
 #include <QDebug>
 #include <QEventLoop>
+#include <QSharedPointer>
 #include <QThread>
 #include <QTimer>
 
@@ -68,6 +69,7 @@ TEST(Integration, requestWithDeletedManager)
     MockConnector mockConnector;
     DataProvider dataProvider(mockConnector);
     DataProxy dataProxy(dataProvider, nullptr);
+    QSharedPointer<IDataClientManager> dataManagerPtr = QSharedPointer<IDataClientManager>(new DataClientManager(dataProxy));
     DataClientManager* dataClientManager = new DataClientManager(dataProxy);
 
     QThread* dataThread = new QThread;
@@ -103,14 +105,14 @@ TEST(Integration, requestWithDeletedManager)
       if(waitForLoop.isRunning())
         waitForLoop.exit();
     });
-
     quitEventLoopTimer.start(2000);
     dataThread->start();
-    RequestData requestData(dataClientManager, &dataProxy);
+
+    RequestData requestData(dataManagerPtr.toWeakRef(), QSharedPointer<IDataProxy>(&dataProxy).toWeakRef());
     requestData.addRequest({RequestCmd::BatteryState});
     requestData.setRequestType(RequestType::GetValues);
     dataClientManager->requestData(requestData);
-    delete dataClientManager;
+    dataManagerPtr.clear();
     waitForLoop.exec(); // Wait until the dataThread sends the data
 }
 

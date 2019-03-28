@@ -14,6 +14,7 @@
  */
 #include <QDebug>
 #include <QDateTime>
+#include <QSharedPointer>
 
 #include "DataClientManager.h"
 #include "DataProvider/IDataProxy.h"
@@ -150,7 +151,7 @@ void DataClientManager::requestGetClientData(IDataClient* dataClient, const Requ
 {
   if( dataClient)
   {
-    RequestData requestData(this, &mDataProxy);
+    RequestData requestData(this, QSharedPointer<IDataProxy>(mDataProxy).toWeakRef());
     // TODO: Add dataClient to the requestData as return path for special single request, like timer based requests.
     requestData.addRequest(request);
     requestData.setRequestType(RequestType::GetValues);

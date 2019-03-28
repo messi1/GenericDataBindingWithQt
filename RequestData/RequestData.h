@@ -35,18 +35,18 @@ bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& d
 //-------------------------------------------------------------------------------------------------
 using RequestMap    = QMap<Request, RequestDataMatrix>;
 using RequestList   = QList<Request>;
-using ClientMangerWeakPtr = QWeakPointer<IDataClientManager*>;
+using DataProxyWeakPtr    = QWeakPointer<IDataProxy>;
+using ClientMangerWeakPtr = QWeakPointer<IDataClientManager>;
 //-------------------------------------------------------------------------------------------------
 
 class RequestData
 {
 public:
   RequestData()=default;
-  RequestData(IDataClientManager* dataManager, IDataProxy* dataProxy);
-  RequestData(ClientMangerWeakPtr dataManager, IDataProxy* dataProxy);
+  RequestData(ClientMangerWeakPtr dataManager, DataProxyWeakPtr dataProxy);
 
-  void setDataManager(IDataClientManager* dataManager);
-  IDataClientManager* dataManager() const;
+  void setDataManager(ClientMangerWeakPtr dataManager);
+  ClientMangerWeakPtr dataClientManager() const;
 
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
@@ -80,8 +80,7 @@ public:
 
 private:
   ClientMangerWeakPtr mManagerToSendResponse;
-  IDataClientManager* mCallerManager = nullptr;
-  IDataProxy*         mCallerProxy   = nullptr;
+  DataProxyWeakPtr    mCallerProxy;
 
   RequestMap  mRequestMap;
   RequestType mRequestType   = RequestType::GetValues;

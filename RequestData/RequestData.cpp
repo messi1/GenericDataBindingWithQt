@@ -27,37 +27,31 @@ bool operator==(const RequestDataMatrix& stringMatrix1, const RequestDataMatrix&
 }
 
 //-------------------------------------------------------------------------------------------------
-RequestData::RequestData(IDataClientManager *dataManager, IDataProxy *dataProxy)
-  : mCallerManager(dataManager),
-    mCallerProxy(dataProxy)
-{}
-
-//-------------------------------------------------------------------------------------------------
-RequestData::RequestData(ClientMangerWeakPtr dataManager, IDataProxy *dataProxy)
+RequestData::RequestData(ClientMangerWeakPtr dataManager, DataProxyWeakPtr dataProxy)
   : mManagerToSendResponse(dataManager),
     mCallerProxy(dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setDataManager(IDataClientManager* dataManager)
+void RequestData::setDataClientManager(ClientMangerWeakPtr dataManager)
 {
-  mCallerManager = dataManager;
+  mManagerToSendResponse = dataManager;
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setDataProxy(IDataProxy* dataProxy)
+void RequestData::setDataProxy(DataProxyWeakPtr dataProxy)
 {
   mCallerProxy = dataProxy;
 }
 
 //-------------------------------------------------------------------------------------------------
-IDataClientManager *RequestData::dataManager() const
+ClientMangerWeakPtr RequestData::dataClientManager() const
 {
-  return mCallerManager;
+    return mManagerToSendResponse;
 }
 
 //-------------------------------------------------------------------------------------------------
-IDataProxy *RequestData::dataProxy() const
+DataProxyWeakPtr RequestData::dataProxy() const
 {
   return mCallerProxy;
 }
@@ -223,7 +217,7 @@ void RequestData::setRequestType(const RequestType &requestType)
 bool RequestData::operator==(const RequestData& obj) const
 {
     return (obj.requestType()  == this->requestType() &&
-       obj.dataManager()       == this->dataManager() &&
+       obj.dataClientManager() == this->dataClientManager() &&
        obj.dataProxy()         == this->dataProxy()   &&
        obj.requestMap()        == this->requestMap());
 }

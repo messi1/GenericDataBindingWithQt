@@ -41,9 +41,9 @@ void DataProxy::requestData(const RequestData &requestData)
 //--------------------------------------------------------------------------------------------------------
 void DataProxy::responseReceived(const RequestData& requestData)
 {
-  if(requestData.dataManager())
+  if(requestData.dataClientManager().toStrongRef())
   {
-    requestData.dataManager()->newValueReceived(requestData);
+    requestData.dataClientManager().toStrongRef()->newValueReceived(requestData);
   }
 }
 

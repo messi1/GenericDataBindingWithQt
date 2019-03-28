@@ -1,5 +1,5 @@
 TARGET         = IntegrationTest
-QT             = core gui widgets
+QT             = core
 QMAKE_CXXFLAGS = -Wextra -Wnon-virtual-dtor -ggdb -std=gnu++11
 CONFIG  += c++14
 
@@ -10,7 +10,8 @@ INCLUDEPATH += \
                ../..
 
 PRE_TARGETDEPS += ../RequestData/libRequestDataLib.a \
-                  ../DataBinding/libDataBindingLib.a
+                  ../DataBinding/libDataBindingLib.a \
+                  ../DataProvider/libDataProviderLib.a
 
 LIBS += -L../DataBinding  -lDataBindingLib \
         -L../DataProvider -lDataProviderLib \
