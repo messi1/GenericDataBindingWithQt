@@ -74,13 +74,13 @@ TEST(DataProvider, DataPassing_requestValue)
   qRegisterMetaType<RequestData>("RequestData");
 
   MockConnector mockConnector;
-  MockDataProxy mockDataProxy1;
+  QSharedPointer<MockDataProxy> mockDataProxy1;
   RequestData   testResponseData = TestValues().responseData1;
 
   QEventLoop waitForLoop;
   QTimer     quitEventLoopTimer;
   QThread*   dataThread = new QThread;
-  QSignalSpy spy(&mockDataProxy1, &MockDataProxy::sigResponseData);
+  QSignalSpy spy(mockDataProxy1.data(), &MockDataProxy::sigResponseData);
 
   quitEventLoopTimer.setInterval(1200);
   quitEventLoopTimer.setSingleShot(true);
@@ -88,7 +88,7 @@ TEST(DataProvider, DataPassing_requestValue)
 
   DataProvider* dataProvider  = new DataProvider(mockConnector);
   RequestData  requestData = TestValues().requestData1;
-  testResponseData.setDataProxy(&mockDataProxy1);
+  testResponseData.setDataProxy(mockDataProxy1);
   testResponseData.setRequestType(RequestType::GetValues);
 
   dataProvider->moveToThread(dataThread);
@@ -99,8 +99,8 @@ TEST(DataProvider, DataPassing_requestValue)
     FAIL();
   });
 
-  QObject::connect(&mockDataProxy1, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-  QObject::connect(&mockDataProxy1, &MockDataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+  QObject::connect(mockDataProxy1.data(), SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
+  QObject::connect(mockDataProxy1.data(), &MockDataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
   {
     //Async code
     EXPECT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
@@ -124,13 +124,13 @@ TEST(DataProvider, DataPassing_requestValue)
 
   dataThread->start();
   quitEventLoopTimer.start();
-  mockDataProxy1.requestData(testResponseData);
+  mockDataProxy1->requestData(testResponseData);
   waitForLoop.exec(); // Wait until the dataThread sends the data
 
   // The signal spy counter should be 1
   EXPECT_EQ(spy.count(), 1);
 
-  mockDataProxy1.disconnect();
+  mockDataProxy1->disconnect();
   dataProvider->disconnect();
   quitEventLoopTimer.stop();
 
@@ -144,13 +144,13 @@ TEST(DataProvider, DataPassing_sendValue)
   qRegisterMetaType<RequestData>("RequestData");
 
   MockConnector mockConnector;
-  MockDataProxy mockDataProxy1;
+  QSharedPointer<MockDataProxy> mockDataProxy1;
   RequestData   testResponseData = TestValues().responseData1;
 
   QEventLoop waitForLoop;
   QTimer     quitEventLoopTimer;
   QThread*   dataThread = new QThread;
-  QSignalSpy spy(&mockDataProxy1, &MockDataProxy::sigResponseData);
+  QSignalSpy spy(mockDataProxy1.data(), &MockDataProxy::sigResponseData);
 
   quitEventLoopTimer.setInterval(2000);
   quitEventLoopTimer.setSingleShot(true);
@@ -158,7 +158,7 @@ TEST(DataProvider, DataPassing_sendValue)
 
   DataProvider* dataProvider  = new DataProvider(mockConnector);
   RequestData  requestData = TestValues().requestData1;
-  requestData.setDataProxy(&mockDataProxy1);
+  requestData.setDataProxy(mockDataProxy1.toWeakRef());
   requestData.setRequestType(RequestType::SetValues);
 
   dataProvider->moveToThread(dataThread);
@@ -169,8 +169,8 @@ TEST(DataProvider, DataPassing_sendValue)
     FAIL();
   });
 
-  QObject::connect(&mockDataProxy1, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-  QObject::connect(&mockDataProxy1, &MockDataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+  QObject::connect(mockDataProxy1.data(), SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
+  QObject::connect(mockDataProxy1.data(), &MockDataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
   {
     //Async code
     EXPECT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
@@ -195,13 +195,13 @@ TEST(DataProvider, DataPassing_sendValue)
 
   dataThread->start();
   quitEventLoopTimer.start();
-  mockDataProxy1.requestData(requestData);
+  mockDataProxy1->requestData(requestData);
   waitForLoop.exec(); // Wait until the dataThread sends the data
 
   // The signal spy counter should be 1
   EXPECT_EQ(spy.count(), 1);
 
-  mockDataProxy1.disconnect();
+  mockDataProxy1->disconnect();
   quitEventLoopTimer.stop();
 
   if(dataProvider)

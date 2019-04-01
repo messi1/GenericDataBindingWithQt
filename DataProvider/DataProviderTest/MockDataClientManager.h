@@ -30,7 +30,7 @@ public:
   void deregisterAllClient(IDataClient* /*dataClient*/) final {}
   void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request& /*oldRequest*/, const Request& /*newRequest*/) final {}
 
-  virtual IDataProxy* dataProxy()  const final {return nullptr;}
+  virtual DataProxyWeakPtr dataProxy()  const final {return DataProxyWeakPtr();}
   virtual IDataClientManager* clone() const final {return nullptr;}
 
   void requestData(const RequestData& /*requestData*/) final {}

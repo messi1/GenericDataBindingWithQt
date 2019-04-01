@@ -4,7 +4,7 @@
 #include "IDataClient.h"
 #include "IDataClientManager.h"
 
-class MockDataClientManager: public IDataClientManager
+class MockDataClientManager: public IDataClientManager, QEnableSharedFromThis<MockDataClientManager>
 {
 public:
 
@@ -15,7 +15,7 @@ public:
   void deregisterAllClient(IDataClient* /*dataClient*/) final {}
   void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request& /*oldRequest*/, const Request& /*newRequest*/) final {}
 
-  virtual IDataProxy* dataProxy()  const final {return nullptr;}
+  virtual DataProxyWeakPtr dataProxy()  const final {return DataProxyWeakPtr();}
   virtual IDataClientManager* clone() const final {return nullptr;}
 
   void requestData(const RequestData& /*requestData*/) final {}
@@ -37,7 +37,7 @@ void MockDataClientManager::requestGetClientData(IDataClient* dataClient, const 
 {
   if( dataClient)
   {
-    RequestData requestData(this, nullptr);
+    RequestData requestData(sharedFromThis().toWeakRef(), dataProxy());
     // TODO: Add dataClient to the requestData as return path for special single request, like timer based requests.
     requestData.addRequest(request);
     requestData.setRequestType(RequestType::GetValues);

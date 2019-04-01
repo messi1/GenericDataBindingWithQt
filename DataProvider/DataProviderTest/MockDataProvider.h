@@ -45,15 +45,15 @@ public slots:
 
     if(requestData.requestMap().keys() == testData.requestData1.requestMap().keys())
     {
-      IDataProxy* tmpProxy       = requestData.dataProxy();
-      IDataClientManager* tmpDCM = requestData.dataManager();
-      testData.responseData1.setDataManager(tmpDCM);
+      DataProxyWeakPtr    tmpProxy  = requestData.dataProxy();
+      ClientMangerWeakPtr tmpDCM    = requestData.dataClientManager();
+      testData.responseData1.setDataClientManager(tmpDCM);
       testData.responseData1.setDataProxy(tmpProxy);
       const_cast<RequestData&>(requestData) = testData.responseData1;
     }
 
     if(requestData.dataProxy())
-      requestData.dataProxy()->sigResponseData(requestData);
+      requestData.dataProxy().toStrongRef()->sigResponseData(requestData);
   }
 };
 

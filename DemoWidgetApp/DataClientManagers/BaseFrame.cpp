@@ -2,15 +2,15 @@
 #include "DataProvider/IDataProxy.h"
 #include "RequestData/RequestCommand.h"
 
-BaseFrame::BaseFrame(IDataProxy &dataProxy, QWidget *parent)
+BaseFrame::BaseFrame(const QSharedPointer<IDataProxy> &dataProxyPtr, QWidget *parent)
     :QFrame(parent),
-      DataClientManager(dataProxy)
+      DataClientManager(dataProxyPtr)
 {
-    RequestData requestData(this, DataClientManager::dataProxy());
+    RequestData requestData(this->sharedFromThis(), DataClientManager::dataProxy());
     requestData.setRequestType(RequestType::GetValues);
     requestData.addRequest({RequestCmd::Language, true});
 
-    DataClientManager::dataProxy()->requestData(requestData);
+    DataClientManager::dataProxy().toStrongRef()->requestData(requestData);
 }
 
 void BaseFrame::showEvent(QShowEvent *event)

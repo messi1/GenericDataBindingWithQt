@@ -34,14 +34,14 @@ TEST(DataProxy, requestData)
   qRegisterMetaType<RequestData>("RequestData");
 
   MockDataProvider      mockDataProvider;
-  MockDataClientManager mockDataClientManager;
-  DataProxy             dataProxy(mockDataProvider);
+  QSharedPointer<MockDataClientManager> mockDataClientManager;
+  QSharedPointer<DataProxy>             dataProxy(new DataProxy(mockDataProvider));
   TestValues            testData;
 
   QEventLoop* waitForLoop = new QEventLoop;
   QTimer      quitEventLoopTimer;
   QThread*    dataThread = new QThread;
-  QSignalSpy  spy(&dataProxy, &DataProxy::sigResponseData);
+  QSignalSpy  spy(dataProxy.data(), &DataProxy::sigResponseData);
 
   quitEventLoopTimer.setInterval(200000);
   quitEventLoopTimer.setSingleShot(true);
@@ -49,8 +49,8 @@ TEST(DataProxy, requestData)
 
   RequestData  testResponseData = TestValues().responseData1;
   RequestData  requestData1 = TestValues().requestData1;
-  requestData1.setDataProxy(&dataProxy);
-  requestData1.setDataManager(&mockDataClientManager);
+  requestData1.setDataProxy(dataProxy);
+  requestData1.setDataClientManager(mockDataClientManager);
 
   mockDataProvider.moveToThread(dataThread);
 
@@ -60,7 +60,7 @@ TEST(DataProxy, requestData)
     FAIL();
   });
 
-  QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+  QObject::connect(dataProxy.data(), &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
   {
     //Async code
     EXPECT_EQ(responseData.requestMap().count(), testResponseData.requestMap().count());
@@ -78,7 +78,7 @@ TEST(DataProxy, requestData)
         EXPECT_TRUE( testResponseItr.value() == responseItr.value() );
     }
 
-    MockDataClientManager* dataClientManager = dynamic_cast<MockDataClientManager*>(responseData.dataManager());
+    MockDataClientManager* dataClientManager = dynamic_cast<MockDataClientManager*>(responseData.dataClientManager().toStrongRef().data());
 
     if(dataClientManager)
     {
@@ -102,12 +102,12 @@ TEST(DataProxy, requestData)
 
   dataThread->start();
   quitEventLoopTimer.start();
-  dataProxy.requestData(requestData1);
+  dataProxy->requestData(requestData1);
   if(waitForLoop->isRunning() == false)
     waitForLoop->exec(); // Wait until the dataThread sends the data
 
   quitEventLoopTimer.stop();
-  dataProxy.disconnect();
+  dataProxy->disconnect();
 
   EXPECT_EQ(spy.count(), 1);
 }

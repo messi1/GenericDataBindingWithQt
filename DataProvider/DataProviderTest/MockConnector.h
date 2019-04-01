@@ -33,7 +33,7 @@ class MockConnector: public IConnector
       responseData.clearAllData();
       responseData = testData.responseData1;
       responseData.setDataProxy(requestData.dataProxy());
-      responseData.setDataManager(requestData.dataManager());
+      responseData.setDataClientManager(requestData.dataClientManager());
 
       return true;
     }

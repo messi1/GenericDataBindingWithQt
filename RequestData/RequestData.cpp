@@ -27,19 +27,19 @@ bool operator==(const RequestDataMatrix& stringMatrix1, const RequestDataMatrix&
 }
 
 //-------------------------------------------------------------------------------------------------
-RequestData::RequestData(ClientMangerWeakPtr dataManager, DataProxyWeakPtr dataProxy)
+RequestData::RequestData(const ClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy)
   : mManagerToSendResponse(dataManager),
     mCallerProxy(dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setDataClientManager(ClientMangerWeakPtr dataManager)
+void RequestData::setDataClientManager(const ClientMangerWeakPtr& dataManager)
 {
   mManagerToSendResponse = dataManager;
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setDataProxy(DataProxyWeakPtr dataProxy)
+void RequestData::setDataProxy(const DataProxyWeakPtr& dataProxy)
 {
   mCallerProxy = dataProxy;
 }

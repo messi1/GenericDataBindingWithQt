@@ -33,8 +33,8 @@ struct RequestDataMatrix {
 //-------------------------------------------------------------------------------------------------
 bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& dataMatrix2);
 //-------------------------------------------------------------------------------------------------
-using RequestMap    = QMap<Request, RequestDataMatrix>;
-using RequestList   = QList<Request>;
+using RequestMap          = QMap<Request, RequestDataMatrix>;
+using RequestList         = QList<Request>;
 using DataProxyWeakPtr    = QWeakPointer<IDataProxy>;
 using ClientMangerWeakPtr = QWeakPointer<IDataClientManager>;
 //-------------------------------------------------------------------------------------------------
@@ -43,13 +43,14 @@ class RequestData
 {
 public:
   RequestData()=default;
-  RequestData(ClientMangerWeakPtr dataManager, DataProxyWeakPtr dataProxy);
+  RequestData(const ClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy);
+  // TODO: Missing Copy ctor and assignement operator
 
-  void setDataManager(ClientMangerWeakPtr dataManager);
+  void setDataClientManager(const ClientMangerWeakPtr& dataManager);
   ClientMangerWeakPtr dataClientManager() const;
 
-  void setDataProxy(IDataProxy* dataProxy);
-  IDataProxy*   dataProxy() const;
+  void setDataProxy(const DataProxyWeakPtr& dataProxy);
+  DataProxyWeakPtr   dataProxy() const;
 
   const QString accessRights(const Request& request) const;
 

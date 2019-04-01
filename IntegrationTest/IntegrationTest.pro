@@ -21,7 +21,8 @@ LIBS += -L../DataBinding  -lDataBindingLib \
 HEADERS += \
     ../DataProvider/DataProviderTest/TestValues.h \
     tst_MultiRequests.h \
-    tst_RequestWithDeletedManager.h
+    tst_RequestWithDeletedManager.h \
+    tst_CopyRequest.h
 
 SOURCES += \
         main.cpp \

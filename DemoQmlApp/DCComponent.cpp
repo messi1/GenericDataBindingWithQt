@@ -1,7 +1,7 @@
 #include "DCComponent.h"
 
-DCComponent::DCComponent(IDataProxy &dataProxy, QObject *parent)
-    :  QObject(parent), DataClientManager(dataProxy)
+DCComponent::DCComponent(QSharedPointer<IDataProxy> &dataProxyPtr, QObject *parent)
+    :  QObject(parent), DataClientManager(dataProxyPtr)
 {
 
 }

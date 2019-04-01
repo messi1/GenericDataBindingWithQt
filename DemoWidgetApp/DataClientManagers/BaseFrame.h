@@ -9,7 +9,7 @@ class BaseFrame : public QFrame, public DataClientManager
 {
     Q_OBJECT
 public:
-    explicit BaseFrame(IDataProxy& dataProxy, QWidget *parent = nullptr);
+    explicit BaseFrame(const QSharedPointer<IDataProxy> &dataProxyPtr, QWidget *parent = nullptr);
     ~BaseFrame()override = default;
 
 protected:

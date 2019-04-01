@@ -46,7 +46,7 @@ void DataProvider::requestData(const RequestData& requestData)
   // Answer received and send it back to the requested proxy
   if(requestData.dataProxy())
   {
-    emit requestData.dataProxy()->sigResponseData(responseData);
+    emit requestData.dataProxy().toStrongRef()->sigResponseData(responseData);
   }
   else
   {
