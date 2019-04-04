@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
   int ret = RUN_ALL_TESTS();
 
   QTimer exitTimer;
-  exitTimer.setInterval(2000);
+  exitTimer.setInterval(2100);
 
   QObject::connect(&exitTimer, &QTimer::timeout, &app, &QCoreApplication::quit);
   exitTimer.start();

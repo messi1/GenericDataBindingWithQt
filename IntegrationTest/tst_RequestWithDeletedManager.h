@@ -61,7 +61,7 @@ TEST(Integration, requestWithDeletedManager)
     MockConnector mockConnector;
     DataProvider dataProvider(mockConnector);
     QSharedPointer<DataProxy> dataProxyPtr(new DataProxy(dataProvider, nullptr));
-    QSharedPointer<DataClientManager> dataClientManagerPtr = QSharedPointer<DataClientManager> (/*new DataClientManager(dataProxyPtr)*/);
+    QSharedPointer<DataClientManager> dataClientManagerPtr = QSharedPointer<DataClientManager> (new DataClientManager(dataProxyPtr));
 
     QThread* dataThread = new QThread;
     dataThread->setObjectName("dataThread");
@@ -77,7 +77,8 @@ TEST(Integration, requestWithDeletedManager)
     QObject::connect(dataProxyPtr.data(), &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
     {
       //Async code
-      EXPECT_FALSE(responseData.dataClientManager().toStrongRef());
+      EXPECT_TRUE(responseData.dataClientManager());
+      EXPECT_TRUE(responseData.dataClientManager().toStrongRef());
 
       if(waitForLoop.isRunning())
         waitForLoop.exit();
@@ -88,9 +89,9 @@ TEST(Integration, requestWithDeletedManager)
     RequestData requestData(dataClientManagerPtr, dataProxyPtr);
     requestData.addRequest({RequestCmd::BatteryState});
     requestData.setRequestType(RequestType::GetValues);
-    dataProxyPtr->requestData(requestData);
-//    dataClientManagerPtr->requestData(requestData);
-//    dataClientManagerPtr.clear();
+    //dataProxyPtr->requestData(requestData);
+    dataClientManagerPtr->requestData(requestData);
+    dataClientManagerPtr.clear();
     waitForLoop.exec(); // Wait until the dataThread sends the data
 }
 
