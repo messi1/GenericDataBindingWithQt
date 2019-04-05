@@ -33,6 +33,15 @@ RequestData::RequestData(const ClientMangerWeakPtr &dataManager, const DataProxy
 {}
 
 //-------------------------------------------------------------------------------------------------
+void RequestData::operator=(const RequestData &obj)
+{
+    this->setDataProxy(obj.dataProxy());
+    this->setDataClientManager(obj.dataClientManager());
+    this->setRequestMap(obj.requestMap());
+    this->setRequestType(obj.requestType());
+}
+
+//-------------------------------------------------------------------------------------------------
 void RequestData::setDataClientManager(const ClientMangerWeakPtr& dataManager)
 {
   mManagerToSendResponse = dataManager;

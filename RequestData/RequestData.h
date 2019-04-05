@@ -45,6 +45,7 @@ public:
   RequestData()=default;
   RequestData(const ClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy);
   // TODO: Missing Copy ctor and assignement operator
+  void operator=(const RequestData& obj);
 
   void setDataClientManager(const ClientMangerWeakPtr& dataManager);
   ClientMangerWeakPtr dataClientManager() const;

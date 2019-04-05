@@ -25,39 +25,14 @@
 #include "DataProvider/DataProxy.h"
 #include "RequestData/RequestCommand.h"
 #include "RequestData/RequestData.h"
-#include "RequestBroker/IConnector.h"
 
+#include "MockConnector.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
 using namespace testing;
 
-#include "DataProvider/DataProviderTest/TestValues.h"
-
-class MockConnector: public IConnector
-{
-  public:
-    bool requestData(const RequestData& requestData, RequestData& responseData) override
-    {
-        TestValues testData;
-        responseData = requestData;
-
-        if( responseData.requestMap() == responseData.requestMap())
-        {
-          responseData.clearAllData();
-
-          responseData.addRequest(testData.request1);
-          responseData.addRequest(testData.request2, testData.valueList1);
-          responseData.addRequest(testData.request3, testData.valueList2, testData.rangeList1);
-          responseData.addRequest(testData.request4, testData.valueList3, testData.rangeList2, testData.errorList1);
-
-          return true;
-        }
-
-        return false;
-    }
-};
 
 TEST(Integration, multiRequests)
 {

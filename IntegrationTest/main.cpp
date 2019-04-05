@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 #include <QTimer>
 
+#include "tst_CopyRequest.h"
 #include "tst_RequestWithDeletedManager.h"
 
 #include <gtest/gtest.h>

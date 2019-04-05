@@ -22,7 +22,8 @@ HEADERS += \
     ../DataProvider/DataProviderTest/TestValues.h \
     tst_MultiRequests.h \
     tst_RequestWithDeletedManager.h \
-    tst_CopyRequest.h
+    tst_CopyRequest.h \
+    MockConnector.h
 
 SOURCES += \
         main.cpp \
