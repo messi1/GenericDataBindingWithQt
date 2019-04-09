@@ -11,6 +11,7 @@ before_install:
 
 install: 
   # C++14
+  - sudo apt-get install googletest
   - sudo apt-get install -qq g++-7
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   # Qt5
@@ -18,6 +19,13 @@ install:
   - export QMAKE=/usr/lib/x86_64-linux-gnu/qt5/bin/qmake
   # Codecov
   - sudo update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-5 90
+
+before_script:
+  - cd /usr/src
+  - sudo mkdir build-gtest
+  - cd build-gtest
+  - sudo cmake ../googletest
+  - make install
 
 # Start virtual X server, from https://docs.travis-ci.com/user/gui-and-headless-browsers/
 #before_script:
@@ -39,3 +47,4 @@ script:
   - ls DataBinding/DataBindingTest
   - ls RequestData
   - ls RequestData/RequestDataTest
+  
