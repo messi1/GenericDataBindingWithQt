@@ -24,4 +24,4 @@ install:
 script: 
   - qmake -qt=qt5
   - make
-  - ./GenericDataBindingWithQt
+  - ./DataProvider/DataProviderTest/DataProviderTest
