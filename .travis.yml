@@ -1,0 +1,8 @@
+language: cpp
+compiler: gcc
+dist: trusty
+
+script: 
+  - qmake
+  - make
+  - ./GenericDataBindingWithQt
