@@ -8,6 +8,12 @@ before_install:
   - sudo apt-get update -qq
   # Codecov
   - sudo pip install codecov
+  - git clone https://github.com/google/googletest.git
+  - mkdir build-googletest
+  - cd build-googletest
+  - cmake ../googletest
+  - make
+  - make install
 
 install: 
   # C++14
