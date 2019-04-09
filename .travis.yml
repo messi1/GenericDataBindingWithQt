@@ -13,7 +13,7 @@ before_install:
   - cd build-googletest
   - cmake ../googletest
   - make
-  - make install
+  - sudo make install
 
 install: 
   # C++14
