@@ -1,5 +1,3 @@
-include(gtest_dependency.pri)
-
 TEMPLATE = app
 CONFIG  += console c++14
 CONFIG  -= app_bundle
@@ -10,7 +8,8 @@ INCLUDEPATH += \
                ../..
 
 LIBS += -L../ -lDataBindingLib \
-        -L../../RequestData/ -lRequestDataLib
+        -L../../RequestData/ -lRequestDataLib \
+        -L/usr/local/lib -lgtest
 
 PRE_TARGETDEPS += ../../RequestData/libRequestDataLib.a \
                   ../libDataBindingLib.a

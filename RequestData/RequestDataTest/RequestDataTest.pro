@@ -1,6 +1,3 @@
-include(gtest_dependency.pri)
-
-
 TEMPLATE = app
 CONFIG  += console c++14
 CONFIG  -= app_bundle
@@ -11,7 +8,8 @@ INCLUDEPATH += \
                .. \
                ../..
 
-LIBS += -L../ -lRequestDataLib
+LIBS += -L../ -lRequestDataLib \
+        -L/usr/local/lib -lgtest
 
 HEADERS += \
     tst_RequestData.h \
@@ -20,5 +18,3 @@ HEADERS += \
 SOURCES += \
     main.cpp
 
-DISTFILES += \
-    gtest_dependency.pri
