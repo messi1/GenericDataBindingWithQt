@@ -24,4 +24,6 @@ install:
 script: 
   - qmake -qt=qt5
   - make
-  - ./DataProvider/DataProviderTest/DataProviderTest
+  - ls
+  - ls DataProvider
+  - ls DataProvider/DataProviderTest
