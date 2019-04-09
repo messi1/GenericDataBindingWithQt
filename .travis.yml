@@ -39,12 +39,7 @@ script:
   - cd build-debug-GenericDataBindingWithQt
   - qmake -qt=qt5 ../GenericDataBindingWithQt
   - make
-  - pwd
-  - ls
-  - ls DataProvider
-  - ls DataProvider/DataProviderTest
-  - ls DataBinding
-  - ls DataBinding/DataBindingTest
-  - ls RequestData
-  - ls RequestData/RequestDataTest
-  
+  - RequestData/RequestDataTest/RequestDataTest
+  - DataProvider/DataProviderTest/DataProviderTest
+  - DataBinding/DataBindingTest/DataBindingTest
+ 
