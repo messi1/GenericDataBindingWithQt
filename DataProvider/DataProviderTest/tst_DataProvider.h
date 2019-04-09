@@ -33,6 +33,7 @@
 
 using namespace testing;
 
+#ifdef DEBUG_BUILD
 TEST(DataProvider, emptyRequestData)
 {
   ::testing::FLAGS_gtest_death_test_style = "threadsafe";
@@ -44,6 +45,7 @@ TEST(DataProvider, emptyRequestData)
 
   ASSERT_DEATH(dataProvider->requestData(requestData1), "");
 }
+#endif
 
 TEST(DataProvider, moveToThread)
 {
