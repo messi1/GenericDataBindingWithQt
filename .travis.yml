@@ -11,7 +11,7 @@ before_install:
 
 install: 
   # C++14
-  - sudo apt-get install googletest
+  - sudo apt-get install gtest
   - sudo apt-get install -qq g++-7
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90
   # Qt5
