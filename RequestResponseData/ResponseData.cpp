@@ -57,6 +57,20 @@ IDataProxy *ResponseData::dataProxy() const
 }
 
 //-------------------------------------------------------------------------------------------------
+const QString ResponseData::accessRights(const Request &request) const
+{
+    bool res = mResponseMap.contains(request);
+    if (res)
+    {
+        return mResponseMap[request].accessRights;
+    }
+    else
+    {
+        return QString();
+    }
+}
+
+//-------------------------------------------------------------------------------------------------
 bool ResponseData::valueList(const Request &request, QStringList &valueList)
 {
     bool res = mResponseMap.contains(request);
