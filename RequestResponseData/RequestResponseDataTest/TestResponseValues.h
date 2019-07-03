@@ -19,7 +19,6 @@
 #include <QStringList>
 #include "RequestResponseData/RequestCommand.h"
 #include "RequestResponseData/ResponseData.h"
-#include "TestRequestValues.h"
 
 using TestRequestList = QList<Request>;
 using TestStringList  = QList<QStringList>;
@@ -50,7 +49,12 @@ struct TestResponseValues
 
     const QStringList errorList1 = {"error 5","error 10","error 20","" };
     const QStringList errorList2 = {"error 7","error 44","error 33","" };
-    const QStringList errorList3 = {"error 87","error 23","","error 99"};
+    const QStringList errorList3 = {"error 87", "error 23", "", "error 99"};
+
+    const QString accessRight1 = "r";
+    const QString accessRight2 = "rw";
+    const QString accessRight3 = "rx";
+    const QString accessRight4 = "rwx";
 
     ResponseData responseData1 = createResponseData({request1, request2, request3},
                                                 {valueList1, valueList2,valueList3},

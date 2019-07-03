@@ -15,12 +15,9 @@
 
 #include <QCoreApplication>
 
-
 #include "tst_RequestData.h"
-
-
+#include "tst_ResponseData.h"
 #include <gtest/gtest.h>
-
 
 int main(int argc, char *argv[])
 {

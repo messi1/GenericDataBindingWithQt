@@ -53,7 +53,37 @@ IDataClientManager *ResponseData::dataClientManager() const
 //-------------------------------------------------------------------------------------------------
 IDataProxy *ResponseData::dataProxy() const
 {
-  return mCallerProxy;
+    return mCallerProxy;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool ResponseData::valueList(const Request &request, QStringList &valueList)
+{
+    bool res = mResponseMap.contains(request);
+    if(res)
+        valueList = mResponseMap[request].valueList;
+
+    return res;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool ResponseData::rangeList(const Request &request, QStringList &rangeList)
+{
+    bool res = mResponseMap.contains(request);
+    if(res)
+        rangeList = mResponseMap[request].rangeList;
+
+    return res;
+}
+
+//-------------------------------------------------------------------------------------------------
+bool ResponseData::errorList(const Request &request, QStringList &errorList)
+{
+    bool res = mResponseMap.contains(request);
+    if(res)
+        errorList = mResponseMap[request].errorList;
+
+    return res;
 }
 //-------------------------------------------------------------------------------------------------
 void ResponseData::setValueList(const Request &request, const QStringList &valueList)
@@ -170,9 +200,9 @@ void ResponseData::setRequestType(const RequestType &requestType)
 //-------------------------------------------------------------------------------------------------
 bool ResponseData::operator==(const ResponseData& obj) const
 {
-    return (obj.requestType()  == this->requestType() &&
+    return (obj.requestType()  == this->requestType()       &&
        obj.dataClientManager() == this->dataClientManager() &&
-       obj.dataProxy()         == this->dataProxy()   &&
+       obj.dataProxy()         == this->dataProxy()         &&
        obj.responseMap()       == this->responseMap());
 }
 
