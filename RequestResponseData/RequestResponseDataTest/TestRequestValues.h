@@ -38,8 +38,11 @@ struct TestRequestValues
 
     const QList<Request> requestList{ request1, request2, request3, request4, request5, request6 };
 
-    RequestData requestData1  = createRequestData({request1, request2, request3});
-    RequestData requestData2  = createRequestData({request4, request5, request6});
+    RequestData requestData1 = createRequestData({request1, request2, request3});
+    RequestData requestData2 = createRequestData({request4, request5, request6});
+
+    QStringList valueList1 = {"1", "2", "3"};
+    QStringList valueList2 = {"5", "6", "7", "8"};
 };
 
 #endif // TESTREQUESTVALUES_H
