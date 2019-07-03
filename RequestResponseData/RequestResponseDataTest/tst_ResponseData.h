@@ -159,7 +159,8 @@ TEST(ResponseData, addResponseWithSameRequest)
     EXPECT_TRUE(valueList.isEmpty() &&
               rangeList.isEmpty() &&
               errorList.isEmpty() &&
-              accessRights.isEmpty());
+              accessRights == testValues.accessRight1 &&
+              responseData.responseMap().size() > 0);
 
 
     responseData.addResponse(request, testValues.valueList1, testValues.accessRight2);
@@ -220,7 +221,7 @@ TEST(ResponseData, addMultipleRequests)
     EXPECT_TRUE(valueList.isEmpty() &&
               rangeList.isEmpty() &&
               errorList.isEmpty() &&
-              accessRights.isEmpty());
+              accessRights == testValues.accessRight1);
 
 
   responseData.addResponse(testValues.request2, testValues.valueList1, testValues.accessRight2);
