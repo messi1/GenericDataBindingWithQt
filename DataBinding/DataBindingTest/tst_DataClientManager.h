@@ -1,7 +1,7 @@
 #ifndef TST_DATACLIENTMANAGER_H
 #define TST_DATACLIENTMANAGER_H
 
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestCommand.h"
 
 #include "DataClientManager.h"
 #include "MockDataProxy.h"

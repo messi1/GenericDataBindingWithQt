@@ -18,22 +18,22 @@
 
 #include <QString>
 
-#include "RequestData/RequestData.h"
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestData.h"
+#include "RequestResponseData/ResponseData.h"
+#include "RequestResponseData/RequestCommand.h"
 #include "RequestBroker/IConnector.h"
-#include "TestValues.h"
+#include "TestRequestValues.h"
+#include "TestResponseValues.h"
 
 class MockConnector: public IConnector
 {
   public:
-    bool requestData(const RequestData& requestData, RequestData& responseData) override
+    bool requestData(const RequestData& requestData, ResponseData& responseData) override
     {
-      TestValues testData;
-
       responseData.clearAllData();
-      responseData = testData.responseData1;
+      responseData = TestResponseValues().responseData1;
       responseData.setDataProxy(requestData.dataProxy());
-      responseData.setDataManager(requestData.dataManager());
+      responseData.setDataClientManager(requestData.dataClientManager());
 
       return true;
     }

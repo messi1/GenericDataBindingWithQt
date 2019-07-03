@@ -8,13 +8,17 @@ INCLUDEPATH += \
                .. \
                ../..
 
-LIBS += -L../ -lRequestDataLib \
+LIBS += -L../ -lRequestResponseDataLib \
         -L/usr/local/lib -lgtest
 
+
 HEADERS += \
+    TestRequestValues.h \
+    TestResponseValues.h \
     tst_RequestData.h \
-    TestValues.h
+    tst_ResponseData.h
 
 SOURCES += \
+    TestRequestValues.cpp \
+    TestResponseValues.cpp \
     main.cpp
-

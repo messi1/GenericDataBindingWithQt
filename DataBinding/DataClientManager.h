@@ -21,7 +21,7 @@
 #include <QVector>
 
 #include "IDataClientManager.h"
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestData.h"
 
 class IDataProxy;
 class IDataClient;
@@ -52,8 +52,7 @@ public:
     void requestSaveData(const Request& saveRequest,   const QStringList& valueList) final;
     void requestCommand(const Request& commandRequest, const QStringList& valueList) final;
 
-    virtual void newValueReceived( const RequestData& requestData) override;
-    virtual void newStatusReceived(const RequestData& requestData) override;
+    virtual void newValueReceived( const ResponseData& requestData) override;
 
 private:
     using ClientVector     = QVector<IDataClient*>;

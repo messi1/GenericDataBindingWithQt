@@ -18,7 +18,7 @@
 #include "DataClientManager.h"
 #include "DataProvider/IDataProxy.h"
 #include "IDataClient.h"
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestCommand.h"
 
 
 //--------------------------------------------------------------------------------------------------------
@@ -201,40 +201,30 @@ void DataClientManager::requestSaveData(const Request& saveRequest, const QStrin
 //--------------------------------------------------------------------------------------------------------
 // Replies from the DataProxy
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::newValueReceived(const RequestData &responseData)
+void DataClientManager::newValueReceived(const ResponseData &responseData)
 {
-    const RequestMap &requestMap   = responseData.requestMap();
+    const ResponseMap &responseMap   = responseData.responseMap();
 
-    QMapIterator<Request, RequestDataMatrix> responseItr(requestMap);
+    QMapIterator<Request, ResponseValue> responseItr(responseMap);
 
-    while (responseItr.hasNext()) {
+    while (responseItr.hasNext())
+    {
         responseItr.next();
         ClientVector* clientVector = &mClientRequestMap[responseItr.key()];
 
         for (int i = 0; i < clientVector->size(); ++i)
         {
-          clientVector->at(i)->setAccessRights(responseItr.value().accessRights);
-          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList, responseItr.value().errorList);
+            if(responseItr.value().errorList.size() > 0)
+            {
+                clientVector->at(i)->setErrorList(responseItr.key(), responseItr.value().errorList);
+            }
+            else
+            {
+                clientVector->at(i)->setAccessRights(responseItr.value().accessRights);
+                clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList);
+            }
         }
     }
 }
 
-//--------------------------------------------------------------------------------------------------------
-void DataClientManager::newStatusReceived(const RequestData &responseData)
-{
-    const RequestMap &requestMap   = responseData.requestMap();
-
-    QMapIterator<Request, RequestDataMatrix> responseItr(requestMap);
-
-    while (responseItr.hasNext()) {
-        responseItr.next();
-        ClientVector* clientVector = &mClientRequestMap[responseItr.key()];
-
-        for (int i = 0; i < clientVector->size(); ++i)
-        {
-          clientVector->at(i)->setAccessRights(responseItr.value().accessRights);
-          clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList, responseItr.value().errorList);
-        }
-    }
-}
 

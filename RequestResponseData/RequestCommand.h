@@ -7,7 +7,7 @@
 
 /* This enum class represents all commands which can be send from the NewGui to the RequestBroker. */
 
-enum class RequestType
+enum class RequestType : unsigned int
 {
   GetValues,
   SetValues,

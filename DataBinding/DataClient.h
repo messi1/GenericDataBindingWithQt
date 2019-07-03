@@ -36,12 +36,11 @@ public:
 
     void requestGetData(const RequestCmd requestCmd,  bool withRange = false, quint8 contextId = 0);
     void requestSaveData(const RequestCmd requestCmd, const QString& requestValue);
-    virtual void setAccessRights(const QString& accessRights) = 0;
     virtual void setValueList( const Request& request, const QStringList& responseValueList,
-                               const QStringList& responseRangeList, const QStringList& responseErrorList) = 0;
-    virtual void setStatusList(const Request& request,
-                               const QStringList& responseStatusList, const QStringList& responseErrorList) = 0;
-    virtual void refresh() = 0;
+                               const QStringList& responseRangeList)override = 0;
+    virtual void setAccessRights(const QString& accessRights)override = 0;
+    virtual void setErrorList(const Request& request, const QStringList& responseErrorList)override = 0;
+    virtual void refresh()override = 0;
 
 protected:
     IDataClientManager& mDataClientManager;

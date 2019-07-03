@@ -16,7 +16,7 @@
 #define __IDATA_CLIENT
 
 // Cant be class forwarded because of multiple inclusion which generate previous declartion error
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestCommand.h"
 
 class QString;
 class QStringList;
@@ -27,10 +27,9 @@ public:
     IDataClient() = default;
     virtual ~IDataClient() = default;
     virtual void setValueList( const Request& request, const QStringList& responseValueList,
-                               const QStringList& responseRangeList, const QStringList& responseErrorList) = 0;
-    virtual void setStatusList(const Request& request,
-                               const QStringList& responseStatusList, const QStringList& responseErrorList) = 0;
+                               const QStringList& responseRangeList) = 0;
     virtual void setAccessRights(const QString& accessRights) = 0;
+    virtual void setErrorList(const Request& request, const QStringList& responseErrorList) = 0;
     virtual void refresh() = 0;
 };
 

@@ -4,7 +4,7 @@
 #include "TestDataClient.h"
 #include "MockDataClientManager.h"
 
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestCommand.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>

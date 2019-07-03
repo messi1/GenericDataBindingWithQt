@@ -33,11 +33,11 @@ public:
   void requestData(const RequestData& requestData) override;
 
 private slots:
-  void responseReceived(const RequestData &requestData);
+  void responseReceived(const ResponseData &responseData);
 
 signals:
   void sigRequestData(const RequestData& requestData)  override;
-  void sigResponseData(const RequestData& requestData) override;
+  void sigResponseData(const ResponseData& requestData) override;
 
 private:
     IDataProvider& mDataProvider;

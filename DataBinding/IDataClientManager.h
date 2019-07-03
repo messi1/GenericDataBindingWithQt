@@ -16,8 +16,9 @@
 #define __IDATA_CLIENT_MANAGER
 
 // Cant be class forwarded because of multiple inclusion which generate previous declartion error
-#include "RequestData/RequestData.h"
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestData.h"
+#include "RequestResponseData/ResponseData.h"
+#include "RequestResponseData/RequestCommand.h"
 
 class IDataClient;
 class IDataProxy;
@@ -40,8 +41,7 @@ public:
     virtual void requestGetClientData(IDataClient* dataClient, const Request& request)       = 0;
     virtual void requestGetAllClientData() = 0;
 
-    virtual void newValueReceived(const RequestData &requestData)  = 0;
-    virtual void newStatusReceived(const RequestData &requestData)  = 0;
+    virtual void newValueReceived(const ResponseData &requestData)  = 0;
 };
 
 #endif // __IDATA_CLIENT_MANAGER

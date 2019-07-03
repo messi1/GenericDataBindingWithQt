@@ -7,16 +7,22 @@ DCCheckBox::DCCheckBox(IDataClientManager &dataClientManager, QWidget *parent)
 
 }
 
-void DCCheckBox::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
-                              const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
+void DCCheckBox::setValueList(const Request& /*request*/, const QStringList& /*valueList*/, const QStringList& /*rangeList*/)
 {
 
 }
 
-void DCCheckBox::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+void DCCheckBox::setAccessRights(const QString &/*accessRights*/)
 {
 
 }
+
+void DCCheckBox::setErrorList(const Request &/*request*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
+
 
 void DCCheckBox::refresh()
 {

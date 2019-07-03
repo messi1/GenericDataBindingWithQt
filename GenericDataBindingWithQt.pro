@@ -4,20 +4,22 @@ SUBDIRS = DataProvider \
           DataProvider/DataProviderTest \
           DataBinding \
           DataBinding/DataBindingTest \
-          RequestData \
-          RequestData/RequestDataTest \
+          RequestResponseData \
+          RequestResponseData/RequestResponseDataTest \
           DemoWidgetApp \
-          DemoQmlApp
+          DemoQmlApp \
+          IntegrationTest
 
-PRE_TARGETDEPS += RequestData DataProvider DataBinding
+PRE_TARGETDEPS += RequestResponseData DataProvider DataBinding
 
-RequestData/RequestDataTest.depends   = RequestData
-DataProvider.depends                  = RequestData
-DataBinding.depends                   = RequestData
+RequestResponseData/RequestResponseDataTest.depends   = RequestResponseData
+DataProvider.depends                  = RequestResponseData
+DataBinding.depends                   = RequestResponseData
 DataProvider/DataProviderTest.depends = DataProvider
 DataBinding/DataBindingTest.depends   = DataBinding
-DemoWidgetApp.depends                 = RequestData DataProvider DataBinding
-DemoQmlApp.depends                    = RequestData DataProvider DataBinding
+DemoWidgetApp.depends                 = RequestResponseData DataProvider DataBinding
+DemoQmlApp.depends                    = RequestResponseData DataProvider DataBinding
+IntegrationTest.depends               = RequestResponseData DataProvider DataBinding
 
 OTHER_FILES += doc/ClassDiagram.png \
                doc/ClassDiagram.uml \

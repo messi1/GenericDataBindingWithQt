@@ -22,38 +22,39 @@
 #include "DataProvider/IDataProvider.h"
 #include "DataProvider/IDataProxy.h"
 
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestData.h"
 
-#include "TestValues.h"
+#include "TestRequestValues.h"
+#include "TestResponseValues.h"
 
 class MockDataProvider: public QObject, public IDataProvider
 {
   Q_OBJECT
   Q_INTERFACES(IDataProvider)
 
-public:
-  explicit MockDataProvider(QObject* parent=nullptr)
-      :QObject(parent)
+  public:
+  explicit MockDataProvider(QObject *parent = nullptr)
+      : QObject(parent)
   {
-    setObjectName("MockDataProvider");
+      setObjectName("MockDataProvider");
   }
 
-public slots:
-  void requestData(const RequestData& requestData) override
+  public slots:
+  void requestData(const RequestData &requestData) override
   {
-    TestValues testData;
+      TestResponseValues testData;
+      ResponseData responseData;
 
-    if(requestData.requestMap().keys() == testData.requestData1.requestMap().keys())
-    {
-      IDataProxy* tmpProxy       = requestData.dataProxy();
-      IDataClientManager* tmpDCM = requestData.dataManager();
-      testData.responseData1.setDataManager(tmpDCM);
-      testData.responseData1.setDataProxy(tmpProxy);
-      const_cast<RequestData&>(requestData) = testData.responseData1;
-    }
+      if (requestData.requestMap().keys() == testData.responseData1.responseMap().keys())
+      {
+          responseData.setDataProxy(requestData.dataProxy());
+          responseData.setDataClientManager(requestData.dataClientManager());
+          responseData.setRequestType(requestData.requestType());
+          responseData.setResponseMap(testData.responseData1.responseMap());
+      }
 
-    if(requestData.dataProxy())
-      requestData.dataProxy()->sigResponseData(requestData);
+      if (requestData.dataProxy())
+          requestData.dataProxy()->sigResponseData(responseData);
   }
 };
 

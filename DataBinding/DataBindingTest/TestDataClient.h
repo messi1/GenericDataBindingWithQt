@@ -12,12 +12,9 @@ public:
     ~TestDataClient() override = default;
 
     void setValueList( const Request& /*requestCmd*/, const QStringList& /*valueList*/,
-                       const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final;
-    void setStatusList( const Request& /*requestCmd*/, const QStringList& /*rangeList*/, const QStringList& /*errorList*/) final {}
-    void setAccessRights(const QString& /*accessRights*/) override
-    {
-
-    }
+                       const QStringList& /*rangeList*/) final;
+    void setAccessRights(const QString& /*accessRights*/) override {}
+    void setErrorList(const Request& /*request*/, const QStringList& /*responseErrorList*/) override {}
     void refresh() final {}
 
 private:
@@ -28,7 +25,7 @@ TestDataClient::TestDataClient(IDataClientManager& dataClientManager)
   : DataClient(dataClientManager)
 {}
 
-void TestDataClient::setValueList(const Request& /*requestCmd*/, const QStringList& valueList, const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
+void TestDataClient::setValueList(const Request& /*requestCmd*/, const QStringList& valueList, const QStringList& /*rangeList*/)
 {
   if(valueList.count() > 0)
     mData = valueList.at(0);

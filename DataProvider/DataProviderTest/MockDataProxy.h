@@ -20,7 +20,6 @@
 
 #include "DataProvider/IDataProxy.h"
 
-
 class MockDataProxy: public QObject, public IDataProxy
 {
   Q_OBJECT
@@ -37,11 +36,10 @@ public:
 
 private slots:
   void requestedValuesReceived(const RequestData &/*requestData*/){}
-  void requestedStatusReceived(const RequestData &/*requestData*/){}
 
 signals:
   void sigRequestData(const RequestData& requestData) override;
-  void sigResponseData(const RequestData& requestData) override;
+  void sigResponseData(const ResponseData& responseData) override;
 };
 
 #endif // MOCKDATAPROXY_H

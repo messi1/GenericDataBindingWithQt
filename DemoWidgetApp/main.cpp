@@ -15,31 +15,31 @@
 
 #include "DataProvider/DataProvider.h"
 #include "DataProvider/DataProxy.h"
-#include "RequestData/RequestCommand.h"
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestCommand.h"
+#include "RequestResponseData/RequestData.h"
 #include "RequestBroker/IConnector.h"
 
 #include "DataClientManagers/BaseFrame.h"
 #include "DataClients/DCLineEdit.h"
 
-#include "DataProvider/DataProviderTest/TestValues.h"
+#include "RequestResponseData/RequestResponseDataTest/TestRequestValues.h"
+#include "RequestResponseData/RequestResponseDataTest/TestResponseValues.h"
 
 class MockConnector: public IConnector
 {
   public:
-    bool requestData(const RequestData& requestData, RequestData& responseData) override
+    bool requestData(const RequestData& requestData, ResponseData& responseData) override
     {
-        TestValues testData;
-        responseData = requestData;
+        TestResponseValues testData;
 
-        if( responseData.requestMap() == responseData.requestMap())
+        if( requestData.requestMap().keys() == testData.responseData1.responseMap().keys())
         {
           responseData.clearAllData();
 
-          responseData.addRequest(testData.request1);
-          responseData.addRequest(testData.request2, testData.valueList1);
-          responseData.addRequest(testData.request3, testData.valueList2, testData.rangeList1);
-          responseData.addRequest(testData.request4, testData.valueList3, testData.rangeList2, testData.errorList1);
+          responseData.addResponse(testData.request1);
+          responseData.addResponse(testData.request2, testData.valueList1);
+          responseData.addResponse(testData.request3, testData.valueList2, testData.rangeList1);
+          responseData.addResponse(testData.request4, testData.valueList3, testData.rangeList2, testData.errorList1);
 
           return true;
         }

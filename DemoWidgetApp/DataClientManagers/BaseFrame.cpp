@@ -1,6 +1,6 @@
 #include "BaseFrame.h"
 #include "DataProvider/IDataProxy.h"
-#include "RequestData/RequestCommand.h"
+#include "RequestResponseData/RequestCommand.h"
 
 BaseFrame::BaseFrame(IDataProxy &dataProxy, QWidget *parent)
     :QFrame(parent),

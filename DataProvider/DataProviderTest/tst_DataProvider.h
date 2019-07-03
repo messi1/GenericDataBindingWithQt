@@ -20,12 +20,12 @@
 #include <QTimer>
 
 #include "DataProvider/DataProvider.h"
-#include "RequestData/RequestCommand.h"
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestCommand.h"
+#include "RequestResponseData/RequestData.h"
 
 #include "MockConnector.h"
 #include "MockDataProxy.h"
-#include "TestValues.h"
+#include "TestRequestValues.h"
 
 #include <assert.h>
 #include <gtest/gtest.h>
@@ -77,7 +77,7 @@ TEST(DataProvider, DataPassing_requestValue)
 
   MockConnector mockConnector;
   MockDataProxy mockDataProxy1;
-  RequestData   testResponseData = TestValues().responseData1;
+  RequestData   testRequestData = TestRequestValues().requestData1;
 
   QEventLoop waitForLoop;
   QTimer     quitEventLoopTimer;
@@ -89,9 +89,8 @@ TEST(DataProvider, DataPassing_requestValue)
   dataThread->setObjectName("dataThread");
 
   DataProvider* dataProvider  = new DataProvider(mockConnector);
-  RequestData  requestData = TestValues().requestData1;
-  testResponseData.setDataProxy(&mockDataProxy1);
-  testResponseData.setRequestType(RequestType::GetValues);
+  testRequestData.setDataProxy(&mockDataProxy1);
+  testRequestData.setRequestType(RequestType::GetValues);
 
   dataProvider->moveToThread(dataThread);
 
@@ -101,18 +100,21 @@ TEST(DataProvider, DataPassing_requestValue)
     FAIL();
   });
 
+  //Connect requests mockProxy -> dataProvider
   QObject::connect(&mockDataProxy1, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-  QObject::connect(&mockDataProxy1, &MockDataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+  //Connect response mockProxy ->lambda
+  QObject::connect(&mockDataProxy1, &MockDataProxy::sigResponseData, [testRequestData, &waitForLoop](const ResponseData &responseData)
   {
     //Async code
-    EXPECT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
-    ASSERT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
-    EXPECT_TRUE( responseData.requestType() == testResponseData.requestType() );
+    EXPECT_GE(responseData.responseMap().count(), testRequestData.requestMap().count());
+    ASSERT_GE(responseData.responseMap().count(), testRequestData.requestMap().count());
+    EXPECT_TRUE( responseData.requestType() == testRequestData.requestType() );
 
-    QMapIterator<Request, RequestDataMatrix> responseItr(responseData.requestMap());
-    QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
+    QMapIterator<Request, ResponseValue> responseItr(responseData.responseMap());
+    QMapIterator<Request, ResponseValue> testResponseItr(TestResponseValues().responseData1.responseMap());
 
-    while(testResponseItr.hasNext() && responseItr.hasNext()) {
+    while (testResponseItr.hasNext() && responseItr.hasNext())
+    {
         testResponseItr.next();
         responseItr.next();
 
@@ -126,7 +128,7 @@ TEST(DataProvider, DataPassing_requestValue)
 
   dataThread->start();
   quitEventLoopTimer.start();
-  mockDataProxy1.requestData(testResponseData);
+  mockDataProxy1.requestData(testRequestData);
   waitForLoop.exec(); // Wait until the dataThread sends the data
 
   // The signal spy counter should be 1
@@ -147,7 +149,6 @@ TEST(DataProvider, DataPassing_sendValue)
 
   MockConnector mockConnector;
   MockDataProxy mockDataProxy1;
-  RequestData   testResponseData = TestValues().responseData1;
 
   QEventLoop waitForLoop;
   QTimer     quitEventLoopTimer;
@@ -159,7 +160,7 @@ TEST(DataProvider, DataPassing_sendValue)
   dataThread->setObjectName("dataThread");
 
   DataProvider* dataProvider  = new DataProvider(mockConnector);
-  RequestData  requestData = TestValues().requestData1;
+  RequestData  requestData = TestRequestValues().requestData1;
   requestData.setDataProxy(&mockDataProxy1);
   requestData.setRequestType(RequestType::SetValues);
 
@@ -172,27 +173,29 @@ TEST(DataProvider, DataPassing_sendValue)
   });
 
   QObject::connect(&mockDataProxy1, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-  QObject::connect(&mockDataProxy1, &MockDataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+  QObject::connect(&mockDataProxy1, &MockDataProxy::sigResponseData, [&waitForLoop](const ResponseData &responseData)
   {
     //Async code
-    EXPECT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
-    ASSERT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
-    EXPECT_TRUE( responseData.requestType() == testResponseData.requestType() );
+    EXPECT_GE(responseData.responseMap().count(), TestResponseValues().responseData1.responseMap().count());
+    ASSERT_GE(responseData.responseMap().count(), TestResponseValues().responseData1.responseMap().count());
+    EXPECT_TRUE( responseData.requestType() == TestResponseValues().responseData1.requestType() );
 
-    QMapIterator<Request, RequestDataMatrix> responseItr(responseData.requestMap());
-    QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
+    QMapIterator<Request, ResponseValue> responseItr( TestResponseValues().responseData1.responseMap());
+    QMapIterator<Request, ResponseValue> testResponseItr(TestResponseValues().responseData1.responseMap());
 
-    while(testResponseItr.hasNext() && responseItr.hasNext()) {
+    while (testResponseItr.hasNext() && responseItr.hasNext())
+    {
         testResponseItr.next();
         responseItr.next();
 
-        EXPECT_TRUE( testResponseItr.key()   == responseItr.key() );
-        EXPECT_TRUE( testResponseItr.value() == responseItr.value() );
-
+        EXPECT_TRUE(testResponseItr.key() == responseItr.key());
+        EXPECT_TRUE(testResponseItr.value() == responseItr.value());
     }
 
     if(waitForLoop.isRunning())
-      waitForLoop.exit();
+    {
+        waitForLoop.exit();
+    }
   });
 
   dataThread->start();

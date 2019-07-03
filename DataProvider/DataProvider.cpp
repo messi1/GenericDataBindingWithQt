@@ -17,7 +17,8 @@
 
 #include "IDataProxy.h"
 #include "DataProvider.h"
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestData.h"
+#include "RequestResponseData/ResponseData.h"
 #include "RequestBroker/IConnector.h"
 
 
@@ -27,13 +28,14 @@ DataProvider::DataProvider (IConnector& connector, QObject *parent) :
     mDataConnector(connector)
 {
   qRegisterMetaType<RequestData>("RequestData");
+  qRegisterMetaType<ResponseData>("ResponseData");
   setObjectName("DataProvider");
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataProvider::requestData(const RequestData& requestData)
 {
-  RequestData responseData;
+  ResponseData responseData;
   bool lRes = false;
 
   lRes = mDataConnector.requestData(requestData, responseData);

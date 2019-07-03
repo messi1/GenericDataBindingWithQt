@@ -7,12 +7,17 @@ DCComboBox::DCComboBox(IDataClientManager &dataClientManager, QWidget *parent)
 
 }
 void DCComboBox::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
-                              const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
+                              const QStringList& /*rangeList*/)
 {
 
 }
 
-void DCComboBox::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+void DCComboBox::setAccessRights(const QString &/*accessRights*/)
+{
+
+}
+
+void DCComboBox::setErrorList(const Request &/*request*/, const QStringList &/*responseErrorList*/)
 {
 
 }

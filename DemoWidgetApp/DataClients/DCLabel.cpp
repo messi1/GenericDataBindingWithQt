@@ -7,13 +7,18 @@ DCLabel::DCLabel(IDataClientManager &dataClientManager, QWidget *parent)
 
 }
 
-void DCLabel::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
-                           const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
+void DCLabel::setAccessRights(const QString &/*accessRights*/)
 {
 
 }
 
-void DCLabel::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+void DCLabel::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
+                           const QStringList& /*rangeList*/)
+{
+
+}
+
+void DCLabel::setErrorList(const Request &/*request*/, const QStringList &/*responseErrorList*/)
 {
 
 }

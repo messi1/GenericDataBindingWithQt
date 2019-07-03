@@ -13,22 +13,24 @@
  * limitations under the License.
  */
 
-#ifndef TESTVALUES_H
-#define TESTVALUES_H
+#ifndef TESTRESPONSEVALUES_H
+#define TESTRESPONSEVALUES_H
 
 #include <QStringList>
-#include "RequestData/RequestCommand.h"
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestCommand.h"
+#include "RequestResponseData/ResponseData.h"
+#include "TestRequestValues.h"
 
-using TestRequestList    = QList<Request>;
-using TestStringListList = QList<QStringList>;
+using TestRequestList = QList<Request>;
+using TestStringList  = QList<QStringList>;
 
-RequestData fillRequestData(const TestRequestList& requestList);
-RequestData fillRequestData(const TestRequestList& requestList, const TestStringListList& valueList);
-RequestData fillRequestData(const TestRequestList& requestList, const TestStringListList& valueList, const TestStringListList& rangeList);
-RequestData fillRequestData(const TestRequestList& requestList, const TestStringListList& valueList, const TestStringListList& rangeList, const TestStringListList& errorList);
+void fillResponseData(ResponseData& data);
+ResponseData createResponseData(const TestRequestList& requestList);
+ResponseData createResponseData(const TestRequestList& requestList, const TestStringList& valueList);
+ResponseData createResponseData(const TestRequestList& requestList, const TestStringList& valueList, const TestStringList& rangeList);
+ResponseData createResponseData(const TestRequestList& requestList, const TestStringList& valueList, const TestStringList& rangeList, const TestStringList& errorList);
 
-struct TestValues
+struct TestResponseValues
 {
     const Request request1{RequestCmd::WlanList,  true};
     const Request request2{RequestCmd::WlanState, false, 1};
@@ -37,8 +39,6 @@ struct TestValues
     const Request request4{RequestCmd::WlanList,  false, 3};
     const Request request5{RequestCmd::WlanState, true,  4};
     const Request request6{RequestCmd::Language,  false, 5};
-
-    const QList<Request> requestList{ request1, request2, request3, request4, request5, request6 };
 
     const QStringList valueList1 = {"5","10","20","" };
     const QStringList valueList2 = {"7","44","33","" };
@@ -52,17 +52,12 @@ struct TestValues
     const QStringList errorList2 = {"error 7","error 44","error 33","" };
     const QStringList errorList3 = {"error 87","error 23","","error 99"};
 
-    RequestData requestData1  = fillRequestData({request1, request2, request3});
-    RequestData requestData2  = fillRequestData({request4, request5, request6});
-
-    RequestData responseData1 = fillRequestData({request1, request2, request3},
+    ResponseData responseData1 = createResponseData({request1, request2, request3},
                                                 {valueList1, valueList2,valueList3},
                                                 {rangeList1, rangeList2}, {errorList1});
-    RequestData responseData2 = fillRequestData({request4, request5, request6},
+    ResponseData responseData2 = createResponseData({request4, request5, request6},
                                                 {valueList1, valueList2,valueList3},
                                                 {rangeList1, rangeList2}, {errorList1});
 };
 
-
-
-#endif // TESTVALUES_H
+#endif // TESTRESPONSEVALUES_H

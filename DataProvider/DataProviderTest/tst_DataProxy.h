@@ -22,7 +22,8 @@
 #include "DataProvider/DataProxy.h"
 #include "MockDataClientManager.h"
 #include "MockDataProvider.h"
-#include "TestValues.h"
+#include "TestRequestValues.h"
+#include "TestResponseValues.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
@@ -32,11 +33,11 @@ using namespace testing;
 TEST(DataProxy, requestData)
 {
   qRegisterMetaType<RequestData>("RequestData");
+  qRegisterMetaType<ResponseData>("ResponseData");
 
   MockDataProvider      mockDataProvider;
   MockDataClientManager mockDataClientManager;
   DataProxy             dataProxy(mockDataProvider);
-  TestValues            testData;
 
   QEventLoop* waitForLoop = new QEventLoop;
   QTimer      quitEventLoopTimer;
@@ -47,10 +48,10 @@ TEST(DataProxy, requestData)
   quitEventLoopTimer.setSingleShot(true);
   dataThread->setObjectName("dataThread");
 
-  RequestData  testResponseData = TestValues().responseData1;
-  RequestData  requestData1 = TestValues().requestData1;
-  requestData1.setDataProxy(&dataProxy);
-  requestData1.setDataManager(&mockDataClientManager);
+  ResponseData  testResponseData = TestResponseValues().responseData1;
+  RequestData   requestData     = TestRequestValues().requestData1;
+  requestData.setDataProxy(&dataProxy);
+  requestData.setDataClientManager(&mockDataClientManager);
 
   mockDataProvider.moveToThread(dataThread);
 
@@ -60,17 +61,18 @@ TEST(DataProxy, requestData)
     FAIL();
   });
 
-  QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+  QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const ResponseData &responseData)
   {
     //Async code
-    EXPECT_EQ(responseData.requestMap().count(), testResponseData.requestMap().count());
-    ASSERT_EQ(responseData.requestMap().count(), testResponseData.requestMap().count());
+    EXPECT_EQ(responseData.responseMap().count(), testResponseData.responseMap().count());
+    ASSERT_EQ(responseData.responseMap().count(), testResponseData.responseMap().count());
     EXPECT_TRUE( responseData.requestType() == testResponseData.requestType() );
 
-    QMapIterator<Request, RequestDataMatrix> responseItr(responseData.requestMap());
-    QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
+    QMapIterator<Request, ResponseValue> responseItr(responseData.responseMap());
+    QMapIterator<Request, ResponseValue> testResponseItr(testResponseData.responseMap());
 
-    while(testResponseItr.hasNext() && responseItr.hasNext()) {
+    while(testResponseItr.hasNext() && responseItr.hasNext())
+    {
         testResponseItr.next();
         responseItr.next();
 
@@ -78,16 +80,17 @@ TEST(DataProxy, requestData)
         EXPECT_TRUE( testResponseItr.value() == responseItr.value() );
     }
 
-    MockDataClientManager* dataClientManager = dynamic_cast<MockDataClientManager*>(responseData.dataManager());
+    MockDataClientManager* dataClientManager = dynamic_cast<MockDataClientManager*>(responseData.dataClientManager());
 
     if(dataClientManager)
     {
-      QMapIterator<Request, RequestDataMatrix> responseItr(dataClientManager->requestData().requestMap());
-      QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
+      QMapIterator<Request, ResponseValue> responseItr(dataClientManager->responseData().responseMap());
+      QMapIterator<Request, ResponseValue> testResponseItr(testResponseData.responseMap());
 
       usleep(1000); // Strange things happen. It seems that the data are not ready yet.
 
-      while(testResponseItr.hasNext() && responseItr.hasNext()) {
+      while(testResponseItr.hasNext() && responseItr.hasNext())
+      {
           testResponseItr.next();
           responseItr.next();
 
@@ -102,7 +105,9 @@ TEST(DataProxy, requestData)
 
   dataThread->start();
   quitEventLoopTimer.start();
-  dataProxy.requestData(requestData1);
+  dataProxy.requestData(requestData);
+
+
   if(waitForLoop->isRunning() == false)
     waitForLoop->exec(); // Wait until the dataThread sends the data
 

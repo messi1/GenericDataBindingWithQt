@@ -7,13 +7,17 @@ DCPushButton::DCPushButton(IDataClientManager &dataClientManager, QWidget *paren
 
 }
 
-void DCPushButton::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
-                                const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
+void DCPushButton::setValueList(const Request& /*request*/, const QStringList& /*valueList*/, const QStringList& /*rangeList*/)
 {
 
 }
 
-void DCPushButton::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+void DCPushButton::setAccessRights(const QString &/*accessRights*/)
+{
+
+}
+
+void DCPushButton::setErrorList(const Request &/*request*/, const QStringList &/*responseErrorList*/)
 {
 
 }

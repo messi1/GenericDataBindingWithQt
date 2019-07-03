@@ -23,17 +23,8 @@ class IDataClientManager;
 class IDataProxy;
 
 //-------------------------------------------------------------------------------------------------
-struct RequestDataMatrix {
-    QStringList        valueList;
-    QStringList        rangeList;
-    QStringList        errorList;
-    QString            accessRights;
-};
-//-------------------------------------------------------------------------------------------------
-bool operator==(const RequestDataMatrix& dataMatrix1, const RequestDataMatrix& dataMatrix2);
-//-------------------------------------------------------------------------------------------------
-using RequestMap    = QMap<Request, RequestDataMatrix>;
-using RequestList   = QList<Request>;
+using RequestMap              = QMap<Request, QStringList>;
+using RequestList             = QList<Request>;
 //-------------------------------------------------------------------------------------------------
 
 class RequestData
@@ -42,33 +33,23 @@ public:
   RequestData()=default;
   RequestData(IDataClientManager* dataManager, IDataProxy* dataProxy);
 
-  void setDataManager(IDataClientManager* dataManager);
-  IDataClientManager* dataManager() const;
+  void setDataClientManager(IDataClientManager* dataManager);
+  IDataClientManager* dataClientManager() const;
 
   void setDataProxy(IDataProxy* dataProxy);
   IDataProxy*   dataProxy() const;
 
-  const QString accessRights(const Request& request) const;
-
   bool valueList(const Request& request, QStringList &valueList);
-  bool rangeList(const Request& request, QStringList& rangeList);
-  bool errorList(const Request& request, QStringList& errorList);
-
   void setValueList(const Request& request, const QStringList& valueList);
-  void setRangeList(const Request& request, const QStringList& rangeList);
-  void setErrorList(const Request& request, const QStringList& errorList);
 
   void addRequestList(const RequestList& requestList);
-  void addRequest(const Request& request, const QString& accessRights="");
-  void addRequest(const Request& request, const QStringList& valueList, const QString& accessRights="");
-  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QString& accessRights="");
-  void addRequest(const Request& request, const QStringList& valueList, const QStringList& rangeList,
-                  const QStringList& errorList, const QString& accessRights="");
-
-  void setRequestMap(const RequestMap& requestMap);
-  const RequestMap &requestMap() const;
+  void addRequest(const Request& request);
+  void addRequest(const Request& request, const QStringList& valueList);
 
   void clearAllData();
+
+  void setRequestMap(const RequestMap &requestMap);
+  const RequestMap &requestMap() const;
 
   bool operator==(const RequestData& obj) const;
 
@@ -80,14 +61,12 @@ private:
   IDataProxy*         mCallerProxy   = nullptr;
 
   RequestMap  mRequestMap;
-  RequestType mRequestType   = RequestType::GetValues;
+  RequestType mRequestType = RequestType::GetValues;
 };
 
 //-------------------------------------------------------------------------------------------------
 // Serializer/Deserializer for RequestData Type
 //-------------------------------------------------------------------------------------------------
-QDataStream& operator<<(QDataStream& out, const RequestDataMatrix& stringMatrix);
-QDataStream& operator>>(QDataStream&  in,       RequestDataMatrix& stringMatrix);
 QDataStream& operator<<(QDataStream& out, const RequestData& requestData);
 QDataStream& operator>>(QDataStream&  in,       RequestData& requestData);
 QDataStream &operator<<(QDataStream& out, const Request&  request);

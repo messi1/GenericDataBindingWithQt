@@ -9,7 +9,7 @@ INCLUDEPATH += \
                .. \
                ../..
 
-LIBS += -L../../RequestData/ -lRequestDataLib
+LIBS += -L../../RequestResponseData/ -lRequestResponseDataLib
 
 HEADERS +=
 

@@ -16,13 +16,14 @@
 #define ICONNECTOR_H
 
 class RequestData;
+class ResponseData;
 
 
 class IConnector
 {
 public:
   virtual  ~IConnector()=default;
-  virtual bool requestData(const RequestData& paramData, RequestData& responseData) = 0;
+  virtual bool requestData(const RequestData& paramData, ResponseData& responseData) = 0;
 };
 
 

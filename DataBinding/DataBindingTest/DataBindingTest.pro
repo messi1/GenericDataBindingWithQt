@@ -5,14 +5,15 @@ QT      += testlib core
 
 INCLUDEPATH += \
                .. \
-               ../..
+               ../.. \
+               ../../RequestResponseData/
+
+PRE_TARGETDEPS += ../../RequestResponseData/libRequestResponseDataLib.a \
+                  ../libDataBindingLib.a
 
 LIBS += -L../ -lDataBindingLib \
-        -L../../RequestData/ -lRequestDataLib \
+        -L../../RequestResponseData/ -lRequestResponseDataLib \
         -L/usr/local/lib -lgtest
-
-PRE_TARGETDEPS += ../../RequestData/libRequestDataLib.a \
-                  ../libDataBindingLib.a
 
 HEADERS += \
     tst_DataClient.h \

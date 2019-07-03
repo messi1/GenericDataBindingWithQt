@@ -25,8 +25,7 @@ public:
     virtual ~IDataProvider() = default;
 
 public slots:
-  virtual void requestData(const RequestData& requestData) = 0;
-
+    virtual void requestData(const RequestData& requestData) = 0;
 };
 
 Q_DECLARE_INTERFACE(IDataProvider, "IDataProvider")

@@ -17,8 +17,8 @@
 #include "DataBinding/IDataClientManager.h"
 #include "DataProxy.h"
 #include "IDataProvider.h"
-#include "RequestData/RequestData.h"
-
+#include "RequestResponseData/RequestData.h"
+#include "RequestResponseData/ResponseData.h"
 
 //--------------------------------------------------------------------------------------------------------
 DataProxy::DataProxy(IDataProvider &dataProvider, QObject *parent)
@@ -39,11 +39,11 @@ void DataProxy::requestData(const RequestData &requestData)
 //--------------------------------------------------------------------------------------------------------
 // Received data from dataThread to the main thread and forward it to the dataClientManager.
 //--------------------------------------------------------------------------------------------------------
-void DataProxy::responseReceived(const RequestData& requestData)
+void DataProxy::responseReceived(const ResponseData &responseData)
 {
-  if(requestData.dataManager())
+  if(responseData.dataClientManager())
   {
-    requestData.dataManager()->newValueReceived(requestData);
+    responseData.dataClientManager()->newValueReceived(responseData);
   }
 }
 

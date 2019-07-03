@@ -9,9 +9,9 @@ class DCLineEdit : public QLineEdit, public DataClient
     Q_OBJECT
 public:
     explicit DCLineEdit(IDataClientManager &dataClientManager, QWidget *parent = nullptr);
-    void setValueList( const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList) override;
-    void setStatusList(const Request& request, const QStringList& responseStatusList, const QStringList& responseErrorList) final;
-    void setAccessRights(const QString& accessRights) override;
+    void setValueList( const Request& request, const QStringList& valueList, const QStringList& rangeList) override;
+    void setAccessRights(const QString& accessRights)override;
+    void setErrorList(const Request& request, const QStringList& responseErrorList)override;
     void refresh() override;
 };
 

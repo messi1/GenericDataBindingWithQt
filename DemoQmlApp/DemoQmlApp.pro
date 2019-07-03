@@ -7,7 +7,7 @@ INCLUDEPATH += ../
 
 LIBS += -L../DataBinding  -lDataBindingLib
 LIBS += -L../DataProvider -lDataProviderLib
-LIBS += -L../RequestData  -lRequestDataLib
+LIBS += -L../RequestResponseData  -lRequestResponseDataLib
 
 SOURCES += \
     main.cpp \

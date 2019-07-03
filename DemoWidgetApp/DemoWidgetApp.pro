@@ -8,7 +8,7 @@ INCLUDEPATH += ../
 
 LIBS += -L../DataBinding  -lDataBindingLib
 LIBS += -L../DataProvider -lDataProviderLib
-LIBS += -L../RequestData  -lRequestDataLib
+LIBS += -L../RequestResponseData  -lRequestResponseDataLib
 
 
 HEADERS += DataClientManagers/BaseFrame.h \
@@ -21,11 +21,12 @@ HEADERS += DataClientManagers/BaseFrame.h \
 
 
 SOURCES += main.cpp \
-           DataClientManagers/BaseFrame.cpp \
+    DataClientManagers/BaseFrame.cpp \
     DataClients/DCPushButton.cpp \
     DataClients/DCCheckBox.cpp \
     DataClients/DCLabel.cpp \
     DataClients/DCComboBox.cpp \
     DataClients/DCTextEdit.cpp \
     DataClients/DCLineEdit.cpp \
-    ../DataProvider/DataProviderTest/TestValues.cpp
+    ../RequestResponseData/RequestResponseDataTest/TestRequestValues.cpp \
+    ../RequestResponseData/RequestResponseDataTest/TestResponseValues.cpp

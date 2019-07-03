@@ -8,6 +8,7 @@ CONFIG        += staticlib
 
 INCLUDEPATH += \
                .. \
+               ../RequestResponseData/
 
 
 HEADERS   += \

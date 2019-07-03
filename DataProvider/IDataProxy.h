@@ -18,16 +18,17 @@
 #include <QObject>
 
 class RequestData;
+class ResponseData;
 
 class IDataProxy
 {
 public:
-  virtual ~IDataProxy()=default;
-  virtual void requestData(const RequestData& requestData) = 0;
+    virtual ~IDataProxy()=default;
+    virtual void requestData(const RequestData& requestData) = 0;
 
-  signals:
-    virtual void sigRequestData(const RequestData& requestData)  = 0;
-    virtual void sigResponseData(const RequestData& requestData) = 0;
+signals:
+    virtual void sigRequestData(const RequestData& requestData)   = 0;
+    virtual void sigResponseData(const ResponseData& requestData) = 0;
 };
 
 Q_DECLARE_INTERFACE(IDataProxy, "IDataProxy")

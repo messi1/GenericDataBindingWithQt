@@ -7,13 +7,17 @@ DCTextEdit::DCTextEdit(IDataClientManager &dataClientManager, QWidget *parent)
 
 }
 
-void DCTextEdit::setValueList(const Request& /*request*/, const QStringList& /*valueList*/,
-                              const QStringList& /*rangeList*/, const QStringList& /*errorList*/)
+void DCTextEdit::setAccessRights(const QString &/*accessRights*/)
 {
 
 }
 
-void DCTextEdit::setStatusList(const Request &/*request*/, const QStringList &/*responseStatusList*/, const QStringList &/*responseErrorList*/)
+void DCTextEdit::setErrorList(const Request &/*request*/, const QStringList &/*responseErrorList*/)
+{
+
+}
+
+void DCTextEdit::setValueList(const Request& /*request*/, const QStringList& /*valueList*/, const QStringList& /*rangeList*/)
 {
 
 }

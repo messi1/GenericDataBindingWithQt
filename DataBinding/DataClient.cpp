@@ -18,8 +18,8 @@
 #include "DataClient.h"
 #include "IDataClientManager.h"
 
-#include "RequestData/RequestCommand.h"
-#include "RequestData/RequestData.h"
+#include "RequestResponseData/RequestCommand.h"
+#include "RequestResponseData/RequestData.h"
 
 //--------------------------------------------------------------------------------------------------------
 DataClient::DataClient(IDataClientManager &dataClientManager)

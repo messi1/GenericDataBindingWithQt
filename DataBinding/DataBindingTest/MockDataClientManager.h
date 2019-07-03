@@ -24,13 +24,12 @@ public:
   void requestGetClientData(IDataClient* /*dataClient*/, const Request& /*request*/) final;
   void requestGetAllClientData() final {}
 
-  virtual void newValueReceived( const RequestData &requestData) final { mRequestData = requestData; }
-  virtual void newStatusReceived(const RequestData &RequestData) final { mRequestData = RequestData; }
+  virtual void newValueReceived( const ResponseData &responseData) final { mRequestData = responseData; }
 
-  const RequestData& requestData() const {return mRequestData;}
+  const ResponseData& requestData() const {return mRequestData;}
 
 private:
-  RequestData mRequestData;
+  ResponseData mRequestData;
 };
 
 void MockDataClientManager::requestGetClientData(IDataClient* dataClient, const Request& request)
@@ -42,7 +41,7 @@ void MockDataClientManager::requestGetClientData(IDataClient* dataClient, const 
     requestData.addRequest(request);
     requestData.setRequestType(RequestType::GetValues);
 
-    dataClient->setValueList(request, {"BlaBla"}, QStringList(), QStringList());
+    dataClient->setValueList(request, {"BlaBla"}, QStringList());
   }
 }
 #endif // MOCKDATACLIENTMANAGER_H

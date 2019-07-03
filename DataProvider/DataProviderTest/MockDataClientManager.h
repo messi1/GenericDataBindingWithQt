@@ -22,7 +22,6 @@ class MockDataClientManager: public IDataClientManager
 {
 
 public:
-
   MockDataClientManager() = default;
   virtual ~MockDataClientManager() = default;
   void registerClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
@@ -39,13 +38,12 @@ public:
   void requestGetClientData(IDataClient* /*dataClient*/, const Request& /*request*/) final {}
   void requestGetAllClientData() final {}
 
-  virtual void newValueReceived( const RequestData &requestData) final { mRequestData = requestData; }
-  virtual void newStatusReceived(const RequestData &requestData) final { mRequestData = requestData; }
+  virtual void newValueReceived( const ResponseData &responseData) final { mResponseData = responseData; }
 
-  const RequestData& requestData() const {return mRequestData;}
+  const ResponseData& responseData() const {return mResponseData;}
 
 private:
-  RequestData mRequestData;
+  ResponseData mResponseData;
 };
 
 #endif // MOCKDATACLIENTMANAGER_H
