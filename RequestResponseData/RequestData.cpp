@@ -97,7 +97,7 @@ const RequestMap &RequestData::requestMap() const
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::clearAllData()
+void RequestData::clearAllValues()
 {
     QMapIterator<Request, QStringList> it(mRequestMap);
 
@@ -105,6 +105,12 @@ void RequestData::clearAllData()
         it.next();
         mRequestMap[it.key()].clear();
     }
+}
+
+//-------------------------------------------------------------------------------------------------
+void RequestData::clearRequestMap()
+{
+    mRequestMap.clear();
 }
 
 //-------------------------------------------------------------------------------------------------

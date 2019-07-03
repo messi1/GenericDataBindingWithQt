@@ -173,23 +173,46 @@ TEST(RequestData, addRequestsWithSameRequest)
 TEST(RequestData, addMultipleRequests)
 {
     TestRequestValues testValues;
-
     RequestData requestData;
     QStringList valueList;
 
     requestData.addRequest(testValues.request1);
-    EXPECT_TRUE(requestData.requestMap().keys().count() == 1 && requestData.requestMap().values().count() == 1 );
+    EXPECT_TRUE(requestData.requestMap().keys().count() == 1
+                && requestData.requestMap().values().count() == 1);
     requestData.valueList(testValues.request1, valueList);
     EXPECT_TRUE(valueList.isEmpty());
 
     requestData.addRequest(testValues.request1);
     requestData.addRequest(testValues.request2, testValues.valueList1);
     requestData.valueList(testValues.request2, valueList);
-    EXPECT_TRUE(requestData.requestMap().keys().count() == 2 && requestData.requestMap().values().count() == 2 );
-    EXPECT_TRUE(valueList.count() == testValues.valueList1.count() );
+    EXPECT_TRUE(requestData.requestMap().keys().count() == 2
+                && requestData.requestMap().values().count() == 2);
+    EXPECT_TRUE(valueList.count() == testValues.valueList1.count());
 
     requestData.addRequest(testValues.request3, testValues.valueList2);
-    EXPECT_TRUE(requestData.requestMap().keys().count() == 3 && requestData.requestMap().values().count() == 3 );
+    EXPECT_TRUE(requestData.requestMap().keys().count() == 3
+                && requestData.requestMap().values().count() == 3);
     requestData.valueList(testValues.request3, valueList);
     EXPECT_TRUE(valueList.count() == testValues.valueList2.count());
+}
+
+//-------------------------------------------------------------------------------------------------
+TEST(RequestData, addRequestList)
+{
+    TestRequestValues testValues;
+    RequestData requestData;
+
+    requestData.addRequestList(
+        {testValues.request1, testValues.request1, testValues.request1, testValues.request1});
+    EXPECT_TRUE(requestData.requestMap().keys().count() == 1);
+
+    requestData.addRequestList({testValues.request1,
+                                testValues.request2,
+                                testValues.request3,
+                                testValues.request4,
+                                testValues.request5});
+    EXPECT_TRUE(requestData.requestMap().keys().count() == 5);
+
+    requestData.clearRequestMap();
+    EXPECT_TRUE(requestData.requestMap().keys().isEmpty());
 }

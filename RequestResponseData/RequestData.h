@@ -46,8 +46,9 @@ public:
   void addRequest(const Request& request);
   void addRequest(const Request& request, const QStringList& valueList);
 
-  void clearAllData();
+  void clearAllValues();
 
+  void clearRequestMap();
   void setRequestMap(const RequestMap &requestMap);
   const RequestMap &requestMap() const;
 

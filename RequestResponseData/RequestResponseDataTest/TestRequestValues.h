@@ -32,9 +32,9 @@ struct TestRequestValues
     const Request request2{RequestCmd::WlanState, false, 1};
     const Request request3{RequestCmd::Language,  true , 2};
 
-    const Request request4{RequestCmd::WlanList,  false, 3};
-    const Request request5{RequestCmd::WlanState, true,  4};
-    const Request request6{RequestCmd::Language,  false, 5};
+    const Request request4{RequestCmd::BatteryState, false, 3};
+    const Request request5{RequestCmd::DateTime,     true,  4};
+    const Request request6{RequestCmd::EthState,     false, 5};
 
     const QList<Request> requestList{ request1, request2, request3, request4, request5, request6 };
 
