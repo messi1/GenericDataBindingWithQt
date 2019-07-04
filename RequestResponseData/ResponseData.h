@@ -39,8 +39,6 @@ bool operator==(const ResponseValue &dataValue1,
 //-------------------------------------------------------------------------------------------------
 using ResponseMap             = QMap<Request, ResponseValue>;
 using RequestList             = QList<Request>;
-using DataProxyWeakPtr        = QWeakPointer<IDataProxy>;
-using DataClientMangerWeakPtr = QWeakPointer<IDataClientManager>;
 //-------------------------------------------------------------------------------------------------
 
 class ResponseData
@@ -67,8 +65,7 @@ public:
     void addResponse(const Request& request, const QString& accessRights="");
     void addResponse(const Request& request, const QStringList& valueList, const QString& accessRights="");
     void addResponse(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QString& accessRights="");
-    void addResponse(const Request& request, const QStringList& valueList, const QStringList& rangeList,
-                    const QStringList& errorList, const QString& accessRights="");
+    void addResponse(const Request& request, const QStringList& valueList, const QStringList& rangeList, const QStringList& errorList, const QString& accessRights="");
 
     bool operator==(const ResponseData& obj) const;
 

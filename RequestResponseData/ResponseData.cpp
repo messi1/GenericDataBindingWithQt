@@ -191,7 +191,8 @@ void ResponseData::clearAllData()
 {
     QMapIterator<Request, ResponseValue> it(mResponseMap);
 
-    while (it.hasNext()) {
+    while (it.hasNext())
+    {
         it.next();
         mResponseMap[it.key()].valueList.clear();
         mResponseMap[it.key()].rangeList.clear();
@@ -257,6 +258,3 @@ QDataStream &operator>>(QDataStream &in,  ResponseData &responseData)
 
   return in;
 }
-
-
-
