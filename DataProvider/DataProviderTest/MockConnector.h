@@ -22,8 +22,8 @@
 #include "RequestResponseData/ResponseData.h"
 #include "RequestResponseData/RequestCommand.h"
 #include "RequestBroker/IConnector.h"
-#include "TestRequestValues.h"
-#include "TestResponseValues.h"
+#include "RequestResponseData/RequestResponseDataTest/TestRequestValues.h"
+#include "RequestResponseData/RequestResponseDataTest/TestResponseValues.h"
 
 class MockConnector: public IConnector
 {

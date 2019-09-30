@@ -1,8 +1,8 @@
 #ifndef MOCKDATACLIENTMANAGER_H
 #define MOCKDATACLIENTMANAGER_H
 
-#include "IDataClient.h"
-#include "IDataClientManager.h"
+#include "DataBinding/IDataClient.h"
+#include "DataBinding/IDataClientManager.h"
 
 class MockDataClientManager: public IDataClientManager
 {

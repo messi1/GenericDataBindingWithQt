@@ -4,16 +4,21 @@ project(DataBinding)
 add_library(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
-        PRIVATE
-		DataClient.h
-		DataClient.cpp
-		DataClientManager.h
-		DataClientManager.cpp
-		IDataClient.h
-		IDataClientManager.h
+    PRIVATE
+        DataClient.h
+        DataClient.cpp
+        DataClientManager.h
+        DataClientManager.cpp
+        IDataClient.h
+        IDataClientManager.h
+)
+
+target_include_directories(${PROJECT_NAME}
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME}
-        PUBLIC
-	Qt5::Core
+    PUBLIC
+        Qt5::Core
 )

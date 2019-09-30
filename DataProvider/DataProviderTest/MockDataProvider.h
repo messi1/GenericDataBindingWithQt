@@ -24,8 +24,8 @@
 
 #include "RequestResponseData/RequestData.h"
 
-#include "TestRequestValues.h"
-#include "TestResponseValues.h"
+#include "RequestResponseData/RequestResponseDataTest/TestRequestValues.h"
+#include "RequestResponseData/RequestResponseDataTest/TestResponseValues.h"
 
 class MockDataProvider: public QObject, public IDataProvider
 {

@@ -22,8 +22,8 @@
 #include "DataProvider/DataProxy.h"
 #include "MockDataClientManager.h"
 #include "MockDataProvider.h"
-#include "TestRequestValues.h"
-#include "TestResponseValues.h"
+//#include "RequestResponseData/RequestResponseDataTest/TestRequestValues.h"
+//#include "RequestResponseData/RequestResponseDataTest/TestResponseValues.h"
 
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
@@ -49,7 +49,7 @@ TEST(DataProxy, requestData)
   dataThread->setObjectName("dataThread");
 
   ResponseData  testResponseData = TestResponseValues().responseData1;
-  RequestData   requestData     = TestRequestValues().requestData1;
+  RequestData   requestData      = TestRequestValues().requestData1;
   requestData.setDataProxy(&dataProxy);
   requestData.setDataClientManager(&mockDataClientManager);
 

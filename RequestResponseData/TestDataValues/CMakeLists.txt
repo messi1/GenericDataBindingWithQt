@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.13)
-project(DataProvider)
+project(TestDataValues)
 
 add_library(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
-        PRIVATE
-		DataProvider.h
-		DataProvider.cpp
-		DataProxy.h
-		DataProxy.cpp
-		IDataProvider.h
-		IDataProxy.h
+    PRIVATE
+    TestRequestValues.h
+    TestResponseValues.h
+    TestRequestValues.cpp
+    TestResponseValues.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -19,6 +17,7 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-        PUBLIC
-	Qt5::Core
+    PUBLIC
+        RequestResponseData
 )
+

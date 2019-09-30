@@ -3,7 +3,7 @@
 
 #include "RequestResponseData/RequestCommand.h"
 
-#include "DataClientManager.h"
+#include "DataBinding/DataClientManager.h"
 #include "MockDataProxy.h"
 #include "TestDataClient.h"
 

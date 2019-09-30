@@ -1,26 +1,25 @@
 cmake_minimum_required(VERSION 3.13)
-project(RequestResponseData)
+project(RequestResponseDataTest)
 
-add_library(${PROJECT_NAME})
+add_executable(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-		RequestCommand.h
-		RequestCommand.cpp
-		RequestData.h
-		RequestData.cpp
-		ResponseData.h
-		ResponseData.cpp
+    tst_ResponseData.h
+    tst_RequestData.h
+    main.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
     PRIVATE
-        Qt5::Core
         ${CMAKE_SOURCE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME}
     PUBLIC
-    Qt5::Core
+        RequestResponseData
+        TestDataValues
+        ${GTEST_LIBRARIES}
+        pthread
 )
 

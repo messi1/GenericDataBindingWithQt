@@ -2,7 +2,7 @@
 #define TESTDATACLIENT_H
 
 #include <QString>
-#include "DataClient.h"
+#include "DataBinding/DataClient.h"
 
 class TestDataClient : public DataClient
 {

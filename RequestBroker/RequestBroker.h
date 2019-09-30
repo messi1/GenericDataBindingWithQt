@@ -9,7 +9,7 @@ class RequestBroker : public IConnector
 public:
     RequestBroker();
     virtual ~RequestBroker() override = default;
-    bool requestData(const RequestData& requestData, RequestData& responseData) final;
+    virtual bool requestData(const RequestData& requestData, RequestData& responseData) final;
 
 };
 
