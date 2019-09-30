@@ -3,7 +3,7 @@ project(DemoWidgetApp)
 
 add_executable(${PROJECT_NAME})
 
-find_package(Qt5 COMPONENTS Gui Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
