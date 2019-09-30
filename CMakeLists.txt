@@ -19,5 +19,6 @@ add_subdirectory(RequestResponseData/TestDataValues)
 add_subdirectory(RequestResponseData/RequestResponseDataTest)
 add_subdirectory(IntegrationTest)
 add_subdirectory(DemoWidgetApp)
+add_subdirectory(DemoQmlApp)
 
 add_custom_target(Diagram SOURCES   doc/ClassDiagram.png  doc/ClassDiagram.uml)
