@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __IDATA_PROXY
-#define __IDATA_PROXY
+#ifndef IDATA_PROXY
+#define IDATA_PROXY
 
 #include <QObject>
 
@@ -33,4 +33,4 @@ signals:
 
 Q_DECLARE_INTERFACE(IDataProxy, "IDataProxy")
 
-#endif // __IDATA_PROXY
+#endif // IDATA_PROXY

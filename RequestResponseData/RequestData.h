@@ -34,10 +34,10 @@ public:
   RequestData(IDataClientManager* dataManager, IDataProxy* dataProxy);
 
   void setDataClientManager(IDataClientManager* dataManager);
-  IDataClientManager* dataClientManager() const;
+  [[nodiscard]] IDataClientManager* dataClientManager() const;
 
   void setDataProxy(IDataProxy* dataProxy);
-  IDataProxy*   dataProxy() const;
+  [[nodiscard]] IDataProxy*   dataProxy() const;
 
   bool valueList(const Request& request, QStringList &valueList);
   void setValueList(const Request& request, const QStringList& valueList);
@@ -50,11 +50,11 @@ public:
 
   void clearRequestMap();
   void setRequestMap(const RequestMap &requestMap);
-  const RequestMap &requestMap() const;
+  [[nodiscard]] const RequestMap &requestMap() const;
 
   bool operator==(const RequestData& obj) const;
 
-  RequestType requestType() const;
+  [[nodiscard]] RequestType requestType() const;
   void setRequestType(const RequestType &requestType);
 
 private:

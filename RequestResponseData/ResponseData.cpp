@@ -57,17 +57,15 @@ IDataProxy *ResponseData::dataProxy() const
 }
 
 //-------------------------------------------------------------------------------------------------
-const QString ResponseData::accessRights(const Request &request) const
+QString ResponseData::accessRights(const Request &request) const
 {
     bool res = mResponseMap.contains(request);
     if (res)
     {
         return mResponseMap[request].accessRights;
     }
-    else
-    {
-        return QString();
-    }
+
+    return QString();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -241,7 +239,6 @@ QDataStream &operator>>(QDataStream &in, ResponseValue &stringMatrix)
 QDataStream &operator<<(QDataStream &out, const ResponseData &responseData)
 {
   out << responseData.responseMap();
-
   return out;
 }
 

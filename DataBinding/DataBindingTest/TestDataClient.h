@@ -25,7 +25,8 @@ TestDataClient::TestDataClient(IDataClientManager& dataClientManager)
   : DataClient(dataClientManager)
 {}
 
-void TestDataClient::setValueList(const Request& /*requestCmd*/, const QStringList& valueList, const QStringList& /*rangeList*/)
+inline void TestDataClient::setValueList(const Request & /*requestCmd*/, const QStringList &valueList,
+                                         const QStringList & /*rangeList*/)
 {
   if(valueList.count() > 0)
     mData = valueList.at(0);

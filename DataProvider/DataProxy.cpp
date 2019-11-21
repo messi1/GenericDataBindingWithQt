@@ -22,18 +22,17 @@
 
 //--------------------------------------------------------------------------------------------------------
 DataProxy::DataProxy(IDataProvider &dataProvider, QObject *parent)
-: QObject(parent),
-  mDataProvider(dataProvider)
+    : QObject(parent), mDataProvider(dataProvider)
 {
-  setObjectName("Dataproxy");
-  connect(this, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(&mDataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-  connect(this, &DataProxy::sigResponseData, this, &DataProxy::responseReceived, Qt::QueuedConnection);
+    setObjectName("Dataproxy");
+    connect(this, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(&mDataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
+    connect(this, &DataProxy::sigResponseData, this, &DataProxy::responseReceived, Qt::QueuedConnection);
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataProxy::requestData(const RequestData &requestData)
 {
-      emit sigRequestData(requestData);
+    emit sigRequestData(requestData);
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -41,10 +40,10 @@ void DataProxy::requestData(const RequestData &requestData)
 //--------------------------------------------------------------------------------------------------------
 void DataProxy::responseReceived(const ResponseData &responseData)
 {
-  if(responseData.dataClientManager())
-  {
-    responseData.dataClientManager()->newValueReceived(responseData);
-  }
+    if(responseData.dataClientManager())
+    {
+        responseData.dataClientManager()->newValueReceived(responseData);
+    }
 }
 
 

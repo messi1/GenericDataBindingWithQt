@@ -27,20 +27,20 @@ class DataClient : public IDataClient
 public:
     DataClient() = delete;
     explicit DataClient(IDataClientManager& dataClientManager);
-    virtual ~DataClient() = default;
+    ~DataClient() override = default;
 
-    void registerRequestCmd(const RequestCmd requestCmd);
-    void changeRegisteredRequestCmd(const RequestCmd oldRequestCmd, const RequestCmd newRequestCmd);
-    void deregisterRequestCmd(const RequestCmd requestCmd);
+    void registerRequestCmd(RequestCmd requestCmd);
+    void changeRegisteredRequestCmd(RequestCmd oldRequestCmd, RequestCmd newRequestCmd);
+    void deregisterRequestCmd(RequestCmd requestCmd);
     void deregisterClient();
 
-    void requestGetData(const RequestCmd requestCmd,  bool withRange = false, quint8 contextId = 0);
-    void requestSaveData(const RequestCmd requestCmd, const QString& requestValue);
-    virtual void setValueList( const Request& request, const QStringList& responseValueList,
+    void requestGetData(RequestCmd requestCmd,  bool withRange = false, quint8 contextId = 0);
+    void requestSaveData(RequestCmd requestCmd, const QString& requestValue);
+    void setValueList( const Request& request, const QStringList& responseValueList,
                                const QStringList& responseRangeList)override = 0;
-    virtual void setAccessRights(const QString& accessRights)override = 0;
-    virtual void setErrorList(const Request& request, const QStringList& responseErrorList)override = 0;
-    virtual void refresh()override = 0;
+    void setAccessRights(const QString& accessRights)override = 0;
+    void setErrorList(const Request& request, const QStringList& responseErrorList)override = 0;
+    void refresh()override = 0;
 
 protected:
     IDataClientManager& mDataClientManager;

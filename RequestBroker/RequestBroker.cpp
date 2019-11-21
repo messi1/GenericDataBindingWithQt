@@ -1,14 +1,10 @@
-
-
 #include "RequestBroker.h"
 #include "RequestResponseData/RequestCommand.h"
 
+//RequestBroker::RequestBroker()
+//{}
 
-
-RequestBroker::RequestBroker()
-{}
-
-bool RequestBroker::requestData(const RequestData &/*requestData*/, RequestData &/*responseData*/)
+bool RequestBroker::requestData(const RequestData &/*requestData*/, ResponseData &/*responseData*/)
 {
   return false;
 }

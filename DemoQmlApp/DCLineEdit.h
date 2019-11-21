@@ -7,7 +7,7 @@ class DCLineEdit : public QQuickItem
 {
   Q_OBJECT
 public:
-  DCLineEdit();
+  DCLineEdit()=default;
 
 signals:
 

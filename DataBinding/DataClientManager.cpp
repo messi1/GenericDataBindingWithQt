@@ -41,59 +41,58 @@ IDataProxy *DataClientManager::dataProxy()const
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::setDataProxy(IDataProxy& dataProxy)
 {
-  mDataProxy = dataProxy;
+    mDataProxy = dataProxy;
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::registerClient(const Request& request, IDataClient* dataClient)
 {
-  if(dataClient)
-  {
-    if(mClientRequestMap.contains(request))
+    if(dataClient)
     {
-      if(mClientRequestMap[request].contains(dataClient) == false )
-        mClientRequestMap[request].append(dataClient);
-      else
-        qDebug() << "registerValue(): Could register client because it is already registered ";
+        if(mClientRequestMap.contains(request))
+        {
+            if( not mClientRequestMap[request].contains(dataClient) )
+                mClientRequestMap[request].append(dataClient);
+            else
+                qDebug() << "registerValue(): Could register client because it is already registered ";
+        }
+        else
+        {
+            mClientRequestMap.insert(request, ClientVector{dataClient});
+        }
     }
-    else
-    {
-      mClientRequestMap.insert(request, ClientVector{dataClient});
-    }
-  }
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::deregisterClient(const Request& request, IDataClient* dataClient)
 {
-  if(dataClient)
-  {
-    if(mClientRequestMap.contains(request))
+    if(dataClient)
     {
-        bool isContaining = mClientRequestMap[request].contains(dataClient) ;
+        if(mClientRequestMap.contains(request))
+        {
+            bool isContaining = mClientRequestMap[request].contains(dataClient) ;
 
+            if(isContaining)
+            {
+                mClientRequestMap[request].removeAll(dataClient);
 
-      if(isContaining)
-      {
-        mClientRequestMap[request].removeAll(dataClient);
-
-        if(mClientRequestMap[request].count() == 0)
-            mClientRequestMap.remove(request);
-      }
+                if(mClientRequestMap[request].count() == 0)
+                    mClientRequestMap.remove(request);
+            }
+        }
     }
-  }
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::deregisterAllClient(IDataClient* dataClient)
 {
-  if(dataClient)
-  {
-    foreach (ClientVector value, mClientRequestMap)
+    if(dataClient)
     {
-      value.removeAll(dataClient);
+        foreach (ClientVector value, mClientRequestMap)
+        {
+            value.removeAll(dataClient);
+        }
     }
-  }
 }
 
 //--------------------------------------------------------------------------------------------------------
@@ -107,7 +106,7 @@ void DataClientManager::changeRegisteredRequest(IDataClient* dataClient, const R
 }
 
 //--------------------------------------------------------------------------------------------------------
-const RequestList DataClientManager::allClientRequests(IDataClient* dataClient) const
+RequestList DataClientManager::allClientRequests(IDataClient* dataClient) const
 {
     RequestList cmdVector;
 
@@ -162,7 +161,7 @@ void DataClientManager::requestGetClientData(IDataClient* dataClient, const Requ
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::requestGetAllClientData()
 {
-  if(mClientRequestMap.size() > 0)
+  if(not mClientRequestMap.empty())
   {
     RequestData requestData(this, &mDataProxy);
     requestData.setRequestType(RequestType::GetValues);
@@ -210,18 +209,18 @@ void DataClientManager::newValueReceived(const ResponseData &responseData)
     while (responseItr.hasNext())
     {
         responseItr.next();
-        ClientVector* clientVector = &mClientRequestMap[responseItr.key()];
+        const ClientVector* clientVector = &mClientRequestMap[responseItr.key()];
 
-        for (int i = 0; i < clientVector->size(); ++i)
+        for(auto& client: *clientVector)
         {
-            if(responseItr.value().errorList.size() > 0)
+            if(not responseItr.value().errorList.empty())
             {
-                clientVector->at(i)->setErrorList(responseItr.key(), responseItr.value().errorList);
+                client->setErrorList(responseItr.key(), responseItr.value().errorList);
             }
             else
             {
-                clientVector->at(i)->setAccessRights(responseItr.value().accessRights);
-                clientVector->at(i)->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList);
+                client->setAccessRights(responseItr.value().accessRights);
+                client->setValueList( responseItr.key(), responseItr.value().valueList, responseItr.value().rangeList);
             }
         }
     }

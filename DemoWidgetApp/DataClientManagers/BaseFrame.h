@@ -13,7 +13,7 @@ public:
     ~BaseFrame()override = default;
 
 protected:
-    virtual void showEvent(QShowEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 };
 

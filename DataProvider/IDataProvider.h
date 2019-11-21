@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __IDATA_PROVIDER
-#define __IDATA_PROVIDER
+#ifndef IDATA_PROVIDER
+#define IDATA_PROVIDER
 
 #include <QObject>
 
@@ -30,4 +30,4 @@ public slots:
 
 Q_DECLARE_INTERFACE(IDataProvider, "IDataProvider")
 
-#endif // __IDATA_PROVIDER
+#endif // IDATA_PROVIDER

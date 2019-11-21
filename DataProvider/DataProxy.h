@@ -28,16 +28,16 @@ class DataProxy : public QObject, public IDataProxy
     Q_INTERFACES(IDataProxy)
 
 public:
-  explicit DataProxy(IDataProvider& dataProvider, QObject* parent=nullptr);
+    explicit DataProxy(IDataProvider& dataProvider, QObject* parent=nullptr);
 
-  void requestData(const RequestData& requestData) override;
+    void requestData(const RequestData& requestData) override;
 
 private slots:
-  void responseReceived(const ResponseData &responseData);
+    void responseReceived(const ResponseData &responseData);
 
 signals:
-  void sigRequestData(const RequestData& requestData)  override;
-  void sigResponseData(const ResponseData& requestData) override;
+    void sigRequestData(const RequestData& requestData)  override;
+    void sigResponseData(const ResponseData& requestData) override;
 
 private:
     IDataProvider& mDataProvider;

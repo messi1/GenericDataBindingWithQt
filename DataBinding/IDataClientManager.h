@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __IDATA_CLIENT_MANAGER
-#define __IDATA_CLIENT_MANAGER
+#ifndef IDATA_CLIENT_MANAGER
+#define IDATA_CLIENT_MANAGER
 
 // Cant be class forwarded because of multiple inclusion which generate previous declartion error
 #include "RequestResponseData/RequestData.h"
@@ -32,8 +32,8 @@ public:
     virtual void deregisterAllClient(IDataClient* dataClient) = 0;
     virtual void changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequestId, const Request& newRequestId) = 0;
 
-    virtual IDataProxy* dataProxy()  const = 0;
-    virtual IDataClientManager* clone() const = 0;
+    [[nodiscard]] virtual IDataProxy* dataProxy()  const = 0;
+    [[nodiscard]] virtual IDataClientManager* clone() const = 0;
 
     virtual void requestData(const RequestData &requestData) = 0;
     virtual void requestSaveData(const Request& saveRequest,   const QStringList& valueList) = 0;
@@ -44,4 +44,4 @@ public:
     virtual void newValueReceived(const ResponseData &requestData)  = 0;
 };
 
-#endif // __IDATA_CLIENT_MANAGER
+#endif // IDATA_CLIENT_MANAGER

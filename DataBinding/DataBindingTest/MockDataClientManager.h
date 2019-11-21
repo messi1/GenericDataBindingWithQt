@@ -9,14 +9,14 @@ class MockDataClientManager: public IDataClientManager
 public:
 
   MockDataClientManager() = default;
-  virtual ~MockDataClientManager() = default;
+  ~MockDataClientManager() override = default;
   void registerClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
   void deregisterClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
   void deregisterAllClient(IDataClient* /*dataClient*/) final {}
   void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request& /*oldRequest*/, const Request& /*newRequest*/) final {}
 
-  virtual IDataProxy* dataProxy()  const final {return nullptr;}
-  virtual IDataClientManager* clone() const final {return nullptr;}
+  [[nodiscard]] IDataProxy *        dataProxy() const final { return nullptr; }
+  [[nodiscard]] IDataClientManager *clone() const final { return nullptr; }
 
   void requestData(const RequestData& /*requestData*/) final {}
   void requestSaveData(const Request& /*saveRequest*/,   const QStringList& /*valueList*/) final {}
@@ -24,15 +24,15 @@ public:
   void requestGetClientData(IDataClient* /*dataClient*/, const Request& /*request*/) final;
   void requestGetAllClientData() final {}
 
-  virtual void newValueReceived( const ResponseData &responseData) final { mRequestData = responseData; }
+  void newValueReceived(const ResponseData &responseData) final { mRequestData = responseData; }
 
-  const ResponseData& requestData() const {return mRequestData;}
+  [[nodiscard]] const ResponseData &requestData() const { return mRequestData; }
 
-private:
+  private:
   ResponseData mRequestData;
 };
 
-void MockDataClientManager::requestGetClientData(IDataClient* dataClient, const Request& request)
+inline void MockDataClientManager::requestGetClientData(IDataClient *dataClient, const Request &request)
 {
   if( dataClient)
   {

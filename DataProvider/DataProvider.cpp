@@ -27,34 +27,32 @@ DataProvider::DataProvider (IConnector& connector, QObject *parent) :
     QObject(parent),
     mDataConnector(connector)
 {
-  qRegisterMetaType<RequestData>("RequestData");
-  qRegisterMetaType<ResponseData>("ResponseData");
-  setObjectName("DataProvider");
+    qRegisterMetaType<RequestData>("RequestData");
+    qRegisterMetaType<ResponseData>("ResponseData");
+    setObjectName("DataProvider");
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataProvider::requestData(const RequestData& requestData)
 {
-  ResponseData responseData;
-  bool lRes = false;
+    ResponseData responseData;
+    bool lRes = mDataConnector.requestData(requestData, responseData);
 
-  lRes = mDataConnector.requestData(requestData, responseData);
+    if(not lRes)
+    {
+        qCritical() << "requestData failed.";
+    }
 
-  if(!lRes)
-  {
-    qCritical() << "requestData failed.";
-  }
-
-  // Answer received and send it back to the requested proxy
-  if(requestData.dataProxy())
-  {
-    emit requestData.dataProxy()->sigResponseData(responseData);
-  }
-  else
-  {
-    qCritical() << "No Proxy were installed. The data cannot be returned to the caller";
-    Q_ASSERT(requestData.dataProxy());
-//    abort();
-  }
+    // Answer received and send it back to the requested proxy
+    if(requestData.dataProxy())
+    {
+        emit requestData.dataProxy()->sigResponseData(responseData);
+    }
+    else
+    {
+        qCritical() << "No Proxy were installed. The data cannot be returned to the caller";
+        Q_ASSERT(requestData.dataProxy());
+        //    abort();
+    }
 }
 

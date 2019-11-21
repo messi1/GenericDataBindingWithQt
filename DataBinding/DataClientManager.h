@@ -30,12 +30,12 @@ class DataClientManager : public IDataClientManager
 {
 public:
     explicit DataClientManager(IDataProxy& dataProxy);
-    virtual ~DataClientManager() override;
+    ~DataClientManager() override;
 
-    virtual IDataProxy* dataProxy()const override;
+    [[nodiscard]] IDataProxy* dataProxy()const override;
     void setDataProxy(IDataProxy &dataProxy);
 
-    virtual DataClientManager *clone() const override;
+    [[nodiscard]] DataClientManager *clone() const override;
     void clearDataClientList();
 
     void registerClient(const Request& request, IDataClient* dataClient) final;
@@ -43,8 +43,8 @@ public:
     void deregisterAllClient(IDataClient* dataClient) final;
     void changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequest, const Request& newRequest) final;
 
-    int numberOfRegisterdRequests() const;
-    const RequestList allClientRequests(IDataClient* dataClient) const;
+    [[nodiscard]] int numberOfRegisterdRequests() const;
+    RequestList allClientRequests(IDataClient *dataClient) const;
 
     void requestGetClientData(IDataClient* dataClient, const Request& request) final;
     void requestGetAllClientData() final;
@@ -52,7 +52,7 @@ public:
     void requestSaveData(const Request& saveRequest,   const QStringList& valueList) final;
     void requestCommand(const Request& commandRequest, const QStringList& valueList) final;
 
-    virtual void newValueReceived( const ResponseData& requestData) override;
+    void newValueReceived( const ResponseData& responseData) override;
 
 private:
     using ClientVector     = QVector<IDataClient*>;

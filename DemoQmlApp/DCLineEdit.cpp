@@ -1,6 +1,6 @@
 #include "DCLineEdit.h"
 
-DCLineEdit::DCLineEdit()
-{
+//DCLineEdit::DCLineEdit()
+//{
 
-}
+//}

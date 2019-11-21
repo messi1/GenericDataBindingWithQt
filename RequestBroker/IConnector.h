@@ -23,7 +23,7 @@ class IConnector
 {
 public:
   virtual  ~IConnector()=default;
-  virtual bool requestData(const RequestData& paramData, ResponseData& responseData) = 0;
+  virtual bool requestData(const RequestData& requestData, ResponseData& responseData) = 0;
 };
 
 

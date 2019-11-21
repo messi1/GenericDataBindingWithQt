@@ -26,41 +26,39 @@ DataClient::DataClient(IDataClientManager &dataClientManager)
 : mDataClientManager(dataClientManager)
 {}
 
-
 //--------------------------------------------------------------------------------------------------------
-void DataClient::registerRequestCmd(const RequestCmd requestCmd)
+void DataClient::registerRequestCmd(RequestCmd requestCmd)
 {
-  mDataClientManager.registerClient({requestCmd}, this);
+    mDataClientManager.registerClient({requestCmd}, this);
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClient::changeRegisteredRequestCmd(const RequestCmd oldRequestCmd, const RequestCmd newRequestCmd)
+void DataClient::changeRegisteredRequestCmd(RequestCmd oldRequestCmd, RequestCmd newRequestCmd)
 {
-  mDataClientManager.changeRegisteredRequest( this, {oldRequestCmd}, {newRequestCmd} );
+    mDataClientManager.changeRegisteredRequest( this, {oldRequestCmd}, {newRequestCmd} );
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClient::deregisterClient()
 {
-  mDataClientManager.deregisterAllClient(this);
+    mDataClientManager.deregisterAllClient(this);
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClient::deregisterRequestCmd(const RequestCmd requestCmd)
+void DataClient::deregisterRequestCmd(RequestCmd requestCmd)
 {
-  mDataClientManager.deregisterClient({requestCmd}, this);
+    mDataClientManager.deregisterClient({requestCmd}, this);
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClient::requestGetData(const RequestCmd requestCmd, bool withRange, quint8 contextId)
+void DataClient::requestGetData(RequestCmd requestCmd, bool withRange, quint8 contextId)
 {
     Request request{requestCmd, withRange, contextId};
-  mDataClientManager.requestGetClientData(this, request);
+    mDataClientManager.requestGetClientData(this, request);
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClient::requestSaveData(const RequestCmd requestCmd, const QString& requestValue)
+void DataClient::requestSaveData(RequestCmd requestCmd, const QString& requestValue)
 {
-  mDataClientManager.requestSaveData({requestCmd}, {requestValue});
+    mDataClientManager.requestSaveData({requestCmd}, {requestValue});
 }
-

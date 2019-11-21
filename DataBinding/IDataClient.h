@@ -12,8 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#ifndef __IDATA_CLIENT
-#define __IDATA_CLIENT
+#ifndef IDATA_CLIENT
+#define IDATA_CLIENT
 
 // Cant be class forwarded because of multiple inclusion which generate previous declartion error
 #include "RequestResponseData/RequestCommand.h"
@@ -33,4 +33,4 @@ public:
     virtual void refresh() = 0;
 };
 
-#endif // __IDATA_CLIENT
+#endif // IDATA_CLIENT

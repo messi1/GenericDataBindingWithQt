@@ -9,8 +9,8 @@
 int main(int argc, char* argv[])
 {
   QGuiApplication app(argc, argv);
-  app.setDesktopSettingsAware(false);
-  app.setQuitOnLastWindowClosed(true);
+  QGuiApplication::setDesktopSettingsAware(false);
+  QGuiApplication::setQuitOnLastWindowClosed(true);
 
   QQuickView view;
 
@@ -27,5 +27,5 @@ int main(int argc, char* argv[])
 
   view.show();
 
-   return app.exec();
+  return QGuiApplication::exec();
 }

@@ -34,8 +34,8 @@ struct ResponseValue
     QString            accessRights;
 };
 //-------------------------------------------------------------------------------------------------
-bool operator==(const ResponseValue &dataValue1,
-                const ResponseValue &dataValue2);
+bool operator==(const ResponseValue &stringMatrix1,
+                const ResponseValue &stringMatrix2);
 //-------------------------------------------------------------------------------------------------
 using ResponseMap             = QMap<Request, ResponseValue>;
 using RequestList             = QList<Request>;
@@ -48,11 +48,11 @@ public:
     ResponseData(IDataClientManager *dataManager, IDataProxy *dataProxy);
 
     void setDataClientManager(IDataClientManager* dataManager);
-    IDataClientManager* dataClientManager() const;
+    [[nodiscard]] IDataClientManager* dataClientManager() const;
 
     void setDataProxy(IDataProxy* dataProxy);
-    IDataProxy*   dataProxy() const;
-    const QString accessRights(const Request& request) const;
+    [[nodiscard]] IDataProxy*   dataProxy() const;
+    [[nodiscard]] QString accessRights(const Request& request) const;
 
     bool valueList(const Request& request, QStringList &valueList);
     bool rangeList(const Request& request, QStringList& rangeList);
@@ -70,11 +70,11 @@ public:
     bool operator==(const ResponseData& obj) const;
 
     void setResponseMap(const ResponseMap& requestMap);
-    const ResponseMap &responseMap() const;
+    [[nodiscard]] const ResponseMap &responseMap() const;
 
     void clearAllData();
 
-    RequestType requestType() const;
+    [[nodiscard]] RequestType requestType() const;
     void setRequestType(const RequestType &requestType);
 
   private:
@@ -90,8 +90,8 @@ public:
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream &out, const ResponseValue &stringMatrix);
 QDataStream &operator>>(QDataStream &in, ResponseValue &stringMatrix);
-QDataStream& operator<<(QDataStream& out, const ResponseData& requestData);
-QDataStream& operator>>(QDataStream&  in,       ResponseData& requestData);
+QDataStream& operator<<(QDataStream& out, const ResponseData& responseData);
+QDataStream& operator>>(QDataStream&  in,       ResponseData& responseData);
 
 
 #endif // RESPONSEDATA_H

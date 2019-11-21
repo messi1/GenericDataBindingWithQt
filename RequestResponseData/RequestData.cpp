@@ -159,8 +159,8 @@ QDataStream &operator>>(QDataStream &in,  RequestData &requestData)
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream& out, const  Request& request)
 {
-  unsigned int bla = static_cast<typename std::underlying_type<RequestCmd>::type>(request.requestCmd);
-  out << bla << request.withRange << request.contextId;
+  auto serialized_cmd = static_cast<typename std::underlying_type<RequestCmd>::type>(request.requestCmd);
+  out << serialized_cmd << request.withRange << request.contextId;
   return out;
 }
 

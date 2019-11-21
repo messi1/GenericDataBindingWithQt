@@ -51,10 +51,10 @@ class MockConnector: public IConnector
 int main(int argc, char* argv[])
 {
   QApplication app(argc, argv);
-  app.font().setHintingPreference(QFont::PreferVerticalHinting);
-  app.setDesktopSettingsAware(false);
-  app.setStyle("Windows");
-  app.setQuitOnLastWindowClosed(true);
+  QApplication::font().setHintingPreference(QFont::PreferVerticalHinting);
+  QApplication::setDesktopSettingsAware(false);
+  QApplication::setStyle("Windows");
+  QApplication::setQuitOnLastWindowClosed(true);
 
   MockConnector mockConnector;
   DataProvider dataProvider(mockConnector);
@@ -83,6 +83,6 @@ int main(int argc, char* argv[])
 
   dataThread->start();
 
-  return app.exec();
+  return QApplication::exec();
 }
 
