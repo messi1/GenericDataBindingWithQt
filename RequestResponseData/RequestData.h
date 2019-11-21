@@ -17,6 +17,7 @@
 
 #include <QMap>
 #include <QStringList>
+#include <QWeakPointer>
 #include "RequestCommand.h"
 
 class IDataClientManager;
@@ -25,19 +26,22 @@ class IDataProxy;
 //-------------------------------------------------------------------------------------------------
 using RequestMap              = QMap<Request, QStringList>;
 using RequestList             = QList<Request>;
+using DataProxyWeakPtr        = QWeakPointer<IDataProxy>;
+using DataClientMangerWeakPtr = QWeakPointer<IDataClientManager>;
 //-------------------------------------------------------------------------------------------------
 
 class RequestData
 {
 public:
   RequestData()=default;
-  RequestData(IDataClientManager* dataManager, IDataProxy* dataProxy);
+  RequestData(const DataClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy);
+  void operator=(const RequestData& obj);
 
-  void setDataClientManager(IDataClientManager* dataManager);
-  [[nodiscard]] IDataClientManager* dataClientManager() const;
+  void setDataClientManager(const DataClientMangerWeakPtr& dataManager);
+  [[nodiscard]] DataClientMangerWeakPtr dataClientManager() const;
 
-  void setDataProxy(IDataProxy* dataProxy);
-  [[nodiscard]] IDataProxy*   dataProxy() const;
+  void setDataProxy(const DataProxyWeakPtr& dataProxy);
+  [[nodiscard]] DataProxyWeakPtr   dataProxy() const;
 
   bool valueList(const Request& request, QStringList &valueList);
   void setValueList(const Request& request, const QStringList& valueList);
@@ -58,8 +62,8 @@ public:
   void setRequestType(const RequestType &requestType);
 
 private:
-  IDataClientManager* mCallerManager = nullptr;
-  IDataProxy*         mCallerProxy   = nullptr;
+  DataClientMangerWeakPtr mCallerManager;
+  DataProxyWeakPtr        mCallerProxy;
 
   RequestMap  mRequestMap;
   RequestType mRequestType = RequestType::GetValues;

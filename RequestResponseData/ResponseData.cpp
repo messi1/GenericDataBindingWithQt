@@ -27,31 +27,31 @@ bool operator==(const ResponseValue& stringMatrix1, const ResponseValue& stringM
 }
 
 //-------------------------------------------------------------------------------------------------
-ResponseData::ResponseData(IDataClientManager *dataManager, IDataProxy *dataProxy)
+ResponseData::ResponseData(const DataClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy)
   : mCallerManager(dataManager),
     mCallerProxy(dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
-void ResponseData::setDataClientManager(IDataClientManager* dataManager)
+void ResponseData::setDataClientManager(const DataClientMangerWeakPtr& dataManager)
 {
   mCallerManager = dataManager;
 }
 
 //-------------------------------------------------------------------------------------------------
-void ResponseData::setDataProxy(IDataProxy* dataProxy)
+void ResponseData::setDataProxy(const DataProxyWeakPtr& dataProxy)
 {
   mCallerProxy = dataProxy;
 }
 
 //-------------------------------------------------------------------------------------------------
-IDataClientManager *ResponseData::dataClientManager() const
+DataClientMangerWeakPtr ResponseData::dataClientManager() const
 {
   return mCallerManager;
 }
 
 //-------------------------------------------------------------------------------------------------
-IDataProxy *ResponseData::dataProxy() const
+DataProxyWeakPtr ResponseData::dataProxy() const
 {
     return mCallerProxy;
 }

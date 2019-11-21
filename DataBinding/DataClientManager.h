@@ -17,6 +17,7 @@
 #define DATACLIENTMANAGER_H
 
 #include <QMap>
+#include <QSharedPointer>
 #include <QString>
 #include <QVector>
 
@@ -26,14 +27,14 @@
 class IDataProxy;
 class IDataClient;
 
-class DataClientManager : public IDataClientManager
+class DataClientManager : public IDataClientManager, public QEnableSharedFromThis<DataClientManager>
 {
 public:
-    explicit DataClientManager(IDataProxy& dataProxy);
+    explicit DataClientManager(const QSharedPointer<IDataProxy>& dataProxy);
     ~DataClientManager() override;
 
-    [[nodiscard]] IDataProxy* dataProxy()const override;
-    void setDataProxy(IDataProxy &dataProxy);
+    [[nodiscard]] DataProxyWeakPtr dataProxy()const override;
+    void setDataProxy(const QSharedPointer<IDataProxy> &dataProxy);
 
     [[nodiscard]] DataClientManager *clone() const override;
     void clearDataClientList();
@@ -58,8 +59,8 @@ private:
     using ClientVector     = QVector<IDataClient*>;
     using ClientRequestMap = QMap<Request, ClientVector>;
 
-    IDataProxy&           mDataProxy;
-    ClientRequestMap      mClientRequestMap;
+    QSharedPointer<IDataProxy> mDataProxy;
+    ClientRequestMap           mClientRequestMap;
 };
 
 #endif // DATACLIENTMANAGER_H

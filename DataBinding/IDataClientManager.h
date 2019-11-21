@@ -32,7 +32,7 @@ public:
     virtual void deregisterAllClient(IDataClient* dataClient) = 0;
     virtual void changeRegisteredRequest(IDataClient* dataClient, const Request& oldRequestId, const Request& newRequestId) = 0;
 
-    [[nodiscard]] virtual IDataProxy* dataProxy()  const = 0;
+    [[nodiscard]] virtual DataProxyWeakPtr dataProxy()  const = 0;
     [[nodiscard]] virtual IDataClientManager* clone() const = 0;
 
     virtual void requestData(const RequestData &requestData) = 0;

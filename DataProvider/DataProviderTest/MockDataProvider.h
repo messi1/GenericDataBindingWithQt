@@ -54,7 +54,7 @@ class MockDataProvider: public QObject, public IDataProvider
       }
 
       if (requestData.dataProxy())
-          requestData.dataProxy()->sigResponseData(responseData);
+          requestData.dataProxy().toStrongRef()->sigResponseData(responseData);
   }
 };
 

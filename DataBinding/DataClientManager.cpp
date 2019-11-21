@@ -22,7 +22,7 @@
 
 
 //--------------------------------------------------------------------------------------------------------
-DataClientManager::DataClientManager(IDataProxy &dataProxy)
+DataClientManager::DataClientManager(const QSharedPointer<IDataProxy> &dataProxy)
   : mDataProxy(dataProxy)
 {}
 
@@ -33,13 +33,13 @@ DataClientManager::~DataClientManager()
 }
 
 //--------------------------------------------------------------------------------------------------------
-IDataProxy *DataClientManager::dataProxy()const
+DataProxyWeakPtr DataClientManager::dataProxy()const
 {
-    return &mDataProxy;
+    return mDataProxy;
 }
 
 //--------------------------------------------------------------------------------------------------------
-void DataClientManager::setDataProxy(IDataProxy& dataProxy)
+void DataClientManager::setDataProxy(const QSharedPointer<IDataProxy>& dataProxy)
 {
     mDataProxy = dataProxy;
 }
@@ -149,12 +149,12 @@ void DataClientManager::requestGetClientData(IDataClient* dataClient, const Requ
 {
   if( dataClient)
   {
-    RequestData requestData(this, &mDataProxy);
+    RequestData requestData(sharedFromThis().toWeakRef(), mDataProxy.toWeakRef());
     // TODO: Add dataClient to the requestData as return path for special single request, like timer based requests.
     requestData.addRequest(request);
     requestData.setRequestType(RequestType::GetValues);
 
-    mDataProxy.requestData(requestData);
+    mDataProxy->requestData(requestData);
   }
 }
 
@@ -163,38 +163,38 @@ void DataClientManager::requestGetAllClientData()
 {
   if(not mClientRequestMap.empty())
   {
-    RequestData requestData(this, &mDataProxy);
+    RequestData requestData(sharedFromThis().toWeakRef(), mDataProxy.toWeakRef());
     requestData.setRequestType(RequestType::GetValues);
     requestData.addRequestList(mClientRequestMap.keys());
 
-    mDataProxy.requestData(requestData);
+    mDataProxy->requestData(requestData);
   }
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::requestData(const RequestData &requestData)
 {
-  mDataProxy.requestData(requestData);
+  mDataProxy->requestData(requestData);
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::requestCommand(const Request& commandRequest, const QStringList& valueList)
 {
-  RequestData requestData(this, &mDataProxy);
+  RequestData requestData(sharedFromThis().toWeakRef(), mDataProxy.toWeakRef());
   requestData.setRequestType(RequestType::Command);
   requestData.addRequest(commandRequest, valueList);
 
-  mDataProxy.requestData(requestData);
+  mDataProxy->requestData(requestData);
 }
 
 //--------------------------------------------------------------------------------------------------------
 void DataClientManager::requestSaveData(const Request& saveRequest, const QStringList& valueList)
 {
-  RequestData requestData(this, &mDataProxy);
+  RequestData requestData(sharedFromThis().toWeakRef(), mDataProxy.toWeakRef());
   requestData.setRequestType(RequestType::SetValues);
   requestData.addRequest(saveRequest, valueList);
 
-  mDataProxy.requestData(requestData);
+  mDataProxy->requestData(requestData);
 }
 
 //--------------------------------------------------------------------------------------------------------

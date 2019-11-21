@@ -18,19 +18,18 @@
 
 #include "DataBinding/IDataClientManager.h"
 
-class MockDataClientManager: public IDataClientManager
+class MockDataClientManager: public IDataClientManager, QEnableSharedFromThis<MockDataClientManager>
 {
-
 public:
   MockDataClientManager() = default;
-  virtual ~MockDataClientManager() = default;
+  ~MockDataClientManager()override = default;
   void registerClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
   void deregisterClient(const Request& /*request*/, IDataClient* /*dataClient*/) final {}
   void deregisterAllClient(IDataClient* /*dataClient*/) final {}
   void changeRegisteredRequest(IDataClient* /*dataClient*/, const Request& /*oldRequest*/, const Request& /*newRequest*/) final {}
 
-  virtual IDataProxy* dataProxy()  const final {return nullptr;}
-  virtual IDataClientManager* clone() const final {return nullptr;}
+  [[nodiscard]] DataProxyWeakPtr    dataProxy() const final { return {}; }
+  [[nodiscard]] IDataClientManager *clone() const final { return nullptr; }
 
   void requestData(const RequestData& /*requestData*/) final {}
   void requestSaveData(const Request& /*saveRequest*/, const QStringList& /*valueList*/)  final {}
@@ -38,9 +37,9 @@ public:
   void requestGetClientData(IDataClient* /*dataClient*/, const Request& /*request*/) final {}
   void requestGetAllClientData() final {}
 
-  virtual void newValueReceived( const ResponseData &responseData) final { mResponseData = responseData; }
+  void newValueReceived( const ResponseData &responseData) final { mResponseData = responseData; }
 
-  const ResponseData& responseData() const {return mResponseData;}
+  [[nodiscard]] const ResponseData& responseData() const {return mResponseData;}
 
 private:
   ResponseData mResponseData;

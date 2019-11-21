@@ -39,19 +39,21 @@ bool operator==(const ResponseValue &stringMatrix1,
 //-------------------------------------------------------------------------------------------------
 using ResponseMap             = QMap<Request, ResponseValue>;
 using RequestList             = QList<Request>;
+using DataProxyWeakPtr        = QWeakPointer<IDataProxy>;
+using DataClientMangerWeakPtr = QWeakPointer<IDataClientManager>;
 //-------------------------------------------------------------------------------------------------
 
 class ResponseData
 {
 public:
     ResponseData()=default;
-    ResponseData(IDataClientManager *dataManager, IDataProxy *dataProxy);
+    ResponseData(const DataClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy);
 
-    void setDataClientManager(IDataClientManager* dataManager);
-    [[nodiscard]] IDataClientManager* dataClientManager() const;
+    void setDataClientManager(const DataClientMangerWeakPtr& dataManager);
+    [[nodiscard]] DataClientMangerWeakPtr dataClientManager() const;
 
-    void setDataProxy(IDataProxy* dataProxy);
-    [[nodiscard]] IDataProxy*   dataProxy() const;
+    void setDataProxy(const DataProxyWeakPtr& dataProxy);
+    [[nodiscard]] DataProxyWeakPtr dataProxy() const;
     [[nodiscard]] QString accessRights(const Request& request) const;
 
     bool valueList(const Request& request, QStringList &valueList);
@@ -78,8 +80,8 @@ public:
     void setRequestType(const RequestType &requestType);
 
   private:
-    IDataClientManager* mCallerManager = nullptr;
-    IDataProxy*         mCallerProxy   = nullptr;
+    DataClientMangerWeakPtr mCallerManager;
+    DataProxyWeakPtr        mCallerProxy;
 
     ResponseMap  mResponseMap;
     RequestType  mRequestType   = RequestType::GetValues;
@@ -89,7 +91,7 @@ public:
 // Serializer/Deserializer for RequestData Type
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream &out, const ResponseValue &stringMatrix);
-QDataStream &operator>>(QDataStream &in, ResponseValue &stringMatrix);
+QDataStream &operator>>(QDataStream &in,        ResponseValue &stringMatrix);
 QDataStream& operator<<(QDataStream& out, const ResponseData& responseData);
 QDataStream& operator>>(QDataStream&  in,       ResponseData& responseData);
 

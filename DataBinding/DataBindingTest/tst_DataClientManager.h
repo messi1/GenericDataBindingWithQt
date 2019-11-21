@@ -14,8 +14,8 @@ using namespace testing;
 
 TEST(DataClientManager, registerNullPtrClient)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     clientManager.registerClient({RequestCmd::DateTime}, nullptr);
@@ -25,8 +25,8 @@ TEST(DataClientManager, registerNullPtrClient)
 
 TEST(DataClientManager, deregisterNullPtrClient)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     clientManager.registerClient({RequestCmd::DateTime}, &testClient);
@@ -39,8 +39,8 @@ TEST(DataClientManager, deregisterNullPtrClient)
 
 TEST(DataClientManager, registerClient)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
@@ -52,8 +52,8 @@ TEST(DataClientManager, registerClient)
 
 TEST(DataClientManager, deregisterClient)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
@@ -65,8 +65,8 @@ TEST(DataClientManager, deregisterClient)
 
 TEST(DataClientManager, doubleClientRegistration)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
@@ -78,8 +78,8 @@ TEST(DataClientManager, doubleClientRegistration)
 
 TEST(DataClientManager, deregisterAllClientFromRequests)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);
@@ -91,8 +91,8 @@ TEST(DataClientManager, deregisterAllClientFromRequests)
 
 TEST(DataClientManager, changeRegisteredRequestCmd)
 {
-    MockDataProxy dataProxy;
-    DataClientManager clientManager(dataProxy);
+    QSharedPointer<MockDataProxy> dataProxyPtr(new MockDataProxy);
+    DataClientManager clientManager(dataProxyPtr.toWeakRef());
     TestDataClient testClient(clientManager);
 
     EXPECT_EQ( clientManager.numberOfRegisterdRequests(), 0);

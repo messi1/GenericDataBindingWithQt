@@ -20,31 +20,40 @@
 
 
 //-------------------------------------------------------------------------------------------------
-RequestData::RequestData(IDataClientManager *dataManager, IDataProxy *dataProxy)
+RequestData::RequestData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy)
   : mCallerManager(dataManager),
     mCallerProxy(dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setDataClientManager(IDataClientManager* dataManager)
+void RequestData::operator=(const RequestData &obj)
+{
+    this->setDataProxy(obj.dataProxy());
+    this->setDataClientManager(obj.dataClientManager());
+    this->setRequestMap(obj.requestMap());
+    this->setRequestType(obj.requestType());
+}
+
+//-------------------------------------------------------------------------------------------------
+void RequestData::setDataClientManager(const DataClientMangerWeakPtr& dataManager)
 {
   mCallerManager = dataManager;
 }
 
 //-------------------------------------------------------------------------------------------------
-void RequestData::setDataProxy(IDataProxy* dataProxy)
+void RequestData::setDataProxy(const DataProxyWeakPtr& dataProxy)
 {
   mCallerProxy = dataProxy;
 }
 
 //-------------------------------------------------------------------------------------------------
-IDataClientManager *RequestData::dataClientManager() const
+DataClientMangerWeakPtr RequestData::dataClientManager() const
 {
   return mCallerManager;
 }
 
 //-------------------------------------------------------------------------------------------------
-IDataProxy *RequestData::dataProxy() const
+DataProxyWeakPtr RequestData::dataProxy() const
 {
   return mCallerProxy;
 }

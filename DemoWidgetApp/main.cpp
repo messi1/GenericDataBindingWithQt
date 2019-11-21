@@ -58,13 +58,13 @@ int main(int argc, char* argv[])
 
   MockConnector mockConnector;
   DataProvider dataProvider(mockConnector);
-  DataProxy dataProxy(dataProvider, nullptr);
+  QSharedPointer<DataProxy> dataProxyPtr = QSharedPointer<DataProxy>(new DataProxy(dataProvider, nullptr));
 
   QThread* dataThread = new QThread;
   dataThread->setObjectName("dataThread");
   dataProvider.moveToThread(dataThread);
 
-  BaseFrame* baseWidget = new BaseFrame(dataProxy);
+  BaseFrame* baseWidget = new BaseFrame(dataProxyPtr);
   baseWidget->setGeometry(0, 100, 400, 300);
 
   DCLineEdit* lineEdit = new DCLineEdit(*baseWidget);

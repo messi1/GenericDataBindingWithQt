@@ -127,15 +127,15 @@ TEST(RequestData, checkSetFunction)
     requestData.setRequestType(RequestType::Command);
     EXPECT_TRUE(requestData.requestType() == RequestType::Command);
 
-    requestData.setDataClientManager(reinterpret_cast<IDataClientManager*>(0x800000));
-    EXPECT_TRUE(requestData.dataClientManager() == reinterpret_cast<IDataClientManager*>(0x800000));
-    requestData.setDataClientManager(nullptr);
-    EXPECT_FALSE(requestData.dataClientManager() == reinterpret_cast<IDataClientManager*>(0x800000));
+    requestData.setDataClientManager(QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000)));
+    EXPECT_TRUE(requestData.dataClientManager() == QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000)).toWeakRef());
+    requestData.setDataClientManager({});
+    EXPECT_FALSE(requestData.dataClientManager() == QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000)).toWeakRef());
 
-    requestData.setDataProxy(reinterpret_cast<IDataProxy*>(0x800001));
-    EXPECT_TRUE(requestData.dataProxy() == reinterpret_cast<IDataProxy*>(0x800001));
-    requestData.setDataProxy(nullptr);
-    EXPECT_FALSE(requestData.dataProxy() == reinterpret_cast<IDataProxy*>(0x800001));
+    requestData.setDataProxy(QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001)));
+    EXPECT_TRUE(requestData.dataProxy() == QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001)));
+    requestData.setDataProxy({});
+    EXPECT_FALSE(requestData.dataProxy() == QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001)));
 
     requestData.setValueList({RequestCmd::DateTime}, {"11","22","33"});
     QStringList valueList;
