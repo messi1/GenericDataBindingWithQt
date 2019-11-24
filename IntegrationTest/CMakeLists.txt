@@ -26,6 +26,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Test
         GTest::GTest
         RequestResponseData
+        DataBinding
         DataProvider
         TestDataValues
 )

@@ -38,26 +38,26 @@ using namespace testing;
 
 TEST(Integration2, requestWithDeletedManager)
 {
-//    QEventLoop waitForLoop;
-//    QTimer     quitEventLoopTimer;
-//    RequestData   testResponseData = TestValues().responseData1;
-//    MockConnector mockConnector;
-//    DataProvider dataProvider(mockConnector);
-//    QSharedPointer<DataProxy> dataProxyPtr(new DataProxy(dataProvider, nullptr));
-//    QSharedPointer<DataClientManager> dataClientManagerPtr = QSharedPointer<DataClientManager> (new DataClientManager(dataProxyPtr));
+    QEventLoop waitForLoop;
+    QTimer     quitEventLoopTimer;
+    RequestData   testRequestData = TestRequestValues().requestData1;
+    MockConnector mockConnector;
+    DataProvider dataProvider(mockConnector);
+    QSharedPointer<DataProxy> dataProxyPtr(new DataProxy(dataProvider, nullptr));
+    QSharedPointer<DataClientManager> dataClientManagerPtr = QSharedPointer<DataClientManager> (new DataClientManager(dataProxyPtr));
 
-//    QThread* dataThread = new QThread;
-//    dataThread->setObjectName("dataThread");
-//    dataProvider.moveToThread(dataThread);
+    QThread* dataThread = new QThread;
+    dataThread->setObjectName("dataThread");
+    dataProvider.moveToThread(dataThread);
 
-//    QObject::connect(&quitEventLoopTimer, &QTimer::timeout, [&waitForLoop]()
-//    {
-//      waitForLoop.quit();
-//      SUCCEED();
-//    });
+    QObject::connect(&quitEventLoopTimer, &QTimer::timeout, [&waitForLoop]()
+    {
+      waitForLoop.quit();
+      SUCCEED();
+    });
 
-//    QObject::connect(dataProxyPtr.data(), SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(&dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-//    QObject::connect(dataProxyPtr.data(), &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+    QObject::connect(dataProxyPtr.data(), SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(&dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
+//    QObject::connect(dataProxyPtr.data(), &DataProxy::sigResponseData, [testRequestData, &waitForLoop](const RequestData &responseData)
 //    {
 //      //Async code
 //      EXPECT_TRUE(responseData.dataClientManager());
@@ -66,16 +66,16 @@ TEST(Integration2, requestWithDeletedManager)
 //      if(waitForLoop.isRunning())
 //        waitForLoop.exit();
 //    });
-//    quitEventLoopTimer.start(2000);
-//    dataThread->start();
+    quitEventLoopTimer.start(2000);
+    dataThread->start();
 
-//    RequestData requestData(dataClientManagerPtr, dataProxyPtr);
-//    requestData.addRequest({RequestCmd::BatteryState});
-//    requestData.setRequestType(RequestType::GetValues);
-//    //dataProxyPtr->requestData(requestData);
-//    dataClientManagerPtr->requestData(requestData);
-//    dataClientManagerPtr.clear();
-//    waitForLoop.exec(); // Wait until the dataThread sends the data
+    RequestData requestData(dataClientManagerPtr, dataProxyPtr);
+    requestData.addRequest({RequestCmd::BatteryState});
+    requestData.setRequestType(RequestType::GetValues);
+    dataProxyPtr->requestData(requestData);
+    dataClientManagerPtr->requestData(requestData);
+    dataClientManagerPtr.clear();
+    waitForLoop.exec(); // Wait until the dataThread sends the data
 }
 
 #endif // TST_REQUESTWITHDELETEDMANAGER_H

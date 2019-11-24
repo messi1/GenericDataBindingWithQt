@@ -38,20 +38,20 @@ TEST(Integration, requestWithDeletedManager)
 {
 //    QEventLoop waitForLoop;
 //    QTimer     quitEventLoopTimer;
-//    RequestData   testResponseData = TestValues().responseData1;
+//    RequestData   testRequestData = TestRequestValues().requestData1;
 //    MockConnector mockConnector;
 //    DataProvider dataProvider(mockConnector);
 //    QSharedPointer<DataProxy> dataProxyPtr(new DataProxy(dataProvider, nullptr));
-//    QSharedPointer<DataClientManager> dataClientManagerPtr = QSharedPointer<DataClientManager> (/*new DataClientManager(dataProxyPtr)*/);
+//    QSharedPointer<DataClientManager> dataClientManagerPtr = QSharedPointer<DataClientManager> (dataProxyPtr);
+//    testRequestData.setDataClientManager(dataClientManagerPtr);
+//    testRequestData.setDataProxy(dataProxyPtr);
+//    testRequestData.addRequest({RequestCmd::BatteryState});
+//    testRequestData.setRequestType(RequestType::GetValues);
 
-//    RequestData requestData(dataClientManagerPtr, dataProxyPtr);
-//    RequestData responseData;
-//    requestData.addRequest({RequestCmd::BatteryState});
-//    requestData.setRequestType(RequestType::GetValues);
+//    ResponseData responseData;
 //    responseData.clearAllData();
-
-//    responseData = requestData;
-
-//    EXPECT_TRUE(requestData == responseData);
+    //responseData = testRequestData;
+//TODO: Fix it
+    //EXPECT_TRUE(testRequestData == responseData);
 }
 #endif // TST_COPYREQUEST_H

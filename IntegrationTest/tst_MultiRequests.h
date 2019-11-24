@@ -38,7 +38,7 @@ TEST(Integration, multiRequests)
 {
     QEventLoop waitForLoop;
     QTimer     quitEventLoopTimer;
-    RequestData   testResponseData = TestValues().responseData1;
+    RequestData   testRequestData = TestRequestValues().requestData1;
     MockConnector mockConnector;
     DataProvider dataProvider(mockConnector);
     DataProxy dataProxy(dataProvider, nullptr);
@@ -54,23 +54,22 @@ TEST(Integration, multiRequests)
     });
 
     QObject::connect(&dataProxy, SIGNAL(sigRequestData(const RequestData &)), dynamic_cast<QObject*>(&dataProvider), SLOT(requestData(const RequestData &)), Qt::QueuedConnection);
-    QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testResponseData, &waitForLoop](const RequestData &responseData)
+    QObject::connect(&dataProxy, &DataProxy::sigResponseData, [testRequestData, &waitForLoop](const ResponseData &responseData)
     {
       //Async code
-      EXPECT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
-      ASSERT_GE(responseData.requestMap().count(), testResponseData.requestMap().count());
-      EXPECT_TRUE( responseData.requestType() == testResponseData.requestType() );
+      EXPECT_GE(responseData.responseMap().count(), testRequestData.requestMap().count());
+      ASSERT_GE(responseData.responseMap().count(), testRequestData.requestMap().count());
+      EXPECT_TRUE( responseData.requestType() == testRequestData.requestType() );
 
-      QMapIterator<Request, RequestDataMatrix> responseItr(responseData.requestMap());
-      QMapIterator<Request, RequestDataMatrix> testResponseItr(testResponseData.requestMap());
+      QMapIterator requestItr(testRequestData.requestMap());
+      QMapIterator responseItr(responseData.responseMap());
 
-      while(testResponseItr.hasNext() && responseItr.hasNext()) {
-          testResponseItr.next();
+      while(requestItr.hasNext() && requestItr.hasNext())
+      {
           responseItr.next();
 
-          EXPECT_TRUE( testResponseItr.key()   == responseItr.key() );
-          EXPECT_TRUE( testResponseItr.value() == responseItr.value() );
-
+          EXPECT_TRUE( requestItr.key()   == responseItr.key() );
+//          EXPECT_TRUE( requestItr.value() == responseItr.value() );
       }
 
       if(waitForLoop.isRunning())

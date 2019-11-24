@@ -120,6 +120,9 @@ TEST(RequestData, addRequestPerformance)
 
 
 //-------------------------------------------------------------------------------------------------
+void myDeleter1(IDataClientManager*){}
+void myDeleter2(IDataProxy*){}
+
 TEST(RequestData, checkSetFunction)
 {
     RequestData requestData;
@@ -127,15 +130,18 @@ TEST(RequestData, checkSetFunction)
     requestData.setRequestType(RequestType::Command);
     EXPECT_TRUE(requestData.requestType() == RequestType::Command);
 
-    requestData.setDataClientManager(QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000)));
-    EXPECT_TRUE(requestData.dataClientManager() == QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000)).toWeakRef());
-    requestData.setDataClientManager({});
-    EXPECT_FALSE(requestData.dataClientManager() == QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000)).toWeakRef());
+    QSharedPointer<IDataClientManager> test_DCM_Ptr = QSharedPointer<IDataClientManager>(reinterpret_cast<IDataClientManager*>(0x800000), myDeleter1);
+    QSharedPointer<IDataProxy> testDataProxyPtr = QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001), myDeleter2);
 
-    requestData.setDataProxy(QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001)));
-    EXPECT_TRUE(requestData.dataProxy() == QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001)));
+    requestData.setDataClientManager(test_DCM_Ptr.toWeakRef());
+    EXPECT_TRUE(requestData.dataClientManager() == test_DCM_Ptr.toWeakRef());
+    requestData.setDataClientManager({});
+    EXPECT_FALSE(requestData.dataClientManager() == test_DCM_Ptr.toWeakRef());
+
+    requestData.setDataProxy(testDataProxyPtr.toWeakRef());
+    EXPECT_TRUE(requestData.dataProxy() == testDataProxyPtr.toWeakRef());
     requestData.setDataProxy({});
-    EXPECT_FALSE(requestData.dataProxy() == QSharedPointer<IDataProxy>(reinterpret_cast<IDataProxy*>(0x800001)));
+    EXPECT_FALSE(requestData.dataProxy() == testDataProxyPtr.toWeakRef());
 
     requestData.setValueList({RequestCmd::DateTime}, {"11","22","33"});
     QStringList valueList;
