@@ -77,7 +77,7 @@ TEST(DataProvider, DataPassing_requestValue)
   qRegisterMetaType<RequestData>("RequestData");
 
   MockConnector mockConnector;
-  QSharedPointer<MockDataProxy> mockDataProxy1;
+  QSharedPointer<MockDataProxy> mockDataProxy1(new MockDataProxy);
   DataProvider* dataProvider  = new DataProvider(mockConnector);
   RequestData   testRequestData = TestRequestValues().requestData1;
   testRequestData.setDataProxy(mockDataProxy1);
@@ -147,7 +147,7 @@ TEST(DataProvider, DataPassing_sendValue)
   qRegisterMetaType<RequestData>("RequestData");
 
   MockConnector mockConnector;
-  QSharedPointer<MockDataProxy> mockDataProxy1;
+  QSharedPointer<MockDataProxy> mockDataProxy1(new MockDataProxy);
 
   QEventLoop waitForLoop;
   QTimer     quitEventLoopTimer;
