@@ -30,7 +30,7 @@ class IDataClient;
 class DataClientManager : public IDataClientManager, public QEnableSharedFromThis<DataClientManager>
 {
 public:
-    explicit DataClientManager(const QSharedPointer<IDataProxy>& dataProxy);
+    explicit DataClientManager(QSharedPointer<IDataProxy>  dataProxy);
     ~DataClientManager() override;
 
     [[nodiscard]] DataProxyWeakPtr dataProxy()const override;

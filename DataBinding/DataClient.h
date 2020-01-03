@@ -19,31 +19,33 @@
 
 #include "IDataClient.h"
 
-
 class IDataClientManager;
 
-class DataClient : public IDataClient
-{
+class DataClient : public IDataClient {
 public:
-    DataClient() = delete;
-    explicit DataClient(IDataClientManager& dataClientManager);
-    ~DataClient() override = default;
+  DataClient() = delete;
+  explicit DataClient(IDataClientManager &dataClientManager);
+  ~DataClient() override = default;
 
-    void registerRequestCmd(RequestCmd requestCmd);
-    void changeRegisteredRequestCmd(RequestCmd oldRequestCmd, RequestCmd newRequestCmd);
-    void deregisterRequestCmd(RequestCmd requestCmd);
-    void deregisterClient();
+  void registerRequestCmd(RequestCmd requestCmd);
+  void changeRegisteredRequestCmd(RequestCmd oldRequestCmd,
+                                  RequestCmd newRequestCmd);
+  void deregisterRequestCmd(RequestCmd requestCmd);
+  void deregisterClient();
 
-    void requestGetData(RequestCmd requestCmd,  bool withRange = false, quint8 contextId = 0);
-    void requestSaveData(RequestCmd requestCmd, const QString& requestValue);
-    void setValueList( const Request& request, const QStringList& responseValueList,
-                               const QStringList& responseRangeList)override = 0;
-    void setAccessRights(const QString& accessRights)override = 0;
-    void setErrorList(const Request& request, const QStringList& responseErrorList)override = 0;
-    void refresh()override = 0;
+  void requestGetData(RequestCmd requestCmd, bool withRange = false,
+                      quint8 contextId = 0);
+  void requestSaveData(RequestCmd requestCmd, const QString &requestValue);
+  void setValueList(const Request &request,
+                    const QStringList &responseValueList,
+                    const QStringList &responseRangeList) override = 0;
+  void setAccessRights(const QString &accessRights) override = 0;
+  void setErrorList(const Request &request,
+                    const QStringList &responseErrorList) override = 0;
+  void refresh() override = 0;
 
-protected:
-    IDataClientManager& mDataClientManager;
+private:
+  IDataClientManager &mDataClientManager;
 };
 
 #endif // DATACLIENT_H
