@@ -47,7 +47,7 @@ class ResponseData
 {
 public:
     ResponseData()=default;
-    ResponseData(const DataClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy);
+    ResponseData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy);
 
     void setDataClientManager(const DataClientMangerWeakPtr& dataManager);
     [[nodiscard]] DataClientMangerWeakPtr dataClientManager() const;

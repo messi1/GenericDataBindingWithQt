@@ -27,7 +27,7 @@ bool operator==(const ResponseValue& stringMatrix1, const ResponseValue& stringM
 }
 
 //-------------------------------------------------------------------------------------------------
-ResponseData::ResponseData(const DataClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy)
+ResponseData::ResponseData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy)
   : mCallerManager(dataManager),
     mCallerProxy(dataProxy)
 {}

@@ -34,7 +34,7 @@ class RequestData
 {
 public:
   RequestData()=default;
-  RequestData(const DataClientMangerWeakPtr& dataManager, const DataProxyWeakPtr& dataProxy);
+  RequestData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy);
   void operator=(const RequestData& obj);
 
   void setDataClientManager(const DataClientMangerWeakPtr& dataManager);

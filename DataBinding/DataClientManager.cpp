@@ -14,14 +14,13 @@
  */
 #include <QDateTime>
 #include <QDebug>
-
 #include "DataClientManager.h"
 #include "DataProvider/IDataProxy.h"
 #include "IDataClient.h"
 #include "RequestResponseData/RequestCommand.h"
 
 //--------------------------------------------------------------------------------------------------------
-DataClientManager::DataClientManager(const QSharedPointer<IDataProxy> dataProxy)
+DataClientManager::DataClientManager(const QSharedPointer<IDataProxy> &dataProxy)
     : mDataProxy(dataProxy) {}
 
 //--------------------------------------------------------------------------------------------------------

@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
   QObject::connect(&exitTimer, &QTimer::timeout, &app, &QCoreApplication::quit);
   exitTimer.start();
-  app.exec();
+  QCoreApplication::exec();
 
   return ret;
 }
