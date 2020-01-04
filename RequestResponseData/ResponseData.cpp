@@ -17,8 +17,6 @@
 #include "DataProvider/IDataProxy.h"
 #include "ResponseData.h"
 
-
-
 bool operator==(const ResponseValue& stringMatrix1, const ResponseValue& stringMatrix2)
 {
     return (stringMatrix1.valueList == stringMatrix2.valueList &&
@@ -28,26 +26,25 @@ bool operator==(const ResponseValue& stringMatrix1, const ResponseValue& stringM
 
 //-------------------------------------------------------------------------------------------------
 ResponseData::ResponseData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy)
-  : mCallerManager(dataManager),
-    mCallerProxy(dataProxy)
+    :mCallerManager(dataManager), mCallerProxy(dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
 void ResponseData::setDataClientManager(const DataClientMangerWeakPtr& dataManager)
 {
-  mCallerManager = dataManager;
+    mCallerManager = dataManager;
 }
 
 //-------------------------------------------------------------------------------------------------
 void ResponseData::setDataProxy(const DataProxyWeakPtr& dataProxy)
 {
-  mCallerProxy = dataProxy;
+    mCallerProxy = dataProxy;
 }
 
 //-------------------------------------------------------------------------------------------------
 DataClientMangerWeakPtr ResponseData::dataClientManager() const
 {
-  return mCallerManager;
+    return mCallerManager;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -133,20 +130,20 @@ void ResponseData::setErrorList(const Request &request, const QStringList &error
 //-------------------------------------------------------------------------------------------------
 void ResponseData::addResponse(const Request& request, const QString& accessRights)
 {
-  ResponseValue stringMatrix;
-  stringMatrix.accessRights = accessRights;
+    ResponseValue stringMatrix;
+    stringMatrix.accessRights = accessRights;
 
-  mResponseMap.insert(request, stringMatrix);
+    mResponseMap.insert(request, stringMatrix);
 }
 
 //-------------------------------------------------------------------------------------------------
 void ResponseData::addResponse(const Request& request, const QStringList &valueList, const QString& accessRights)
 {
-  ResponseValue stringMatrix;
-  stringMatrix.valueList    = valueList;
-  stringMatrix.accessRights = accessRights;
+    ResponseValue stringMatrix;
+    stringMatrix.valueList    = valueList;
+    stringMatrix.accessRights = accessRights;
 
-  mResponseMap.insert(request, stringMatrix);
+    mResponseMap.insert(request, stringMatrix);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -163,25 +160,25 @@ void ResponseData::addResponse(const Request& request, const QStringList &valueL
 //-------------------------------------------------------------------------------------------------
 void ResponseData::addResponse(const Request& request, const QStringList &valueList, const QStringList &rangeList, const QStringList &errorList, const QString& accessRights)
 {
-  ResponseValue stringMatrix;
-  stringMatrix.valueList    = valueList;
-  stringMatrix.rangeList    = rangeList;
-  stringMatrix.errorList    = errorList;
-  stringMatrix.accessRights = accessRights;
+    ResponseValue stringMatrix;
+    stringMatrix.valueList    = valueList;
+    stringMatrix.rangeList    = rangeList;
+    stringMatrix.errorList    = errorList;
+    stringMatrix.accessRights = accessRights;
 
-  mResponseMap.insert(request, stringMatrix);
+    mResponseMap.insert(request, stringMatrix);
 }
 
 //-------------------------------------------------------------------------------------------------
 void ResponseData::setResponseMap(const ResponseMap &requestMap)
 {
-  mResponseMap = requestMap;
+    mResponseMap = requestMap;
 }
 
 //-------------------------------------------------------------------------------------------------
 const ResponseMap &ResponseData::responseMap() const
 {
-  return mResponseMap;
+    return mResponseMap;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -201,7 +198,7 @@ void ResponseData::clearAllData()
 //-------------------------------------------------------------------------------------------------
 RequestType ResponseData::requestType() const
 {
-  return mRequestType;
+    return mRequestType;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -214,9 +211,9 @@ void ResponseData::setRequestType(const RequestType &requestType)
 bool ResponseData::operator==(const ResponseData& obj) const
 {
     return (obj.requestType()  == this->requestType()       &&
-       obj.dataClientManager() == this->dataClientManager() &&
-       obj.dataProxy()         == this->dataProxy()         &&
-       obj.responseMap()       == this->responseMap());
+            obj.dataClientManager() == this->dataClientManager() &&
+            obj.dataProxy()         == this->dataProxy()         &&
+            obj.responseMap()       == this->responseMap());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -225,33 +222,33 @@ bool ResponseData::operator==(const ResponseData& obj) const
 
 QDataStream &operator<<(QDataStream &out, const ResponseValue &stringMatrix)
 {
-  out << stringMatrix.valueList << stringMatrix.rangeList << stringMatrix.errorList;
-  return out;
+    out << stringMatrix.valueList << stringMatrix.rangeList << stringMatrix.errorList;
+    return out;
 }
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator>>(QDataStream &in, ResponseValue &stringMatrix)
 {
-  in >> stringMatrix.valueList >> stringMatrix.rangeList >> stringMatrix.errorList;
-  return in;
+    in >> stringMatrix.valueList >> stringMatrix.rangeList >> stringMatrix.errorList;
+    return in;
 }
 
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream &out, const ResponseData &responseData)
 {
-  out << responseData.responseMap();
-  return out;
+    out << responseData.responseMap();
+    return out;
 }
 
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator>>(QDataStream &in,  ResponseData &responseData)
 {
-  ResponseMap responseMap;
-  ResponseValue valueMatrix;
-  ResponseValue rangeMatrix;
-  ResponseValue errorMatrix;
-  in >> responseMap;
+    ResponseMap responseMap;
+    ResponseValue valueMatrix;
+    ResponseValue rangeMatrix;
+    ResponseValue errorMatrix;
+    in >> responseMap;
 
-  responseData.setResponseMap(responseMap);
+    responseData.setResponseMap(responseMap);
 
-  return in;
+    return in;
 }

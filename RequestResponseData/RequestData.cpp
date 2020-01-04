@@ -21,8 +21,7 @@
 
 //-------------------------------------------------------------------------------------------------
 RequestData::RequestData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy)
-  : mCallerManager(dataManager),
-    mCallerProxy(dataProxy)
+    :mCallerManager(dataManager), mCallerProxy(dataProxy)
 {}
 
 //-------------------------------------------------------------------------------------------------
@@ -37,25 +36,25 @@ void RequestData::operator=(const RequestData &obj)
 //-------------------------------------------------------------------------------------------------
 void RequestData::setDataClientManager(const DataClientMangerWeakPtr& dataManager)
 {
-  mCallerManager = dataManager;
+    mCallerManager = dataManager;
 }
 
 //-------------------------------------------------------------------------------------------------
 void RequestData::setDataProxy(const DataProxyWeakPtr& dataProxy)
 {
-  mCallerProxy = dataProxy;
+    mCallerProxy = dataProxy;
 }
 
 //-------------------------------------------------------------------------------------------------
 DataClientMangerWeakPtr RequestData::dataClientManager() const
 {
-  return mCallerManager;
+    return mCallerManager;
 }
 
 //-------------------------------------------------------------------------------------------------
 DataProxyWeakPtr RequestData::dataProxy() const
 {
-  return mCallerProxy;
+    return mCallerProxy;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -90,19 +89,19 @@ void RequestData::addRequest(const Request& request)
 //-------------------------------------------------------------------------------------------------
 void RequestData::addRequest(const Request& request, const QStringList &valueList)
 {
-  mRequestMap.insert(request, valueList);
+    mRequestMap.insert(request, valueList);
 }
 
 //-------------------------------------------------------------------------------------------------
 void RequestData::setRequestMap(const RequestMap &requestMap)
 {
-  mRequestMap = requestMap;
+    mRequestMap = requestMap;
 }
 
 //-------------------------------------------------------------------------------------------------
 const RequestMap &RequestData::requestMap() const
 {
-  return mRequestMap;
+    return mRequestMap;
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -110,7 +109,8 @@ void RequestData::clearAllValues()
 {
     QMapIterator<Request, QStringList> it(mRequestMap);
 
-    while (it.hasNext()) {
+    while (it.hasNext())
+    {
         it.next();
         mRequestMap[it.key()].clear();
     }
@@ -125,22 +125,22 @@ void RequestData::clearRequestMap()
 //-------------------------------------------------------------------------------------------------
 RequestType RequestData::requestType() const
 {
-  return mRequestType;
+    return mRequestType;
 }
 
 //-------------------------------------------------------------------------------------------------
 void RequestData::setRequestType(const RequestType &requestType)
 {
-  mRequestType = requestType;
+    mRequestType = requestType;
 }
 
 //-------------------------------------------------------------------------------------------------
 bool RequestData::operator==(const RequestData& obj) const
 {
-    return (obj.requestType()  == this->requestType() &&
-       obj.dataClientManager() == this->dataClientManager() &&
-       obj.dataProxy()         == this->dataProxy()   &&
-       obj.requestMap()        == this->requestMap());
+    return (obj.requestType()       == this->requestType() &&
+            obj.dataClientManager() == this->dataClientManager() &&
+            obj.dataProxy()         == this->dataProxy()   &&
+            obj.requestMap()        == this->requestMap());
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -168,9 +168,9 @@ QDataStream &operator>>(QDataStream &in,  RequestData &requestData)
 //-------------------------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream& out, const  Request& request)
 {
-  auto serialized_cmd = static_cast<typename std::underlying_type<RequestCmd>::type>(request.requestCmd);
-  out << serialized_cmd << request.withRange << request.contextId;
-  return out;
+    auto serialized_cmd = static_cast<typename std::underlying_type<RequestCmd>::type>(request.requestCmd);
+    out << serialized_cmd << request.withRange << request.contextId;
+    return out;
 }
 
 //-------------------------------------------------------------------------------------------------

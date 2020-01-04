@@ -50,39 +50,39 @@ class MockConnector: public IConnector
 
 int main(int argc, char* argv[])
 {
-  QApplication app(argc, argv);
-  QApplication::font().setHintingPreference(QFont::PreferVerticalHinting);
-  QApplication::setDesktopSettingsAware(false);
-  QApplication::setStyle("Windows");
-  QApplication::setQuitOnLastWindowClosed(true);
+    QApplication app(argc, argv);
+    QApplication::font().setHintingPreference(QFont::PreferVerticalHinting);
+    QApplication::setDesktopSettingsAware(false);
+    QApplication::setStyle("Windows");
+    QApplication::setQuitOnLastWindowClosed(true);
 
-  MockConnector mockConnector;
-  DataProvider dataProvider(mockConnector);
-  QSharedPointer<DataProxy> dataProxyPtr = QSharedPointer<DataProxy>(new DataProxy(dataProvider, nullptr));
+    MockConnector mockConnector;
+    DataProvider dataProvider(mockConnector);
+    QSharedPointer<DataProxy> dataProxyPtr = QSharedPointer<DataProxy>(new DataProxy(dataProvider, nullptr));
 
-  QThread* dataThread = new QThread;
-  dataThread->setObjectName("dataThread");
-  dataProvider.moveToThread(dataThread);
+    QThread* dataThread = new QThread;
+    dataThread->setObjectName("dataThread");
+    dataProvider.moveToThread(dataThread);
 
-  BaseFrame* baseWidget = new BaseFrame(dataProxyPtr);
-  baseWidget->setGeometry(0, 100, 400, 300);
+    BaseFrame* baseWidget = new BaseFrame(dataProxyPtr);
+    baseWidget->setGeometry(0, 100, 400, 300);
 
-  DCLineEdit* lineEdit = new DCLineEdit(*baseWidget);
-  lineEdit->setPlaceholderText("Please enter ...");
+    DCLineEdit* lineEdit = new DCLineEdit(*baseWidget);
+    lineEdit->setPlaceholderText("Please enter ...");
 
-  QPushButton *bla = new QPushButton(baseWidget);
-  bla->setGeometry(0, 0, 100, 40);
-  bla->setText("BBBBBBBBBBBBBBBBBB");
-  bla->setToolTip("BlaBla");
-  bla->show();
-  QLineEdit* el = new QLineEdit(baseWidget);
-  el->setGeometry(0, 100, 100, 40);
-  el->setToolTip("Gugus");
+    QPushButton *bla = new QPushButton(baseWidget);
+    bla->setGeometry(0, 0, 100, 40);
+    bla->setText("BBBBBBBBBBBBBBBBBB");
+    bla->setToolTip("BlaBla");
+    bla->show();
+    QLineEdit* el = new QLineEdit(baseWidget);
+    el->setGeometry(0, 100, 100, 40);
+    el->setToolTip("Gugus");
 
-  baseWidget->show();
+    baseWidget->show();
 
-  dataThread->start();
+    dataThread->start();
 
-  return QApplication::exec();
+    return QApplication::exec();
 }
 

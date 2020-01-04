@@ -21,17 +21,17 @@
 
 int main(int argc, char *argv[])
 {
-  QCoreApplication app(argc, argv);
+    QCoreApplication app(argc, argv);
 
-  ::testing::InitGoogleTest(&argc, argv);
-  int ret = RUN_ALL_TESTS();
+    ::testing::InitGoogleTest(&argc, argv);
+    int ret = RUN_ALL_TESTS();
 
-  QTimer exitTimer;
-  exitTimer.setInterval(2000);
+    QTimer exitTimer;
+    exitTimer.setInterval(2000);
 
-  QObject::connect(&exitTimer, &QTimer::timeout, &app, &QCoreApplication::quit);
-  exitTimer.start();
-  QCoreApplication::exec();
+    QObject::connect(&exitTimer, &QTimer::timeout, &app, &QCoreApplication::quit);
+    exitTimer.start();
+    QCoreApplication::exec();
 
-  return ret;
+    return ret;
 }

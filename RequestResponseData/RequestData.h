@@ -33,40 +33,40 @@ using DataClientMangerWeakPtr = QWeakPointer<IDataClientManager>;
 class RequestData
 {
 public:
-  RequestData()=default;
-  RequestData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy);
-  void operator=(const RequestData& obj);
+    RequestData()=default;
+    RequestData(const DataClientMangerWeakPtr &dataManager, const DataProxyWeakPtr &dataProxy);
+    void operator=(const RequestData& obj);
 
-  void setDataClientManager(const DataClientMangerWeakPtr& dataManager);
-  [[nodiscard]] DataClientMangerWeakPtr dataClientManager() const;
+    void setDataClientManager(const DataClientMangerWeakPtr& dataManager);
+    [[nodiscard]] DataClientMangerWeakPtr dataClientManager() const;
 
-  void setDataProxy(const DataProxyWeakPtr& dataProxy);
-  [[nodiscard]] DataProxyWeakPtr   dataProxy() const;
+    void setDataProxy(const DataProxyWeakPtr& dataProxy);
+    [[nodiscard]] DataProxyWeakPtr   dataProxy() const;
 
-  bool valueList(const Request& request, QStringList &valueList);
-  void setValueList(const Request& request, const QStringList& valueList);
+    bool valueList(const Request& request, QStringList &valueList);
+    void setValueList(const Request& request, const QStringList& valueList);
 
-  void addRequestList(const RequestList& requestList);
-  void addRequest(const Request& request);
-  void addRequest(const Request& request, const QStringList& valueList);
+    void addRequestList(const RequestList& requestList);
+    void addRequest(const Request& request);
+    void addRequest(const Request& request, const QStringList& valueList);
 
-  void clearAllValues();
+    void clearAllValues();
 
-  void clearRequestMap();
-  void setRequestMap(const RequestMap &requestMap);
-  [[nodiscard]] const RequestMap &requestMap() const;
+    void clearRequestMap();
+    void setRequestMap(const RequestMap &requestMap);
+    [[nodiscard]] const RequestMap &requestMap() const;
 
-  bool operator==(const RequestData& obj) const;
+    bool operator==(const RequestData& obj) const;
 
-  [[nodiscard]] RequestType requestType() const;
-  void setRequestType(const RequestType &requestType);
+    [[nodiscard]] RequestType requestType() const;
+    void setRequestType(const RequestType &requestType);
 
 private:
-  DataClientMangerWeakPtr mCallerManager;
-  DataProxyWeakPtr        mCallerProxy;
+    DataClientMangerWeakPtr mCallerManager;
+    DataProxyWeakPtr        mCallerProxy;
 
-  RequestMap  mRequestMap;
-  RequestType mRequestType = RequestType::GetValues;
+    RequestMap  mRequestMap;
+    RequestType mRequestType = RequestType::GetValues;
 };
 
 //-------------------------------------------------------------------------------------------------
